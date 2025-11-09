@@ -5,7 +5,8 @@ import {
   DashboardData,
   FilterOptions,
   JiraIssue,
-  StatusHistory
+  StatusHistory,
+  GitHubActivity
 } from '@/types'
 
 // Configure the API base URL
@@ -55,4 +56,27 @@ export async function fetchIssueDetails(instance: string, issueKey: string): Pro
   developmentTimeDays: number
 }> {
   return fetchAPI(`/api/issue/${issueKey}?instance=${encodeURIComponent(instance)}`)
+}
+
+export async function testGitHubConnection(): Promise<{
+  enabled: boolean
+  owner?: string
+  repos?: string[]
+  repoStatus?: Record<string, { connected: boolean; error?: string }>
+  message?: string
+}> {
+  return fetchAPI('/api/github/status')
+}
+
+export async function fetchGitHubDeveloperActivity(
+  startDate: string,
+  endDate: string
+): Promise<{
+  developerActivity: Record<string, GitHubActivity>
+  startDate: string
+  endDate: string
+  repos: string[]
+}> {
+  const url = `/api/github/developer-activity?start=${encodeURIComponent(startDate)}&end=${encodeURIComponent(endDate)}`
+  return fetchAPI(url)
 }

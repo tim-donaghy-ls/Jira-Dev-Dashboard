@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"jira-dashboard/analysis"
 	"jira-dashboard/config"
+	"jira-dashboard/github"
 	"jira-dashboard/jira"
 	"log"
 	"net/http"
@@ -13,15 +14,25 @@ import (
 
 // Handler manages HTTP requests
 type Handler struct {
-	config      *config.Config
-	jiraClients map[string]*jira.Client
+	config        *config.Config
+	jiraClients   map[string]*jira.Client
+	githubClients map[string]*github.Client // Map of repo name to client
 }
 
 // NewHandler creates a new API handler
 func NewHandler(cfg *config.Config, jiraClients map[string]*jira.Client) *Handler {
+	githubClients := make(map[string]*github.Client)
+	if cfg.GitHub != nil {
+		// Create a client for each repository
+		for _, repo := range cfg.GitHub.Repos {
+			githubClients[repo] = github.NewClient(cfg.GitHub.Token, cfg.GitHub.Owner, repo)
+		}
+	}
+
 	return &Handler{
-		config:      cfg,
-		jiraClients: jiraClients,
+		config:        cfg,
+		jiraClients:   jiraClients,
+		githubClients: githubClients,
 	}
 }
 
@@ -58,6 +69,14 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/test-connection", h.handleTestConnection)
 	mux.HandleFunc("/api/issue/", h.handleIssueChangelog)
 	mux.HandleFunc("/api/tests", HandleTestDashboard)
+
+	// GitHub API routes
+	mux.HandleFunc("/api/github/status", h.handleGitHubStatus)
+	mux.HandleFunc("/api/github/repos", h.handleGitHubRepos)
+	mux.HandleFunc("/api/github/stats", h.handleGitHubStats)
+	mux.HandleFunc("/api/github/prs", h.handleGitHubPRs)
+	mux.HandleFunc("/api/github/commits", h.handleGitHubCommits)
+	mux.HandleFunc("/api/github/developer-activity", h.handleGitHubDeveloperActivity)
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))

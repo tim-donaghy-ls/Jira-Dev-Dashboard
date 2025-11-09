@@ -8,9 +8,10 @@ import * as XLSX from 'xlsx'
 interface TeamPerformanceTableProps {
   data: AssigneeStats[]
   allIssues: JiraIssue[]
+  githubLoading?: boolean
 }
 
-export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTableProps) {
+export function TeamPerformanceTable({ data, allIssues, githubLoading = false }: TeamPerformanceTableProps) {
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('jira_dashboard_team_collapsed')
@@ -131,74 +132,110 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
     let maxScore = 0
     const breakdown: string[] = []
 
-    // 1. Story Points Completed (Weight: 30%)
+    // 1. Story Points Completed (Weight: 25%)
     // Higher is better
-    maxScore += 30
+    maxScore += 25
     let storyPointScore = 0
     if (stats.totalStoryPoints > 0) {
       const avgStoryPoints = totals.totalStoryPoints / data.length
-      storyPointScore = Math.min(30, (stats.totalStoryPoints / avgStoryPoints) * 15)
+      storyPointScore = Math.min(25, (stats.totalStoryPoints / avgStoryPoints) * 12.5)
       score += storyPointScore
-      breakdown.push(`Story Points: ${stats.totalStoryPoints.toFixed(1)} (Team Avg: ${avgStoryPoints.toFixed(1)}) - ${((storyPointScore / 30) * 100).toFixed(0)}%`)
+      breakdown.push(`Story Points: ${stats.totalStoryPoints.toFixed(1)} (Team Avg: ${avgStoryPoints.toFixed(1)}) - ${((storyPointScore / 25) * 100).toFixed(0)}%`)
     } else {
       breakdown.push(`Story Points: 0 - 0%`)
     }
 
-    // 2. Closed vs Total Issues Ratio (Weight: 25%)
+    // 2. Closed vs Total Issues Ratio (Weight: 20%)
     // Higher completion rate is better
-    maxScore += 25
+    maxScore += 20
     let completionScore = 0
     if (stats.totalIssues > 0) {
       const completionRate = stats.closedIssues / stats.totalIssues
-      completionScore = completionRate * 25
+      completionScore = completionRate * 20
       score += completionScore
-      breakdown.push(`Completion Rate: ${(completionRate * 100).toFixed(0)}% (${stats.closedIssues}/${stats.totalIssues}) - ${((completionScore / 25) * 100).toFixed(0)}%`)
+      breakdown.push(`Completion Rate: ${(completionRate * 100).toFixed(0)}% (${stats.closedIssues}/${stats.totalIssues}) - ${((completionScore / 20) * 100).toFixed(0)}%`)
     } else {
       breakdown.push(`Completion Rate: N/A - 0%`)
     }
 
-    // 3. Development Time (Weight: 20%)
+    // 3. Development Time (Weight: 15%)
     // Lower is better (faster development)
-    maxScore += 20
+    maxScore += 15
     let devTimeScore = 0
     if (stats.avgDevelopmentTimeDays > 0) {
       const avgDevTimeNum = totals.devTimeCount > 0 ? totals.totalDevTime / totals.devTimeCount : 0
       if (avgDevTimeNum > 0) {
         // Inverse score: faster developers get higher score
-        devTimeScore = Math.max(0, 20 - ((stats.avgDevelopmentTimeDays / avgDevTimeNum) - 1) * 10)
+        devTimeScore = Math.max(0, 15 - ((stats.avgDevelopmentTimeDays / avgDevTimeNum) - 1) * 7.5)
         score += devTimeScore
-        breakdown.push(`Dev Time: ${stats.avgDevelopmentTimeDays.toFixed(1)} days (Team Avg: ${avgDevTimeNum.toFixed(1)}) - ${((devTimeScore / 20) * 100).toFixed(0)}%`)
+        breakdown.push(`Dev Time: ${stats.avgDevelopmentTimeDays.toFixed(1)} days (Team Avg: ${avgDevTimeNum.toFixed(1)}) - ${((devTimeScore / 15) * 100).toFixed(0)}%`)
       }
     } else {
       breakdown.push(`Dev Time: N/A - 0%`)
     }
 
-    // 4. Quality (Failed Tickets) (Weight: 15%)
-    // Lower failure rate is better
+    // 4. GitHub Activity - Commits (Weight: 15%)
+    // Higher commit count is better
     maxScore += 15
+    let activityScore = 0
+    const totalCommitsAll = data.reduce((sum, dev) => sum + (dev.githubActivity?.commits || 0), 0)
+    const devsWithCommits = data.filter(d => d.githubActivity?.commits).length
+
+    if (totalCommitsAll > 0 && devsWithCommits > 0) {
+      const avgCommits = totalCommitsAll / devsWithCommits
+      const devCommits = stats.githubActivity?.commits || 0
+      activityScore = Math.min(15, (devCommits / avgCommits) * 7.5)
+      score += activityScore
+      breakdown.push(`GitHub Commits: ${devCommits} (Team Avg: ${avgCommits.toFixed(1)}) - ${((activityScore / 15) * 100).toFixed(0)}%`)
+    } else {
+      // No GitHub data available for anyone
+      breakdown.push(`GitHub Commits: 0 (No Data) - 0%`)
+    }
+
+    // 5. GitHub Contribution - Merged PRs (Weight: 15%)
+    // Higher merged PR count is better
+    maxScore += 15
+    let contributionScore = 0
+    const totalPRsMergedAll = data.reduce((sum, dev) => sum + (dev.githubActivity?.prsMerged || 0), 0)
+    const devsWithPRs = data.filter(d => d.githubActivity?.prsMerged).length
+
+    if (totalPRsMergedAll > 0 && devsWithPRs > 0) {
+      const avgPRsMerged = totalPRsMergedAll / devsWithPRs
+      const devPRsMerged = stats.githubActivity?.prsMerged || 0
+      contributionScore = Math.min(15, (devPRsMerged / avgPRsMerged) * 7.5)
+      score += contributionScore
+      breakdown.push(`GitHub PRs Merged: ${devPRsMerged} (Team Avg: ${avgPRsMerged.toFixed(1)}) - ${((contributionScore / 15) * 100).toFixed(0)}%`)
+    } else {
+      // No GitHub data available for anyone
+      breakdown.push(`GitHub PRs Merged: 0 (No Data) - 0%`)
+    }
+
+    // 6. Quality (Failed Tickets) (Weight: 5%)
+    // Lower failure rate is better
+    maxScore += 5
     let qualityScore = 0
     if (stats.totalIssues > 0) {
       const failureRate = metrics.ticketFails / stats.totalIssues
-      qualityScore = Math.max(0, 15 * (1 - failureRate * 2)) // Penalize failures
+      qualityScore = Math.max(0, 5 * (1 - failureRate * 2)) // Penalize failures
       score += qualityScore
-      breakdown.push(`Quality: ${((1 - failureRate) * 100).toFixed(0)}% pass rate (${metrics.ticketFails} failed) - ${((qualityScore / 15) * 100).toFixed(0)}%`)
+      breakdown.push(`Quality: ${((1 - failureRate) * 100).toFixed(0)}% pass rate (${metrics.ticketFails} failed) - ${((qualityScore / 5) * 100).toFixed(0)}%`)
     } else {
-      qualityScore = 15
+      qualityScore = 5
       score += qualityScore
       breakdown.push(`Quality: 100% pass rate (0 failed) - 100%`)
     }
 
-    // 5. Assist/Recovery Rate (Weight: 10%)
+    // 7. Assist/Recovery Rate (Weight: 5%)
     // Higher unfailed rate is better (shows ability to fix failed tickets)
-    maxScore += 10
+    maxScore += 5
     let recoveryScore = 0
     if (metrics.ticketFails > 0) {
       const recoveryRate = metrics.ticketUnfailed / metrics.ticketFails
-      recoveryScore = recoveryRate * 10
+      recoveryScore = recoveryRate * 5
       score += recoveryScore
-      breakdown.push(`Recovery Rate: ${(recoveryRate * 100).toFixed(0)}% (${metrics.ticketUnfailed}/${metrics.ticketFails} fixed) - ${((recoveryScore / 10) * 100).toFixed(0)}%`)
+      breakdown.push(`Recovery Rate: ${(recoveryRate * 100).toFixed(0)}% (${metrics.ticketUnfailed}/${metrics.ticketFails} fixed) - ${((recoveryScore / 5) * 100).toFixed(0)}%`)
     } else {
-      recoveryScore = 10
+      recoveryScore = 5
       score += recoveryScore
       breakdown.push(`Recovery Rate: N/A (no failures) - 100%`)
     }
@@ -298,11 +335,11 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
         stats.totalStoryPoints.toFixed(1),
         stats.avgDevelopmentTimeDays > 0 ? stats.avgDevelopmentTimeDays.toFixed(1) : '-',
         metrics.storyPoints.toFixed(1),
-        '-', // Activity - No data yet
-        '-', // Contribution - No data yet
+        stats.githubActivity?.commits ?? '-', // Activity (Commits)
+        stats.githubActivity ? `${stats.githubActivity.prs} (${stats.githubActivity.prsMerged} merged)` : '-', // Contribution (PRs)
         metrics.ticketFails,
         metrics.ticketUnfailed,
-        '-', // Test Coverage - No data yet
+        stats.githubActivity?.testCoverage != null ? `${stats.githubActivity.testCoverage.toFixed(1)}%` : '-', // Test Coverage
         starRating,
         justification
       ])
@@ -476,18 +513,36 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
                                   <div className="text-xs text-secondary mt-1">Total Story Points in Sprint</div>
                                 </div>
 
-                                {/* Activity: No Data Yet */}
-                                <div className="bg-white dark:bg-gray-900 p-4 rounded border border-custom opacity-60">
+                                {/* Activity: Check-ins (Commits) */}
+                                <div className={`bg-white dark:bg-gray-900 p-4 rounded border border-custom ${stats.githubActivity && stats.githubActivity.commits > 0 ? '' : 'opacity-60'}`}>
                                   <div className="text-xs font-semibold text-secondary uppercase mb-1">Activity</div>
-                                  <div className="text-2xl font-bold text-secondary">-</div>
-                                  <div className="text-xs text-secondary mt-1">Check-ins in Sprint (No Data Yet)</div>
+                                  <div className={`text-2xl font-bold ${stats.githubActivity && stats.githubActivity.commits > 0 ? 'text-primary' : 'text-secondary'}`}>
+                                    {githubLoading && !stats.githubActivity ? (
+                                      <span className="text-sm animate-pulse">Loading...</span>
+                                    ) : (
+                                      stats.githubActivity?.commits ?? 0
+                                    )}
+                                  </div>
+                                  <div className="text-xs text-secondary mt-1">
+                                    {githubLoading ? 'Loading GitHub data...' : 'Commits in Sprint'}
+                                  </div>
                                 </div>
 
-                                {/* Contribution: No Data Yet */}
-                                <div className="bg-white dark:bg-gray-900 p-4 rounded border border-custom opacity-60">
+                                {/* Contribution: PRs */}
+                                <div className={`bg-white dark:bg-gray-900 p-4 rounded border border-custom ${stats.githubActivity && stats.githubActivity.prs > 0 ? '' : 'opacity-60'}`}>
                                   <div className="text-xs font-semibold text-secondary uppercase mb-1">Contribution</div>
-                                  <div className="text-2xl font-bold text-secondary">-</div>
-                                  <div className="text-xs text-secondary mt-1">PRs in Sprint (No Data Yet)</div>
+                                  <div className={`text-2xl font-bold ${stats.githubActivity && stats.githubActivity.prs > 0 ? 'text-primary' : 'text-secondary'}`}>
+                                    {githubLoading && !stats.githubActivity ? (
+                                      <span className="text-sm animate-pulse">Loading...</span>
+                                    ) : stats.githubActivity ? (
+                                      `${stats.githubActivity.prs} (${stats.githubActivity.prsMerged} merged)`
+                                    ) : (
+                                      '0 (0 merged)'
+                                    )}
+                                  </div>
+                                  <div className="text-xs text-secondary mt-1">
+                                    {githubLoading ? 'Loading GitHub data...' : 'PRs in Sprint'}
+                                  </div>
                                 </div>
 
                                 {/* Assisted: Ticket Fails and Unfailed */}
@@ -499,11 +554,21 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
                                   <div className="text-xs text-secondary mt-1">Failed / Unfailed Tickets</div>
                                 </div>
 
-                                {/* Test Coverage: No Data Yet */}
-                                <div className="bg-white dark:bg-gray-900 p-4 rounded border border-custom opacity-60">
+                                {/* Test Coverage */}
+                                <div className={`bg-white dark:bg-gray-900 p-4 rounded border border-custom ${stats.githubActivity?.testCoverage != null && stats.githubActivity.testCoverage > 0 ? '' : 'opacity-60'}`}>
                                   <div className="text-xs font-semibold text-secondary uppercase mb-1">Test Coverage</div>
-                                  <div className="text-2xl font-bold text-secondary">-</div>
-                                  <div className="text-xs text-secondary mt-1">Coverage in Sprint (No Data Yet)</div>
+                                  <div className={`text-2xl font-bold ${stats.githubActivity?.testCoverage != null && stats.githubActivity.testCoverage > 0 ? 'text-primary' : 'text-secondary'}`}>
+                                    {githubLoading && !stats.githubActivity ? (
+                                      <span className="text-sm animate-pulse">Loading...</span>
+                                    ) : stats.githubActivity?.testCoverage != null ? (
+                                      `${stats.githubActivity.testCoverage.toFixed(1)}%`
+                                    ) : (
+                                      '-'
+                                    )}
+                                  </div>
+                                  <div className="text-xs text-secondary mt-1">
+                                    {githubLoading ? 'Loading GitHub data...' : 'Test File Coverage in Sprint'}
+                                  </div>
                                 </div>
                               </div>
                             </div>

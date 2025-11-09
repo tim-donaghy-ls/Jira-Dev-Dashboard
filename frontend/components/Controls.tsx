@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { JiraInstance, JiraProject, JiraSprint } from '@/types'
 import { fetchInstances, fetchProjects, fetchSprints } from '@/lib/api'
+import { ConnectionStatus } from './ConnectionStatus'
 
 interface ControlsProps {
   selectedInstance: string
@@ -11,6 +12,10 @@ interface ControlsProps {
   setSelectedProject: (value: string) => void
   selectedSprint: string
   setSelectedSprint: (value: string) => void
+  jiraConnectionStatus: 'checking' | 'connected' | 'error'
+  jiraConnectionMessage: string
+  githubConnectionStatus: 'checking' | 'connected' | 'error'
+  githubConnectionMessage: string
 }
 
 export function Controls({
@@ -20,6 +25,10 @@ export function Controls({
   setSelectedProject,
   selectedSprint,
   setSelectedSprint,
+  jiraConnectionStatus,
+  jiraConnectionMessage,
+  githubConnectionStatus,
+  githubConnectionMessage,
 }: ControlsProps) {
   const [instances, setInstances] = useState<JiraInstance[]>([])
   const [projects, setProjects] = useState<JiraProject[]>([])
@@ -199,6 +208,11 @@ export function Controls({
         </select>
       </div>
 
+      {/* Connection Status - Far Right */}
+      <div className="flex items-center gap-4 ml-auto">
+        <ConnectionStatus status={jiraConnectionStatus} message={jiraConnectionMessage} />
+        <ConnectionStatus status={githubConnectionStatus} message={githubConnectionMessage} />
+      </div>
     </div>
   )
 }

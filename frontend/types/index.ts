@@ -60,6 +60,17 @@ export interface JiraIssue {
   statusHistory?: StatusHistory[]
 }
 
+export interface GitHubActivity {
+  username: string
+  commits: number
+  prs: number
+  prsMerged: number
+  additions: number
+  deletions: number
+  lastActivity: string
+  testCoverage?: number
+}
+
 export interface AssigneeStats {
   name: string
   totalIssues: number
@@ -69,6 +80,7 @@ export interface AssigneeStats {
   avgDevelopmentTimeDays: number
   avgInProgressToQADays: number
   statusBreakdown?: StatusBreakdown
+  githubActivity?: GitHubActivity
 }
 
 export interface DashboardData {

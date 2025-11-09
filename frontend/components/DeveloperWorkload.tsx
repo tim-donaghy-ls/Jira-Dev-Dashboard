@@ -7,9 +7,10 @@ interface DeveloperWorkloadProps {
   data: AssigneeStats[]
   allIssues: JiraIssue[]
   jiraBaseUrl: string
+  githubLoading?: boolean
 }
 
-export function DeveloperWorkload({ data, allIssues, jiraBaseUrl }: DeveloperWorkloadProps) {
+export function DeveloperWorkload({ data, allIssues, jiraBaseUrl, githubLoading = false }: DeveloperWorkloadProps) {
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('jira_dashboard_workload_collapsed')
@@ -57,6 +58,9 @@ export function DeveloperWorkload({ data, allIssues, jiraBaseUrl }: DeveloperWor
 
   const grandTotal = orderedStatuses.reduce((sum, status) => sum + statusTotals[status], 0)
   const totalStoryPoints = data.reduce((sum, dev) => sum + (dev.totalStoryPoints || 0), 0)
+  const totalCommits = data.reduce((sum, dev) => sum + (dev.githubActivity?.commits || 0), 0)
+  const totalPRs = data.reduce((sum, dev) => sum + (dev.githubActivity?.prs || 0), 0)
+  const totalPRsMerged = data.reduce((sum, dev) => sum + (dev.githubActivity?.prsMerged || 0), 0)
 
   // Find failed tickets for a developer
   const findFailedTickets = (developerName: string) => {
@@ -140,6 +144,12 @@ export function DeveloperWorkload({ data, allIssues, jiraBaseUrl }: DeveloperWor
                   <th className="px-4 py-3 text-center font-semibold text-primary uppercase text-xs tracking-wide">
                     Story Points
                   </th>
+                  <th className="px-4 py-3 text-center font-semibold text-primary uppercase text-xs tracking-wide">
+                    Commits
+                  </th>
+                  <th className="px-4 py-3 text-center font-semibold text-primary uppercase text-xs tracking-wide">
+                    PRs
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -184,12 +194,28 @@ export function DeveloperWorkload({ data, allIssues, jiraBaseUrl }: DeveloperWor
                         <td className="px-4 py-3 text-center text-primary">
                           {dev.totalStoryPoints > 0 ? dev.totalStoryPoints.toFixed(0) : '-'}
                         </td>
+                        <td className={`px-4 py-3 text-center ${dev.githubActivity && dev.githubActivity.commits > 0 ? 'text-primary' : 'text-secondary'}`}>
+                          {githubLoading && !dev.githubActivity ? (
+                            <span className="text-xs animate-pulse">Loading...</span>
+                          ) : (
+                            dev.githubActivity?.commits ?? 0
+                          )}
+                        </td>
+                        <td className={`px-4 py-3 text-center ${dev.githubActivity && dev.githubActivity.prs > 0 ? 'text-primary' : 'text-secondary'}`}>
+                          {githubLoading && !dev.githubActivity ? (
+                            <span className="text-xs animate-pulse">Loading...</span>
+                          ) : dev.githubActivity ? (
+                            `${dev.githubActivity.prs} (${dev.githubActivity.prsMerged})`
+                          ) : (
+                            '0 (0)'
+                          )}
+                        </td>
                       </tr>
 
                       {/* Expanded row for failed tickets */}
                       {isExpanded && (
                         <tr className="border-b border-custom bg-gray-50 dark:bg-gray-800/30">
-                          <td colSpan={orderedStatuses.length + 3} className="px-4 py-4">
+                          <td colSpan={orderedStatuses.length + 5} className="px-4 py-4">
                             {failedTickets.length === 0 ? (
                               <p className="text-green-600 dark:text-green-400 font-semibold">
                                 ✓ No failed tickets found for this developer
@@ -244,6 +270,12 @@ export function DeveloperWorkload({ data, allIssues, jiraBaseUrl }: DeveloperWor
                   </td>
                   <td className="px-4 py-3 text-center text-primary">
                     {totalStoryPoints.toFixed(0)}
+                  </td>
+                  <td className="px-4 py-3 text-center text-primary">
+                    {totalCommits}
+                  </td>
+                  <td className="px-4 py-3 text-center text-primary">
+                    {totalPRs} ({totalPRsMerged})
                   </td>
                 </tr>
               </tfoot>

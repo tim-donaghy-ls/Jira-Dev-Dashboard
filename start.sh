@@ -24,6 +24,11 @@ set +a
 cp .env backend/.env
 cp .env frontend/.env.local
 
+# If SKIP_AUTH is set, add it to frontend .env.local for client-side access
+if [ -n "$SKIP_AUTH" ]; then
+    echo "NEXT_PUBLIC_SKIP_AUTH=$SKIP_AUTH" >> frontend/.env.local
+fi
+
 echo "✅ Environment variables loaded and distributed"
 echo ""
 

@@ -45,6 +45,10 @@ describe('Controls', () => {
     setSelectedProject: mockSetSelectedProject,
     selectedSprint: '',
     setSelectedSprint: mockSetSelectedSprint,
+    jiraConnectionStatus: 'checking' as const,
+    jiraConnectionMessage: 'Checking JIRA connection...',
+    githubConnectionStatus: 'checking' as const,
+    githubConnectionMessage: 'Checking GitHub connection...',
   }
 
   beforeEach(() => {

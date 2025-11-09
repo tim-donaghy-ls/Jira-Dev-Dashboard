@@ -1,19 +1,20 @@
 'use client'
 
 import { ThemeToggle } from './ThemeToggle'
-import { ConnectionStatus } from './ConnectionStatus'
 import UserMenu from './UserMenu'
 import Image from 'next/image'
 
-interface HeaderProps {
-  connectionStatus: 'checking' | 'connected' | 'error'
-  connectionMessage: string
-}
-
-export function Header({ connectionStatus, connectionMessage }: HeaderProps) {
+export function Header() {
   return (
-    <header className="flex justify-between items-center mb-8 pb-5 border-b border-custom">
-      <div className="flex items-center gap-5">
+    <header className="mb-8">
+      {/* Top Bar: Auth and Theme */}
+      <div className="flex justify-end items-center gap-5 pb-3 mb-5 border-b border-custom">
+        <ThemeToggle />
+        <UserMenu />
+      </div>
+
+      {/* Main Header: Logo and Title */}
+      <div className="flex items-center gap-5 pb-5 border-b border-custom">
         <Image
           src="/legalsifter-logo.png"
           alt="Legal Sifter"
@@ -21,6 +22,7 @@ export function Header({ connectionStatus, connectionMessage }: HeaderProps) {
           height={26}
           className="h-10 w-auto dark:hidden"
           priority
+          unoptimized
         />
         <Image
           src="/legalsifter-logo-wh-dark.png"
@@ -29,15 +31,11 @@ export function Header({ connectionStatus, connectionMessage }: HeaderProps) {
           height={26}
           className="h-10 w-auto hidden dark:block"
           priority
+          unoptimized
         />
         <h1 className="text-[28px] font-bold text-primary tracking-tight">
           Development Metrics Dashboard
         </h1>
-      </div>
-      <div className="flex items-center gap-5">
-        <UserMenu />
-        <ThemeToggle />
-        <ConnectionStatus status={connectionStatus} message={connectionMessage} />
       </div>
     </header>
   )

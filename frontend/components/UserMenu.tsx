@@ -21,6 +21,7 @@ export default function UserMenu() {
     }
   }, [isOpen])
 
+  // Don't render if no session - user will be redirected to signin
   if (!session?.user) {
     return null
   }

@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 vi.mock('@/lib/api', () => ({
   fetchDashboardData: vi.fn(),
   testConnection: vi.fn(),
+  testGitHubConnection: vi.fn(),
   fetchInstances: vi.fn(),
   fetchProjects: vi.fn(),
   fetchSprints: vi.fn(),
@@ -34,16 +35,13 @@ vi.mock('xlsx', () => ({
 
 // Mock all components to simplify testing
 vi.mock('@/components/Header', () => ({
-  Header: ({ connectionStatus, connectionMessage }: any) => (
-    <div data-testid="header">
-      <div data-testid="connection-status">{connectionStatus}</div>
-      <div data-testid="connection-message">{connectionMessage}</div>
-    </div>
+  Header: () => (
+    <div data-testid="header">Header</div>
   ),
 }));
 
 vi.mock('@/components/Controls', () => ({
-  Controls: ({ onLoad, selectedInstance, setSelectedInstance, selectedProject, setSelectedProject, selectedSprint, setSelectedSprint }: any) => (
+  Controls: ({ onLoad, selectedInstance, setSelectedInstance, selectedProject, setSelectedProject, selectedSprint, setSelectedSprint, jiraConnectionStatus, jiraConnectionMessage, githubConnectionStatus, githubConnectionMessage }: any) => (
     <div data-testid="controls">
       <button onClick={onLoad} data-testid="load-button">Load Dashboard</button>
       <select data-testid="instance-select" value={selectedInstance} onChange={(e) => setSelectedInstance(e.target.value)}>
@@ -59,6 +57,10 @@ vi.mock('@/components/Controls', () => ({
         <option value="123">Sprint 1</option>
         <option value="all">All Sprints</option>
       </select>
+      <div data-testid="connection-status">{jiraConnectionStatus}</div>
+      <div data-testid="connection-message">{jiraConnectionMessage}</div>
+      <div data-testid="github-connection-status">{githubConnectionStatus}</div>
+      <div data-testid="github-connection-message">{githubConnectionMessage}</div>
     </div>
   ),
 }));
@@ -143,6 +145,17 @@ describe('DashboardPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockFetch.mockClear();
+
+    // Mock GitHub connection test
+    vi.mocked(api.testGitHubConnection).mockResolvedValue({
+      enabled: true,
+      owner: 'test-org',
+      repos: ['repo1', 'repo2'],
+      repoStatus: {
+        'repo1': { connected: true },
+        'repo2': { connected: true }
+      }
+    });
   });
 
   describe('Initial Rendering', () => {

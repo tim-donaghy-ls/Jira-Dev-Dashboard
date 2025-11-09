@@ -29,13 +29,13 @@ vi.mock('next/image', () => ({
 
 describe('Header', () => {
   it('should render the header with title', () => {
-    render(<Header connectionStatus="connected" connectionMessage="Connected to JIRA" />)
+    render(<Header />)
 
     expect(screen.getByText('Development Metrics Dashboard')).toBeInTheDocument()
   })
 
   it('should render the logo', () => {
-    render(<Header connectionStatus="connected" connectionMessage="Connected to JIRA" />)
+    render(<Header />)
 
     const logos = screen.getAllByTestId('logo-image')
     expect(logos).toHaveLength(2) // One for light mode, one for dark mode
@@ -46,32 +46,26 @@ describe('Header', () => {
   })
 
   it('should render ThemeToggle component', () => {
-    render(<Header connectionStatus="connected" connectionMessage="Connected to JIRA" />)
+    render(<Header />)
 
     expect(screen.getByTestId('theme-toggle')).toBeInTheDocument()
   })
 
-  it('should render ConnectionStatus component with correct props', () => {
-    render(<Header connectionStatus="checking" connectionMessage="Connecting..." />)
-
-    expect(screen.getByTestId('connection-status')).toBeInTheDocument()
-    expect(screen.getByTestId('status')).toHaveTextContent('checking')
-    expect(screen.getByTestId('message')).toHaveTextContent('Connecting...')
-  })
-
-  it('should render with error connection status', () => {
-    render(<Header connectionStatus="error" connectionMessage="Connection failed" />)
-
-    expect(screen.getByTestId('status')).toHaveTextContent('error')
-    expect(screen.getByTestId('message')).toHaveTextContent('Connection failed')
-  })
-
   it('should apply correct header styling', () => {
-    const { container } = render(<Header connectionStatus="connected" connectionMessage="Connected" />)
+    const { container } = render(<Header />)
 
     const header = container.querySelector('header')
-    expect(header).toHaveClass('flex')
-    expect(header).toHaveClass('justify-between')
-    expect(header).toHaveClass('items-center')
+    expect(header).toHaveClass('mb-8')
+
+    // Check top bar exists with correct styling (first direct child div)
+    const topBar = header?.children[0]
+    expect(topBar).toHaveClass('flex')
+    expect(topBar).toHaveClass('justify-end')
+    expect(topBar).toHaveClass('items-center')
+
+    // Check main header row exists (second direct child div)
+    const mainHeader = header?.children[1]
+    expect(mainHeader).toHaveClass('flex')
+    expect(mainHeader).toHaveClass('items-center')
   })
 })

@@ -14,21 +14,24 @@ import { SprintSlippage } from '@/components/SprintSlippage'
 import { IssueCard } from '@/components/IssueCard'
 import { StoryPointsWarning } from '@/components/StoryPointsWarning'
 import { UnassignedTicketsWarning } from '@/components/UnassignedTicketsWarning'
-import { DashboardData } from '@/types'
-import { fetchDashboardData, testConnection } from '@/lib/api'
+import { DashboardData, AssigneeStats, GitHubActivity } from '@/types'
+import { fetchDashboardData, testConnection, testGitHubConnection, fetchGitHubDeveloperActivity } from '@/lib/api'
 import * as XLSX from 'xlsx'
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<DashboardData | null>(null)
   const [error, setError] = useState('')
+  const [githubLoading, setGithubLoading] = useState(false)
 
   const [selectedInstance, setSelectedInstance] = useState('')
   const [selectedProject, setSelectedProject] = useState('')
   const [selectedSprint, setSelectedSprint] = useState('')
 
-  const [connectionStatus, setConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
-  const [connectionMessage, setConnectionMessage] = useState('Checking connection...')
+  const [jiraConnectionStatus, setJiraConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
+  const [jiraConnectionMessage, setJiraConnectionMessage] = useState('Checking connection...')
+  const [githubConnectionStatus, setGithubConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
+  const [githubConnectionMessage, setGithubConnectionMessage] = useState('Checking connection...')
 
   // Sprint Tickets filters
   const [developerFilter, setDeveloperFilter] = useState('all')
@@ -43,33 +46,73 @@ export default function DashboardPage() {
     return false
   })
 
-  // Check connection when instance changes
+  // Check JIRA connection when instance changes
   useEffect(() => {
     if (!selectedInstance) return
 
-    async function checkConnection() {
-      setConnectionStatus('checking')
-      setConnectionMessage('Checking connection...')
+    async function checkJiraConnection() {
+      setJiraConnectionStatus('checking')
+      setJiraConnectionMessage('Checking JIRA...')
 
       try {
         const result = await testConnection(selectedInstance)
         if (result.success) {
-          setConnectionStatus('connected')
-          setConnectionMessage('Connected to JIRA')
+          setJiraConnectionStatus('connected')
+          setJiraConnectionMessage('Connected to JIRA')
         } else {
-          setConnectionStatus('error')
-          setConnectionMessage('Connection Failed')
+          setJiraConnectionStatus('error')
+          setJiraConnectionMessage('JIRA Connection Failed')
           setError(result.error || 'Failed to connect to JIRA')
         }
       } catch (err) {
-        setConnectionStatus('error')
-        setConnectionMessage('Connection Error')
+        setJiraConnectionStatus('error')
+        setJiraConnectionMessage('JIRA Connection Error')
         setError(err instanceof Error ? err.message : 'Unable to check JIRA connection')
       }
     }
 
-    checkConnection()
+    checkJiraConnection()
   }, [selectedInstance])
+
+  // Check GitHub connection on mount
+  useEffect(() => {
+    async function checkGithubConnection() {
+      setGithubConnectionStatus('checking')
+      setGithubConnectionMessage('Checking GitHub...')
+
+      try {
+        const result = await testGitHubConnection()
+        if (!result.enabled) {
+          setGithubConnectionStatus('error')
+          setGithubConnectionMessage('GitHub Not Configured')
+        } else {
+          // Count connected repos
+          let connectedCount = 0
+          let totalCount = 0
+          if (result.repoStatus) {
+            totalCount = Object.keys(result.repoStatus).length
+            connectedCount = Object.values(result.repoStatus).filter(status => status.connected).length
+          }
+
+          if (connectedCount === totalCount && totalCount > 0) {
+            setGithubConnectionStatus('connected')
+            setGithubConnectionMessage(`Connected to GitHub (${connectedCount} repos)`)
+          } else if (connectedCount > 0) {
+            setGithubConnectionStatus('connected')
+            setGithubConnectionMessage(`GitHub: ${connectedCount}/${totalCount} repos`)
+          } else {
+            setGithubConnectionStatus('error')
+            setGithubConnectionMessage('GitHub Connection Failed')
+          }
+        }
+      } catch (err) {
+        setGithubConnectionStatus('error')
+        setGithubConnectionMessage('GitHub Connection Error')
+      }
+    }
+
+    checkGithubConnection()
+  }, [])
 
   const loadDashboard = async () => {
     if (!selectedProject) {
@@ -86,12 +129,80 @@ export default function DashboardPage() {
         project: selectedProject,
         sprint: selectedSprint,
       })
+
+      // Set dashboard data immediately - don't wait for GitHub
       setData(result)
+
+      // Fetch GitHub activity asynchronously in the background
+      if (result.sprintInfo?.startDate && result.sprintInfo?.endDate) {
+        loadGitHubActivity(result)
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load dashboard data')
       console.error('Dashboard error:', err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadGitHubActivity = async (dashboardData: DashboardData) => {
+    if (!dashboardData.sprintInfo?.startDate || !dashboardData.sprintInfo?.endDate) {
+      return
+    }
+
+    setGithubLoading(true)
+    console.log('Fetching GitHub activity for sprint:', dashboardData.sprintInfo.startDate, 'to', dashboardData.sprintInfo.endDate)
+
+    try {
+      const githubActivity = await fetchGitHubDeveloperActivity(
+        dashboardData.sprintInfo.startDate,
+        dashboardData.sprintInfo.endDate
+      )
+
+      console.log('GitHub activity response:', githubActivity)
+      console.log('Developers in GitHub:', Object.keys(githubActivity.developerActivity))
+      console.log('Developers in JIRA:', dashboardData.assigneeStats.map(a => a.name))
+
+      // Merge GitHub activity into assignee stats
+      const updatedAssigneeStats: AssigneeStats[] = dashboardData.assigneeStats.map(assignee => {
+        // Try to match by username (handle various formats)
+        const githubUser = Object.keys(githubActivity.developerActivity).find(username => {
+          // Try exact match
+          if (username.toLowerCase() === assignee.name.toLowerCase()) return true
+          // Try matching email
+          if (username.includes('@') && username.toLowerCase().includes(assignee.name.toLowerCase().split(' ')[0])) return true
+          // Try matching first/last name parts
+          const nameParts = assignee.name.toLowerCase().split(' ')
+          return nameParts.some(part => username.toLowerCase().includes(part))
+        })
+
+        if (githubUser) {
+          console.log(`Matched JIRA developer "${assignee.name}" with GitHub user "${githubUser}"`)
+          return {
+            ...assignee,
+            githubActivity: githubActivity.developerActivity[githubUser]
+          }
+        } else {
+          console.log(`No GitHub match found for JIRA developer "${assignee.name}"`)
+        }
+
+        return assignee
+      })
+
+      // Update the data with GitHub activity
+      setData(prevData => {
+        if (!prevData) return prevData
+        return {
+          ...prevData,
+          assigneeStats: updatedAssigneeStats
+        }
+      })
+      console.log('GitHub activity loaded successfully')
+    } catch (githubErr) {
+      console.error('Failed to fetch GitHub activity:', githubErr)
+      // Don't show error to user - just log it
+    } finally {
+      setGithubLoading(false)
     }
   }
 
@@ -269,10 +380,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen">
       <div className="max-w-[1440px] mx-auto p-5">
-        <Header
-          connectionStatus={connectionStatus}
-          connectionMessage={connectionMessage}
-        />
+        <Header />
 
         <Controls
           selectedInstance={selectedInstance}
@@ -281,6 +389,10 @@ export default function DashboardPage() {
           setSelectedProject={setSelectedProject}
           selectedSprint={selectedSprint}
           setSelectedSprint={setSelectedSprint}
+          jiraConnectionStatus={jiraConnectionStatus}
+          jiraConnectionMessage={jiraConnectionMessage}
+          githubConnectionStatus={githubConnectionStatus}
+          githubConnectionMessage={githubConnectionMessage}
         />
 
         {error && <ErrorMessage message={error} />}
@@ -348,10 +460,10 @@ export default function DashboardPage() {
             />
 
             {/* Team Performance */}
-            <TeamPerformanceTable data={data.assigneeStats} allIssues={data.allIssues} />
+            <TeamPerformanceTable data={data.assigneeStats} allIssues={data.allIssues} githubLoading={githubLoading} />
 
             {/* Developer Workload */}
-            <DeveloperWorkload data={data.assigneeStats} allIssues={data.allIssues} jiraBaseUrl={data.jiraBaseUrl} />
+            <DeveloperWorkload data={data.assigneeStats} allIssues={data.allIssues} jiraBaseUrl={data.jiraBaseUrl} githubLoading={githubLoading} />
 
             {/* Sprint Slippage */}
             <SprintSlippage

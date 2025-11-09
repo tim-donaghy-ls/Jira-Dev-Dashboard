@@ -14,9 +14,17 @@ type JiraInstance struct {
 	Token    string `json:"token"`
 }
 
+// GitHubConfig represents GitHub repository configuration
+type GitHubConfig struct {
+	Token string   `json:"token"`
+	Owner string   `json:"owner"`
+	Repos []string `json:"repos"` // Support multiple repositories
+}
+
 // Config holds the application configuration
 type Config struct {
 	Instances  map[string]*JiraInstance
+	GitHub     *GitHubConfig
 	ServerPort string
 }
 
@@ -28,6 +36,25 @@ func LoadConfig() (*Config, error) {
 	config := &Config{
 		Instances:  make(map[string]*JiraInstance),
 		ServerPort: getEnv("SERVER_PORT", "8080"),
+	}
+
+	// Load GitHub configuration
+	githubToken := getEnv("GITHUB_TOKEN", "")
+	githubOwner := getEnv("GITHUB_OWNER", "")
+	githubRepos := getEnv("GITHUB_REPOS", "")
+
+	if githubToken != "" && githubOwner != "" && githubRepos != "" {
+		// Split comma-separated list of repositories
+		repos := strings.Split(githubRepos, ",")
+		for i := range repos {
+			repos[i] = strings.TrimSpace(repos[i])
+		}
+
+		config.GitHub = &GitHubConfig{
+			Token: githubToken,
+			Owner: githubOwner,
+			Repos: repos,
+		}
 	}
 
 	// Load primary instance (backward compatible with old config)
