@@ -57,6 +57,7 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/sprint/", h.handleSprint)
 	mux.HandleFunc("/api/test-connection", h.handleTestConnection)
 	mux.HandleFunc("/api/issue/", h.handleIssueChangelog)
+	mux.HandleFunc("/api/tests", HandleTestDashboard)
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Controls } from '@/components/Controls'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
@@ -424,6 +425,18 @@ export default function DashboardPage() {
             <p className="text-lg">Select a project and click "Load Dashboard" to get started</p>
           </div>
         )}
+
+        {/* Footer */}
+        <footer className="mt-10 pt-5 border-t border-custom">
+          <div className="flex justify-end text-xs text-secondary">
+            <Link
+              href="/tests"
+              className="inline-block px-3 py-2 text-primary hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              Test Application
+            </Link>
+          </div>
+        </footer>
       </div>
     </div>
   )

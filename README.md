@@ -197,6 +197,74 @@ The Go backend uses environment variables to configure JIRA connections:
 - **Port Configuration**: Configurable server port (default: 8080)
 - **CORS Enabled**: Allows frontend to communicate from different origin
 
+## 🧪 Testing
+
+This project includes comprehensive unit tests for both backend and frontend code.
+
+### Running All Tests
+
+Use the unified test script to run all tests:
+
+```bash
+./test-all.sh
+```
+
+### Running Tests Individually
+
+#### Backend Tests (Go)
+```bash
+cd backend
+go test ./...                    # Run all tests
+go test ./... -v                 # Verbose output
+go test ./... -cover             # With coverage
+go test ./jira -v                # Test specific package
+```
+
+#### Frontend Tests (Vitest)
+```bash
+cd frontend
+npm test                         # Run tests in watch mode
+npm test -- --run                # Run tests once
+npm run test:ui                  # Run with UI
+npm run test:coverage            # Generate coverage report
+```
+
+### Test Coverage
+
+- **Backend**: 36 unit tests covering JIRA client, models, and analysis
+  - JIRA API client tests
+  - Development metrics calculation tests
+  - Data analysis and aggregation tests
+
+- **Frontend Unit Tests**: 18 tests covering API client
+  - All API endpoints
+  - Error handling
+  - Query parameter encoding
+
+- **Frontend E2E Tests**: 25+ tests covering full user flows
+  - Dashboard loading and navigation
+  - Filter selection and data display
+  - Charts and visualizations
+  - Accessibility and responsive design
+  - Error handling scenarios
+
+### Running E2E Tests
+
+E2E tests use Playwright and require the application to be running:
+
+```bash
+# Start the application first
+./start.sh
+
+# In another terminal, run E2E tests
+cd frontend
+npm run test:e2e              # Run headless
+npm run test:e2e:ui           # Run with Playwright UI
+npm run test:e2e:headed       # Run in browser (visible)
+```
+
+For detailed testing documentation, see [TESTING.md](TESTING.md)
+
 ### Frontend Configuration
 
 The Next.js frontend is configured via:
