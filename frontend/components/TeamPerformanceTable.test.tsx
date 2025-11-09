@@ -473,7 +473,7 @@ describe('TeamPerformanceTable', () => {
       const actionsButton = screen.getByTitle('Actions')
       fireEvent.click(actionsButton)
 
-      expect(screen.getByText('Export Metrics to Excel')).toBeInTheDocument()
+      expect(screen.getByText(/Export Metrics to Excel/)).toBeInTheDocument()
     })
 
     it('should call XLSX functions when export is clicked', () => {
@@ -482,7 +482,7 @@ describe('TeamPerformanceTable', () => {
       const actionsButton = screen.getByTitle('Actions')
       fireEvent.click(actionsButton)
 
-      const exportButton = screen.getByText('Export Metrics to Excel')
+      const exportButton = screen.getByText(/Export Metrics to Excel/)
       fireEvent.click(exportButton)
 
       expect(XLSX.utils.book_new).toHaveBeenCalled()
@@ -497,10 +497,10 @@ describe('TeamPerformanceTable', () => {
       const actionsButton = screen.getByTitle('Actions')
       fireEvent.click(actionsButton)
 
-      const exportButton = screen.getByText('Export Metrics to Excel')
+      const exportButton = screen.getByText(/Export Metrics to Excel/)
       fireEvent.click(exportButton)
 
-      expect(screen.queryByText('Export Metrics to Excel')).not.toBeInTheDocument()
+      expect(screen.queryByText(/Export Metrics to Excel/)).not.toBeInTheDocument()
     })
 
     it('should close menu when clicking outside', async () => {
@@ -509,13 +509,13 @@ describe('TeamPerformanceTable', () => {
       const actionsButton = screen.getByTitle('Actions')
       fireEvent.click(actionsButton)
 
-      expect(screen.getByText('Export Metrics to Excel')).toBeInTheDocument()
+      expect(screen.getByText(/Export Metrics to Excel/)).toBeInTheDocument()
 
       // Click outside
       fireEvent.mouseDown(document.body)
 
       await waitFor(() => {
-        expect(screen.queryByText('Export Metrics to Excel')).not.toBeInTheDocument()
+        expect(screen.queryByText(/Export Metrics to Excel/)).not.toBeInTheDocument()
       })
     })
   })

@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import { StatusChart } from './StatusChart'
-import { PriorityChart } from './PriorityChart'
-import { StatusBreakdown, PriorityBreakdown } from '@/types'
+import { DeveloperStoryPointsChart } from './DeveloperStoryPointsChart'
+import { DeveloperDevTimeChart } from './DeveloperDevTimeChart'
+import { DeveloperWorkloadChart } from './DeveloperWorkloadChart'
+import { StatusBreakdown, AssigneeStats, JiraIssue } from '@/types'
 
 interface ChartsOverviewProps {
   statusData: StatusBreakdown
-  priorityData: PriorityBreakdown
+  assigneeStats: AssigneeStats[]
+  allIssues: JiraIssue[]
 }
 
-export function ChartsOverview({ statusData, priorityData }: ChartsOverviewProps) {
+export function ChartsOverview({ statusData, assigneeStats, allIssues }: ChartsOverviewProps) {
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('jira_dashboard_charts_collapsed')
@@ -37,9 +40,11 @@ export function ChartsOverview({ statusData, priorityData }: ChartsOverviewProps
       </div>
 
       {!isCollapsed && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-4">
           <StatusChart data={statusData} />
-          <PriorityChart data={priorityData} />
+          <DeveloperStoryPointsChart data={assigneeStats} />
+          <DeveloperDevTimeChart data={assigneeStats} />
+          <DeveloperWorkloadChart data={assigneeStats} allIssues={allIssues} />
         </div>
       )}
     </div>

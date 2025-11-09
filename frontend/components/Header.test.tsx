@@ -16,6 +16,10 @@ vi.mock('./ConnectionStatus', () => ({
   )
 }))
 
+vi.mock('./UserMenu', () => ({
+  default: () => <div data-testid="user-menu">User Menu</div>
+}))
+
 // Mock Next Image
 vi.mock('next/image', () => ({
   default: ({ src, alt, width, height }: any) => (
@@ -33,10 +37,12 @@ describe('Header', () => {
   it('should render the logo', () => {
     render(<Header connectionStatus="connected" connectionMessage="Connected to JIRA" />)
 
-    const logo = screen.getByTestId('logo-image')
-    expect(logo).toBeInTheDocument()
-    expect(logo).toHaveAttribute('src', '/legalsifter-logo.png')
-    expect(logo).toHaveAttribute('alt', 'Legal Sifter')
+    const logos = screen.getAllByTestId('logo-image')
+    expect(logos).toHaveLength(2) // One for light mode, one for dark mode
+    expect(logos[0]).toHaveAttribute('src', '/legalsifter-logo.png')
+    expect(logos[0]).toHaveAttribute('alt', 'Legal Sifter')
+    expect(logos[1]).toHaveAttribute('src', '/legalsifter-logo-wh-dark.png')
+    expect(logos[1]).toHaveAttribute('alt', 'Legal Sifter')
   })
 
   it('should render ThemeToggle component', () => {

@@ -10,8 +10,10 @@ import { SummaryCards } from '@/components/SummaryCards'
 import { ChartsOverview } from '@/components/ChartsOverview'
 import { TeamPerformanceTable } from '@/components/TeamPerformanceTable'
 import { DeveloperWorkload } from '@/components/DeveloperWorkload'
+import { SprintSlippage } from '@/components/SprintSlippage'
 import { IssueCard } from '@/components/IssueCard'
 import { StoryPointsWarning } from '@/components/StoryPointsWarning'
+import { UnassignedTicketsWarning } from '@/components/UnassignedTicketsWarning'
 import { DashboardData } from '@/types'
 import { fetchDashboardData, testConnection } from '@/lib/api'
 import * as XLSX from 'xlsx'
@@ -33,6 +35,13 @@ export default function DashboardPage() {
   const [keywordFilter, setKeywordFilter] = useState('')
   const [isSprintMenuOpen, setIsSprintMenuOpen] = useState(false)
   const sprintMenuRef = useRef<HTMLDivElement>(null)
+  const [isSprintTicketsCollapsed, setIsSprintTicketsCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('jira_dashboard_sprint_tickets_collapsed')
+      return saved === 'true'
+    }
+    return false
+  })
 
   // Check connection when instance changes
   useEffect(() => {
@@ -86,12 +95,17 @@ export default function DashboardPage() {
     }
   }
 
-  // Auto-load dashboard when all selections are filled
+  // Auto-load dashboard when selections change
   useEffect(() => {
-    if (selectedInstance && selectedProject && selectedSprint && !loading && !data) {
+    if (selectedInstance && selectedProject && selectedSprint && !loading) {
       loadDashboard()
     }
   }, [selectedInstance, selectedProject, selectedSprint])
+
+  // Save collapsed state to localStorage
+  useEffect(() => {
+    localStorage.setItem('jira_dashboard_sprint_tickets_collapsed', isSprintTicketsCollapsed.toString())
+  }, [isSprintTicketsCollapsed])
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -261,7 +275,6 @@ export default function DashboardPage() {
         />
 
         <Controls
-          onLoad={loadDashboard}
           selectedInstance={selectedInstance}
           setSelectedInstance={setSelectedInstance}
           selectedProject={selectedProject}
@@ -278,6 +291,12 @@ export default function DashboardPage() {
           <>
             {/* Story Points Warning */}
             <StoryPointsWarning
+              issues={data.allIssues || []}
+              jiraBaseUrl={data.jiraBaseUrl}
+            />
+
+            {/* Unassigned Tickets Warning */}
+            <UnassignedTicketsWarning
               issues={data.allIssues || []}
               jiraBaseUrl={data.jiraBaseUrl}
             />
@@ -324,7 +343,8 @@ export default function DashboardPage() {
             {/* Charts */}
             <ChartsOverview
               statusData={data.statusBreakdown}
-              priorityData={data.priorityBreakdown}
+              assigneeStats={data.assigneeStats}
+              allIssues={data.allIssues}
             />
 
             {/* Team Performance */}
@@ -333,96 +353,125 @@ export default function DashboardPage() {
             {/* Developer Workload */}
             <DeveloperWorkload data={data.assigneeStats} allIssues={data.allIssues} jiraBaseUrl={data.jiraBaseUrl} />
 
+            {/* Sprint Slippage */}
+            <SprintSlippage
+              allIssues={data.allIssues}
+              jiraBaseUrl={data.jiraBaseUrl}
+              currentSprintName={data.sprintInfo?.name}
+            />
+
             {/* Sprint Tickets */}
             <div className="bg-container shadow-card border border-custom border-l-4 border-l-primary rounded-lg p-5 mb-5">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold text-primary">Sprint Tickets</h3>
-                <div className="relative" ref={sprintMenuRef}>
+                <div className="flex items-center gap-2">
+                  {/* Export Menu */}
+                  <div className="relative" ref={sprintMenuRef}>
+                    <button
+                      onClick={() => setIsSprintMenuOpen(!isSprintMenuOpen)}
+                      className="w-8 h-8 flex items-center justify-center rounded text-2xl font-bold text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                      title="Actions"
+                    >
+                      ⋮
+                    </button>
+                    {isSprintMenuOpen && (
+                      <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-custom rounded-lg shadow-lg z-10">
+                        <button
+                          onClick={exportSprintTickets}
+                          className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg border-b border-custom"
+                        >
+                          Export Tickets in Sprint
+                        </button>
+                        <button
+                          onClick={generateReleaseNotes}
+                          className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors last:rounded-b-lg"
+                        >
+                          Create Release Notes
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  {/* Collapse/Expand Button */}
                   <button
-                    onClick={() => setIsSprintMenuOpen(!isSprintMenuOpen)}
+                    onClick={() => setIsSprintTicketsCollapsed(!isSprintTicketsCollapsed)}
                     className="w-8 h-8 flex items-center justify-center rounded text-2xl font-bold text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                    title="Actions"
+                    title="Collapse/Expand"
                   >
-                    ⋮
+                    {isSprintTicketsCollapsed ? '+' : '−'}
                   </button>
-                  {isSprintMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-custom rounded-lg shadow-lg z-10">
-                      <button
-                        onClick={exportSprintTickets}
-                        className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg border-b border-custom"
+                </div>
+              </div>
+
+              {!isSprintTicketsCollapsed && (
+                <>
+                  {/* Filter Controls */}
+                  <div className="flex flex-wrap gap-4 items-end mb-4">
+                    <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
+                      <label htmlFor="developerFilter" className="text-sm font-semibold text-primary">
+                        Filter by Developer:
+                      </label>
+                      <select
+                        id="developerFilter"
+                        value={developerFilter}
+                        onChange={(e) => setDeveloperFilter(e.target.value)}
+                        className="px-3.5 py-2.5 border border-custom rounded-lg text-base bg-card text-primary transition-all duration-200 hover:border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
                       >
-                        Export Tickets in Sprint
-                      </button>
-                      <button
-                        onClick={generateReleaseNotes}
-                        className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors last:rounded-b-lg"
-                      >
-                        Create Release Notes
-                      </button>
+                        <option value="all">All Developers</option>
+                        {uniqueDevelopers.map(dev => (
+                          <option key={dev} value={dev}>{dev}</option>
+                        ))}
+                      </select>
                     </div>
-                  )}
-                </div>
-              </div>
 
-              {/* Filter Controls */}
-              <div className="flex flex-wrap gap-4 items-end mb-4">
-                <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
-                  <label htmlFor="developerFilter" className="text-sm font-semibold text-primary">
-                    Filter by Developer:
-                  </label>
-                  <select
-                    id="developerFilter"
-                    value={developerFilter}
-                    onChange={(e) => setDeveloperFilter(e.target.value)}
-                    className="px-3.5 py-2.5 border border-custom rounded-lg text-base bg-card text-primary transition-all duration-200 hover:border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
-                  >
-                    <option value="all">All Developers</option>
-                    {uniqueDevelopers.map(dev => (
-                      <option key={dev} value={dev}>{dev}</option>
-                    ))}
-                  </select>
-                </div>
+                    <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
+                      <label htmlFor="keywordFilter" className="text-sm font-semibold text-primary">
+                        Search:
+                      </label>
+                      <input
+                        type="text"
+                        id="keywordFilter"
+                        value={keywordFilter}
+                        onChange={(e) => setKeywordFilter(e.target.value)}
+                        placeholder="Ticket ID, keyword, text..."
+                        className="px-3.5 py-2.5 border border-custom rounded-lg text-base bg-card text-primary transition-all duration-200 hover:border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
+                      />
+                    </div>
+                  </div>
 
-                <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
-                  <label htmlFor="keywordFilter" className="text-sm font-semibold text-primary">
-                    Search:
-                  </label>
-                  <input
-                    type="text"
-                    id="keywordFilter"
-                    value={keywordFilter}
-                    onChange={(e) => setKeywordFilter(e.target.value)}
-                    placeholder="Ticket ID, keyword, text..."
-                    className="px-3.5 py-2.5 border border-custom rounded-lg text-base bg-card text-primary transition-all duration-200 hover:border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
-                  />
-                </div>
-              </div>
+                  <div className="flex flex-col gap-4 max-h-[600px] overflow-y-auto pr-1">
+                    {filteredSprintIssues.length > 0 ? (
+                      filteredSprintIssues.map((issue) => (
+                        <IssueCard
+                          key={issue.key}
+                          issue={issue}
+                          jiraBaseUrl={data.jiraBaseUrl}
+                          instance={selectedInstance}
+                        />
+                      ))
+                    ) : (
+                      <p className="text-center text-secondary py-5">
+                        {data.recentIssues && data.recentIssues.length > 0
+                          ? 'No issues found matching the current filters.'
+                          : 'No issues found'}
+                      </p>
+                    )}
+                  </div>
 
-              <div className="flex flex-col gap-4 max-h-[600px] overflow-y-auto pr-1">
-                {filteredSprintIssues.length > 0 ? (
-                  filteredSprintIssues.map((issue) => (
-                    <IssueCard
-                      key={issue.key}
-                      issue={issue}
-                      jiraBaseUrl={data.jiraBaseUrl}
-                      instance={selectedInstance}
-                    />
-                  ))
-                ) : (
-                  <p className="text-center text-secondary py-5">
-                    {data.recentIssues && data.recentIssues.length > 0
-                      ? 'No issues found matching the current filters.'
-                      : 'No issues found'}
-                  </p>
-                )}
-              </div>
+                  {/* Footer with total count */}
+                  <div className="mt-4 pt-4 border-t border-custom">
+                    <div className="text-sm text-secondary text-center">
+                      Showing <span className="font-semibold text-primary">{filteredSprintIssues.length}</span> of <span className="font-semibold text-primary">{data.recentIssues?.length || 0}</span> ticket{(data.recentIssues?.length || 0) !== 1 ? 's' : ''}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
 
         {!loading && !data && !error && (
           <div className="text-center py-20 text-secondary">
-            <p className="text-lg">Select a project and click "Load Dashboard" to get started</p>
+            <p className="text-lg">Select a project and sprint to load the dashboard</p>
           </div>
         )}
 

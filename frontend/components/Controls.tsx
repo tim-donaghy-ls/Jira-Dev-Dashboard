@@ -5,7 +5,6 @@ import { JiraInstance, JiraProject, JiraSprint } from '@/types'
 import { fetchInstances, fetchProjects, fetchSprints } from '@/lib/api'
 
 interface ControlsProps {
-  onLoad: () => void
   selectedInstance: string
   setSelectedInstance: (value: string) => void
   selectedProject: string
@@ -15,7 +14,6 @@ interface ControlsProps {
 }
 
 export function Controls({
-  onLoad,
   selectedInstance,
   setSelectedInstance,
   selectedProject,
@@ -134,7 +132,7 @@ export function Controls({
 
   return (
     <div className="flex flex-wrap gap-4 items-end mb-8 p-5 bg-container shadow-card border border-custom rounded-lg">
-      <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
+      <div className="flex flex-col gap-1.5 min-w-[120px] flex-1 max-w-[240px]">
         <label htmlFor="instanceKey" className="text-sm font-semibold text-primary">
           JIRA Instance:
         </label>
@@ -153,7 +151,7 @@ export function Controls({
         </select>
       </div>
 
-      <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
+      <div className="flex flex-col gap-1.5 min-w-[120px] flex-1 max-w-[240px]">
         <label htmlFor="projectKey" className="text-sm font-semibold text-primary">
           Project:
         </label>
@@ -175,7 +173,7 @@ export function Controls({
         </select>
       </div>
 
-      <div className="flex flex-col gap-1.5 min-w-[200px] flex-1">
+      <div className="flex flex-col gap-1.5 min-w-[120px] flex-1 max-w-[240px]">
         <label htmlFor="sprintKey" className="text-sm font-semibold text-primary">
           Sprint:
         </label>
@@ -201,21 +199,6 @@ export function Controls({
         </select>
       </div>
 
-      <button
-        onClick={onLoad}
-        disabled={!selectedProject}
-        className="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold shadow-card transition-all duration-200 hover:shadow-card-hover hover:-translate-y-px disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Load Dashboard
-      </button>
-
-      <button
-        onClick={onLoad}
-        disabled={!selectedProject}
-        className="px-5 py-2.5 bg-container text-primary border border-custom rounded-lg text-sm font-semibold shadow-card transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-card-hover hover:-translate-y-px disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Refresh
-      </button>
     </div>
   )
 }

@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
 import { StatusBreakdown } from '@/types'
+import { ChartModal } from './ChartModal'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -11,6 +13,8 @@ interface StatusChartProps {
 }
 
 export function StatusChart({ data }: StatusChartProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const labels = Object.keys(data)
   const values = Object.values(data)
 
@@ -42,13 +46,32 @@ export function StatusChart({ data }: StatusChartProps) {
   }
 
   return (
-    <div className="bg-card shadow-card border border-custom rounded-lg p-4">
-      <h3 className="text-base font-semibold text-primary mb-4">
-        Status Distribution
-      </h3>
-      <div className="max-h-[300px]">
-        <Doughnut data={chartData} options={options} />
+    <>
+      <div className="bg-card shadow-card border border-custom rounded-lg p-4 transition-all duration-200 hover:shadow-lg">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-base font-semibold text-primary">
+            Status Distribution
+          </h3>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-6 h-6 flex items-center justify-center rounded text-sm text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            title="Expand Chart"
+          >
+            ⛶
+          </button>
+        </div>
+        <div className="max-h-[300px]">
+          <Doughnut data={chartData} options={options} />
+        </div>
       </div>
-    </div>
+
+      <ChartModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Status Distribution"
+      >
+        <Doughnut data={chartData} options={options} />
+      </ChartModal>
+    </>
   )
 }

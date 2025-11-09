@@ -166,7 +166,7 @@ describe('DashboardPage', () => {
 
     it('should show initial message when no data loaded', () => {
       render(<DashboardPage />);
-      expect(screen.getByText('Select a project and click "Load Dashboard" to get started')).toBeInTheDocument();
+      expect(screen.getByText('Select a project and sprint to load the dashboard')).toBeInTheDocument();
     });
   });
 
@@ -225,16 +225,15 @@ describe('DashboardPage', () => {
 
   describe('Loading Dashboard Data', () => {
     it('should require project selection before loading', async () => {
+      // Since we removed the Load button and added auto-load on selection,
+      // this test now verifies that the dashboard doesn't auto-load without selections
       render(<DashboardPage />);
 
-      const loadButton = screen.getByTestId('load-button');
-      fireEvent.click(loadButton);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('error-message')).toHaveTextContent('Please select a project');
-      });
+      // Wait a moment to ensure no auto-load happens
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(api.fetchDashboardData).not.toHaveBeenCalled();
+      expect(screen.getByText('Select a project and sprint to load the dashboard')).toBeInTheDocument();
     });
 
     it('should fetch dashboard data when all fields are filled', async () => {

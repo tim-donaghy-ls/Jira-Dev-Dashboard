@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.spec.ts',
-  testIgnore: '**/*.test.{ts,tsx}',
+  testIgnore: ['**/*.test.ts', '**/*.test.tsx', '**/node_modules/**'],
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -38,16 +38,16 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      testDir: './e2e',
-      testMatch: '**/*.spec.ts',
     },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  /* Note: E2E tests require the application to be running with authentication disabled.
+   *
+   * To run E2E tests:
+   * 1. From the project root: SKIP_AUTH=true bash start.sh
+   * 2. In another terminal: cd frontend && npx playwright test e2e
+   *
+   * The SKIP_AUTH environment variable must be set when starting the application server,
+   * not just when running Playwright tests.
+   */
 });

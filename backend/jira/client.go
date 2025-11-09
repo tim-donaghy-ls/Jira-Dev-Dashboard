@@ -132,13 +132,33 @@ func convertJiraIssue(jiraIssue JiraIssue) Issue {
 	// Parse dates
 	if created, err := time.Parse(time.RFC3339, jiraIssue.Fields.Created); err == nil {
 		issue.Created = created
+	} else {
+		// Try alternative format without timezone colon (e.g., -0400 instead of -04:00)
+		if created, err := time.Parse("2006-01-02T15:04:05.999-0700", jiraIssue.Fields.Created); err == nil {
+			issue.Created = created
+		} else {
+			log.Printf("Failed to parse created date for %s: %v (value: %s)", issue.Key, err, jiraIssue.Fields.Created)
+		}
 	}
+
 	if updated, err := time.Parse(time.RFC3339, jiraIssue.Fields.Updated); err == nil {
 		issue.Updated = updated
+	} else {
+		// Try alternative format without timezone colon
+		if updated, err := time.Parse("2006-01-02T15:04:05.999-0700", jiraIssue.Fields.Updated); err == nil {
+			issue.Updated = updated
+		} else {
+			log.Printf("Failed to parse updated date for %s: %v (value: %s)", issue.Key, err, jiraIssue.Fields.Updated)
+		}
 	}
 	if jiraIssue.Fields.Resolutiondate != nil {
 		if resolved, err := time.Parse(time.RFC3339, *jiraIssue.Fields.Resolutiondate); err == nil {
 			issue.Resolved = &resolved
+		} else {
+			// Try alternative format without timezone colon
+			if resolved, err := time.Parse("2006-01-02T15:04:05.999-0700", *jiraIssue.Fields.Resolutiondate); err == nil {
+				issue.Resolved = &resolved
+			}
 		}
 	}
 

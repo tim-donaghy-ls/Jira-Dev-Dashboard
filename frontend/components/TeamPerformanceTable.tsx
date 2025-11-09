@@ -18,7 +18,7 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
     }
     return false
   })
-  const [expandedDeveloper, setExpandedDeveloper] = useState<string | null>(null)
+  const [expandedDevelopers, setExpandedDevelopers] = useState<Set<string>>(new Set())
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const [tooltipData, setTooltipData] = useState<{
@@ -52,6 +52,7 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
       }
     }
   }, [isMenuOpen])
+
 
   // Calculate totals
   const totals = data.reduce(
@@ -238,11 +239,24 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
   })
 
   const handleRowClick = (developerName: string) => {
-    if (expandedDeveloper === developerName) {
-      setExpandedDeveloper(null)
-    } else {
-      setExpandedDeveloper(developerName)
-    }
+    setExpandedDevelopers(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(developerName)) {
+        newSet.delete(developerName)
+      } else {
+        newSet.add(developerName)
+      }
+      return newSet
+    })
+  }
+
+  const handleExpandAll = () => {
+    const allDevelopers = new Set(rankedDevelopers.map(({ stats }) => stats.name))
+    setExpandedDevelopers(allDevelopers)
+  }
+
+  const handleCollapseAll = () => {
+    setExpandedDevelopers(new Set())
   }
 
   const exportToExcel = () => {
@@ -266,12 +280,16 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
         'Assisted (Failed)',
         'Assisted (Unfailed)',
         'Test Coverage',
-        'Rating (Stars)'
+        'Rating (Stars)',
+        'Rating Justification'
       ]
     ]
 
     // Add each developer's data with their metrics (using ranked developers to maintain ranking order)
-    rankedDevelopers.forEach(({ stats, metrics, starRating }) => {
+    rankedDevelopers.forEach(({ stats, metrics, starRating, ratingBreakdown }) => {
+      // Format rating breakdown as a single cell with line breaks
+      const justification = ratingBreakdown.join('\n')
+
       combinedData.push([
         stats.name,
         stats.totalIssues,
@@ -285,7 +303,8 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
         metrics.ticketFails,
         metrics.ticketUnfailed,
         '-', // Test Coverage - No data yet
-        starRating
+        starRating,
+        justification
       ])
     })
 
@@ -298,7 +317,7 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
       totals.closedIssues,
       totals.totalStoryPoints.toFixed(1),
       avgDevTime,
-      '', '', '', '', '', '', '' // Empty cells for detailed metrics totals and rating
+      '', '', '', '', '', '', '', '' // Empty cells for detailed metrics totals, rating, and justification
     ])
 
     // Create worksheet
@@ -314,11 +333,26 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
     setIsMenuOpen(false)
   }
 
+
   return (
     <div className="bg-container shadow-card border border-custom rounded-lg p-5 mb-5">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold text-primary">Team Performance</h3>
         <div className="flex items-center gap-2">
+          {/* Toggle Expand/Collapse All Developers */}
+          <button
+            onClick={() => {
+              if (expandedDevelopers.size > 0) {
+                handleCollapseAll()
+              } else {
+                handleExpandAll()
+              }
+            }}
+            className="w-8 h-8 flex items-center justify-center rounded text-2xl font-bold text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            title={expandedDevelopers.size > 0 ? "Collapse All Developers" : "Expand All Developers"}
+          >
+            {expandedDevelopers.size > 0 ? '−' : '+'}
+          </button>
           {/* Export Menu */}
           <div className="relative" ref={menuRef}>
             <button
@@ -332,9 +366,9 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
               <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-custom rounded-lg shadow-lg z-10">
                 <button
                   onClick={exportToExcel}
-                  className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                  className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-lg"
                 >
-                  Export Metrics to Excel
+                  📥 Export Metrics to Excel
                 </button>
               </div>
             )}
@@ -384,7 +418,7 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
               </thead>
               <tbody>
                 {rankedDevelopers.map(({ stats, metrics, starRating, ratingPercentage, ratingBreakdown }) => {
-                  const isExpanded = expandedDeveloper === stats.name
+                  const isExpanded = expandedDevelopers.has(stats.name)
                   const expandedMetrics = isExpanded ? metrics : null
 
                   return (
@@ -395,18 +429,18 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
                           isExpanded ? 'bg-primary/10' : ''
                         }`}
                       >
-                        <td className="px-4 py-3 text-primary font-medium">{stats.name}</td>
-                        <td className="px-4 py-3 text-primary">{stats.totalIssues}</td>
-                        <td className="px-4 py-3 text-primary">{stats.openIssues}</td>
-                        <td className="px-4 py-3 text-primary">{stats.closedIssues}</td>
-                        <td className="px-4 py-3 text-primary">
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : 'font-medium'}`}>{stats.name}</td>
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : ''}`}>{stats.totalIssues}</td>
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : ''}`}>{stats.openIssues}</td>
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : ''}`}>{stats.closedIssues}</td>
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : ''}`}>
                           {stats.totalStoryPoints > 0 ? stats.totalStoryPoints.toFixed(0) : '-'}
                         </td>
-                        <td className="px-4 py-3 text-primary">
+                        <td className={`px-4 py-3 text-primary ${isExpanded ? 'font-bold' : ''}`}>
                           {stats.avgDevelopmentTimeDays > 0 ? stats.avgDevelopmentTimeDays.toFixed(1) : '-'}
                         </td>
                         <td
-                          className="px-4 py-3 text-primary relative"
+                          className={`px-4 py-3 text-primary relative ${isExpanded ? 'font-bold' : ''}`}
                         >
                           <span
                             className="cursor-help inline-block"
@@ -488,7 +522,6 @@ export function TeamPerformanceTable({ data, allIssues }: TeamPerformanceTablePr
                   <td className="px-4 py-3 text-primary">{totals.closedIssues}</td>
                   <td className="px-4 py-3 text-primary">{totals.totalStoryPoints.toFixed(0)}</td>
                   <td className="px-4 py-3 text-primary">{avgDevTime}</td>
-                  <td className="px-4 py-3 text-primary">{avgQATime}</td>
                   <td className="px-4 py-3 text-primary">-</td>
                 </tr>
               </tfoot>

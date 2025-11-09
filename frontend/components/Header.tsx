@@ -2,6 +2,7 @@
 
 import { ThemeToggle } from './ThemeToggle'
 import { ConnectionStatus } from './ConnectionStatus'
+import UserMenu from './UserMenu'
 import Image from 'next/image'
 
 interface HeaderProps {
@@ -18,7 +19,15 @@ export function Header({ connectionStatus, connectionMessage }: HeaderProps) {
           alt="Legal Sifter"
           width={150}
           height={26}
-          className="h-10 w-auto"
+          className="h-10 w-auto dark:hidden"
+          priority
+        />
+        <Image
+          src="/legalsifter-logo-wh-dark.png"
+          alt="Legal Sifter"
+          width={150}
+          height={26}
+          className="h-10 w-auto hidden dark:block"
           priority
         />
         <h1 className="text-[28px] font-bold text-primary tracking-tight">
@@ -26,6 +35,7 @@ export function Header({ connectionStatus, connectionMessage }: HeaderProps) {
         </h1>
       </div>
       <div className="flex items-center gap-5">
+        <UserMenu />
         <ThemeToggle />
         <ConnectionStatus status={connectionStatus} message={connectionMessage} />
       </div>

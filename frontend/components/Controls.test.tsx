@@ -34,13 +34,11 @@ const mockSprints = {
 }
 
 describe('Controls', () => {
-  const mockOnLoad = vi.fn()
   const mockSetSelectedInstance = vi.fn()
   const mockSetSelectedProject = vi.fn()
   const mockSetSelectedSprint = vi.fn()
 
   const defaultProps = {
-    onLoad: mockOnLoad,
     selectedInstance: '',
     setSelectedInstance: mockSetSelectedInstance,
     selectedProject: '',
@@ -67,8 +65,6 @@ describe('Controls', () => {
     expect(screen.getByLabelText('JIRA Instance:')).toBeInTheDocument()
     expect(screen.getByLabelText('Project:')).toBeInTheDocument()
     expect(screen.getByLabelText('Sprint:')).toBeInTheDocument()
-    expect(screen.getByText('Load Dashboard')).toBeInTheDocument()
-    expect(screen.getByText('Refresh')).toBeInTheDocument()
   })
 
   it('should load instances on mount', async () => {
@@ -268,38 +264,6 @@ describe('Controls', () => {
 
     const select = screen.getByLabelText('Sprint:')
     expect(select).toBeDisabled()
-  })
-
-  it('should disable Load Dashboard button when no project is selected', () => {
-    render(<Controls {...defaultProps} selectedProject="" />)
-
-    const button = screen.getByText('Load Dashboard')
-    expect(button).toBeDisabled()
-  })
-
-  it('should disable Refresh button when no project is selected', () => {
-    render(<Controls {...defaultProps} selectedProject="" />)
-
-    const button = screen.getByText('Refresh')
-    expect(button).toBeDisabled()
-  })
-
-  it('should call onLoad when Load Dashboard is clicked', async () => {
-    render(<Controls {...defaultProps} selectedProject="PROJ1" />)
-
-    const button = screen.getByText('Load Dashboard')
-    fireEvent.click(button)
-
-    expect(mockOnLoad).toHaveBeenCalled()
-  })
-
-  it('should call onLoad when Refresh is clicked', async () => {
-    render(<Controls {...defaultProps} selectedProject="PROJ1" />)
-
-    const button = screen.getByText('Refresh')
-    fireEvent.click(button)
-
-    expect(mockOnLoad).toHaveBeenCalled()
   })
 
   it('should save instance to localStorage when changed', async () => {
