@@ -105,7 +105,7 @@ func runBackendTests() TestSuiteResult {
 		Status:    "running",
 	}
 
-	// Run go test with JSON output and coverage
+	// Run go test with JSON output and coverage (already in backend directory)
 	cmd := exec.Command("go", "test", "./...", "-json", "-v", "-cover")
 	output, err := cmd.CombinedOutput()
 
