@@ -104,9 +104,13 @@ const tools: Anthropic.Tool[] = [
 
 // Tool execution functions
 async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+  // Use backend API URL - in production this should be configured properly
+  const apiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 
   try {
+    console.log(`[Tool Call] Executing ${toolName} with input:`, toolInput)
+    console.log(`[Tool Call] Using API URL: ${apiUrl}`)
+
     switch (toolName) {
       case 'search_jira_issues': {
         const { jql, instance } = toolInput
@@ -114,9 +118,17 @@ async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
           jql,
           ...(instance && { instance })
         })
-        const response = await fetch(`${apiUrl}/api/search?${params}`)
-        if (!response.ok) throw new Error(`JIRA API error: ${response.statusText}`)
-        return await response.json()
+        const url = `${apiUrl}/api/search?${params}`
+        console.log(`[Tool Call] Fetching: ${url}`)
+        const response = await fetch(url)
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error(`[Tool Call] JIRA API error: ${response.status} ${response.statusText}`, errorText)
+          throw new Error(`JIRA API error: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(`[Tool Call] JIRA search returned ${data.count || 0} issues`)
+        return data
       }
 
       case 'get_github_commits': {
@@ -126,9 +138,17 @@ async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
           ...(repo && { repo }),
           ...(author && { author })
         })
-        const response = await fetch(`${apiUrl}/api/github/commits?${params}`)
-        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
-        return await response.json()
+        const url = `${apiUrl}/api/github/commits?${params}`
+        console.log(`[Tool Call] Fetching: ${url}`)
+        const response = await fetch(url)
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error(`[Tool Call] GitHub API error: ${response.status} ${response.statusText}`, errorText)
+          throw new Error(`GitHub API error: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(`[Tool Call] GitHub commits returned ${data.commits?.length || 0} commits`)
+        return data
       }
 
       case 'get_github_pull_requests': {
@@ -138,9 +158,17 @@ async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
           state,
           ...(repo && { repo })
         })
-        const response = await fetch(`${apiUrl}/api/github/prs?${params}`)
-        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
-        return await response.json()
+        const url = `${apiUrl}/api/github/prs?${params}`
+        console.log(`[Tool Call] Fetching: ${url}`)
+        const response = await fetch(url)
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error(`[Tool Call] GitHub API error: ${response.status} ${response.statusText}`, errorText)
+          throw new Error(`GitHub API error: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(`[Tool Call] GitHub PRs returned ${data.prs?.length || 0} PRs`)
+        return data
       }
 
       case 'get_github_developer_stats': {
@@ -149,28 +177,47 @@ async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
           days: days.toString(),
           ...(repo && { repo })
         })
-        const response = await fetch(`${apiUrl}/api/github/stats?${params}`)
-        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
-        return await response.json()
+        const url = `${apiUrl}/api/github/stats?${params}`
+        console.log(`[Tool Call] Fetching: ${url}`)
+        const response = await fetch(url)
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error(`[Tool Call] GitHub API error: ${response.status} ${response.statusText}`, errorText)
+          throw new Error(`GitHub API error: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(`[Tool Call] GitHub stats returned data for ${Object.keys(data.developers || {}).length} developers`)
+        return data
       }
 
       case 'verify_aha_features': {
         const { jiraKeys } = toolInput
-        const response = await fetch(`${apiUrl}/api/aha/verify`, {
+        const url = `${apiUrl}/api/aha/verify`
+        console.log(`[Tool Call] Fetching: ${url}`)
+        const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ jiraKeys })
         })
-        if (!response.ok) throw new Error(`Aha API error: ${response.statusText}`)
-        return await response.json()
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error(`[Tool Call] Aha API error: ${response.status} ${response.statusText}`, errorText)
+          throw new Error(`Aha API error: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(`[Tool Call] Aha verification returned data for ${jiraKeys.length} keys`)
+        return data
       }
 
       default:
         throw new Error(`Unknown tool: ${toolName}`)
     }
   } catch (error) {
-    console.error(`Tool execution error for ${toolName}:`, error)
-    return { error: error instanceof Error ? error.message : 'Tool execution failed' }
+    console.error(`[Tool Call] Tool execution error for ${toolName}:`, error)
+    return {
+      error: error instanceof Error ? error.message : 'Tool execution failed',
+      details: error instanceof Error ? error.stack : undefined
+    }
   }
 }
 
@@ -218,19 +265,19 @@ CAPABILITIES:
 6. Generate code snippets and configuration files when specifically requested
 7. Export data in CSV, JSON, or other formats
 
-AVAILABLE TOOLS:
-- search_jira_issues: Query JIRA for specific tickets using JQL
-- get_github_commits: Fetch recent commits from GitHub repositories
-- get_github_pull_requests: Get PR information from GitHub
-- get_github_developer_stats: Get developer contribution statistics from GitHub
-- verify_aha_features: Check if JIRA tickets exist in Aha
+AVAILABLE TOOLS (You MUST use these when appropriate):
+- search_jira_issues: Query JIRA for specific tickets using JQL. Use for ANY query about JIRA tickets, bugs, features, or specific developers' work.
+- get_github_commits: Fetch recent commits from GitHub repositories. Use when asked about commits, code changes, or recent development activity.
+- get_github_pull_requests: Get PR information from GitHub. Use when asked about pull requests, code reviews, or merges.
+- get_github_developer_stats: Get developer contribution statistics from GitHub. Use when asked about developer productivity, commit counts, or code metrics.
+- verify_aha_features: Check if JIRA tickets exist in Aha. Use when asked about Aha integration or ticket verification.
 
-USE TOOLS WHEN:
-- User asks about specific tickets not in current dashboard view
-- User wants recent commits or PRs from GitHub
-- User asks about developer activity or contributions
-- User wants to verify Aha integration for tickets
-- You need fresh data beyond what's in the current dashboard context
+CRITICAL: You MUST use these tools when the user asks questions that require:
+- Searching for specific JIRA tickets (e.g., "find bugs", "show tickets for John", "high priority items")
+- GitHub activity (e.g., "recent commits", "pull requests", "developer stats")
+- Aha verification (e.g., "check Aha", "verify tickets")
+
+DO NOT say you "don't have access" to this information. USE THE TOOLS to fetch it!
 
 IMPORTANT FORMATTING RULES:
 - Write responses in clear, natural language without markdown formatting UNLESS specifically requested
