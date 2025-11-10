@@ -175,79 +175,209 @@ What would you like to know?`,
         URL.revokeObjectURL(url)
 
       } else if (type === 'excel') {
-        // Generate Excel spreadsheet
+        // Generate Excel spreadsheet with enhanced parsing
         const XLSX = await import('xlsx')
 
-        // Parse content into rows
+        // Parse content into rows - handle tab-separated data properly
         const lines = content.split('\n').filter(line => line.trim())
         const data: any[][] = []
+        const sheets: { [key: string]: any[][] } = {}
+        let currentSheet = 'Sprint Metrics'
 
         lines.forEach(line => {
           const trimmed = line.trim()
-          // Split by common separators
+
+          // Check for sheet markers
+          if (trimmed.startsWith('SHEET:')) {
+            currentSheet = trimmed.replace('SHEET:', '').trim()
+            if (!sheets[currentSheet]) {
+              sheets[currentSheet] = []
+            }
+            return
+          }
+
+          let rowData: any[] = []
+
+          // Priority 1: Tab-separated values (proper Excel format)
           if (trimmed.includes('\t')) {
-            data.push(trimmed.split('\t'))
-          } else if (trimmed.includes(':')) {
+            rowData = trimmed.split('\t').map(cell => {
+              // Try to convert numbers
+              const num = parseFloat(cell)
+              return !isNaN(num) && cell.trim() !== '' ? num : cell
+            })
+          }
+          // Priority 2: Pipe-separated values
+          else if (trimmed.includes('|')) {
+            rowData = trimmed.split('|').map(cell => {
+              const cleaned = cell.trim()
+              const num = parseFloat(cleaned)
+              return !isNaN(num) && cleaned !== '' ? num : cleaned
+            })
+          }
+          // Priority 3: Colon-separated key-value pairs
+          else if (trimmed.includes(':')) {
             const parts = trimmed.split(':')
-            data.push([parts[0].trim(), parts.slice(1).join(':').trim()])
-          } else if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
-            data.push([trimmed.substring(1).trim()])
+            rowData = [parts[0].trim(), parts.slice(1).join(':').trim()]
+          }
+          // Priority 4: Bullet points (single column)
+          else if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
+            rowData = [trimmed.substring(1).trim()]
+          }
+          // Default: Single cell
+          else {
+            rowData = [trimmed]
+          }
+
+          // Add to appropriate sheet
+          if (Object.keys(sheets).length > 0 && sheets[currentSheet]) {
+            sheets[currentSheet].push(rowData)
           } else {
-            data.push([trimmed])
+            data.push(rowData)
           }
         })
 
-        const ws = XLSX.utils.aoa_to_sheet(data)
+        // Create workbook
         const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, 'Sprint Metrics')
+
+        // If we have multiple sheets, add them all
+        if (Object.keys(sheets).length > 0) {
+          Object.entries(sheets).forEach(([sheetName, sheetData]) => {
+            if (sheetData.length > 0) {
+              const ws = XLSX.utils.aoa_to_sheet(sheetData)
+
+              // Auto-size columns
+              const colWidths = sheetData[0]?.map((_, colIndex) => {
+                const maxLength = Math.max(
+                  ...sheetData.map(row =>
+                    (row[colIndex]?.toString() || '').length
+                  )
+                )
+                return { wch: Math.min(Math.max(maxLength + 2, 10), 50) }
+              })
+              ws['!cols'] = colWidths
+
+              XLSX.utils.book_append_sheet(wb, ws, sheetName)
+            }
+          })
+        } else {
+          // Single sheet
+          const ws = XLSX.utils.aoa_to_sheet(data)
+
+          // Auto-size columns
+          if (data.length > 0) {
+            const colWidths = data[0]?.map((_, colIndex) => {
+              const maxLength = Math.max(
+                ...data.map(row =>
+                  (row[colIndex]?.toString() || '').length
+                )
+              )
+              return { wch: Math.min(Math.max(maxLength + 2, 10), 50) }
+            })
+            ws['!cols'] = colWidths
+          }
+
+          XLSX.utils.book_append_sheet(wb, ws, 'Sprint Metrics')
+        }
 
         XLSX.writeFile(wb, `Sprint_Metrics_${timestamp}.xlsx`)
 
       } else if (type === 'powerpoint') {
-        // Generate PowerPoint presentation
+        // Generate PowerPoint presentation with improved slide parsing
         const PptxGenJS = (await import('pptxgenjs')).default
         const pptx = new PptxGenJS()
 
-        // Parse content into slides
-        const sections = content.split('\n\n').filter(section => section.trim())
+        // Split content into slides - looking for double line breaks as slide separators
+        const slideContents: string[] = []
+        const lines = content.split('\n')
+        let currentSlide = ''
+        let consecutiveEmptyLines = 0
 
-        sections.forEach((section, index) => {
+        lines.forEach((line, index) => {
+          if (line.trim() === '') {
+            consecutiveEmptyLines++
+          } else {
+            // If we had 2+ empty lines, start a new slide
+            if (consecutiveEmptyLines >= 2 && currentSlide.trim()) {
+              slideContents.push(currentSlide.trim())
+              currentSlide = ''
+            }
+            consecutiveEmptyLines = 0
+            currentSlide += (currentSlide ? '\n' : '') + line
+          }
+
+          // Add last slide if we're at the end
+          if (index === lines.length - 1 && currentSlide.trim()) {
+            slideContents.push(currentSlide.trim())
+          }
+        })
+
+        // If no proper slide breaks found, fall back to splitting by double newlines
+        if (slideContents.length === 0) {
+          slideContents.push(...content.split('\n\n').filter(s => s.trim()))
+        }
+
+        slideContents.forEach((slideContent, index) => {
           const slide = pptx.addSlide()
-          const lines = section.split('\n').filter(line => line.trim())
+          const slideLines = slideContent.split('\n').filter(line => line.trim())
 
-          if (lines.length > 0) {
-            const title = lines[0].trim()
+          if (slideLines.length > 0) {
+            // First line is the title
+            const title = slideLines[0].trim().replace(/^[•\-]\s*/, '')
             slide.addText(title, {
               x: 0.5,
               y: 0.5,
               w: 9,
               h: 1,
-              fontSize: 24,
+              fontSize: 28,
               bold: true,
               color: '363636'
             })
 
-            // Add remaining lines as bullet points
-            if (lines.length > 1) {
-              const bullets = lines.slice(1).map(line => {
+            // Remaining lines are bullet points
+            if (slideLines.length > 1) {
+              const bullets = slideLines.slice(1).map(line => {
                 const trimmed = line.trim()
+                // Remove bullet markers and numbering
+                const cleanText = trimmed.replace(/^[•\-\*]\s*/, '').replace(/^\d+\.\s*/, '')
                 return {
-                  text: trimmed.replace(/^[•\-]\s*/, ''),
+                  text: cleanText,
                   options: { bullet: true }
                 }
               })
+
+              // Calculate height based on number of bullets
+              const bulletHeight = Math.min(bullets.length * 0.6 + 0.5, 4.5)
 
               slide.addText(bullets, {
                 x: 0.5,
                 y: 2,
                 w: 9,
-                h: 4,
-                fontSize: 14,
-                color: '363636'
+                h: bulletHeight,
+                fontSize: 16,
+                color: '363636',
+                valign: 'top'
               })
             }
           }
         })
+
+        // Add a title slide if there are multiple slides
+        if (slideContents.length > 1) {
+          const titleSlide = pptx.addSlide({ masterName: 'TITLE_SLIDE' })
+          titleSlide.addText('Sprint Report', {
+            x: 1,
+            y: 2.5,
+            w: 8,
+            h: 1.5,
+            fontSize: 44,
+            bold: true,
+            color: '363636',
+            align: 'center'
+          })
+
+          // Move title slide to beginning
+          pptx.slides.unshift(pptx.slides.pop()!)
+        }
 
         await pptx.writeFile({ fileName: `Sprint_Presentation_${timestamp}.pptx` })
       }

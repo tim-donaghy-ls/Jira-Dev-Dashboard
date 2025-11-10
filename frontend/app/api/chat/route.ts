@@ -64,11 +64,73 @@ RESPONSE STYLE:
 - Highlight key metrics and numbers
 - Avoid technical jargon unless necessary
 
+==============================================
+CRITICAL DOCUMENT GENERATION INSTRUCTIONS:
+==============================================
+
+WHEN GENERATING WORD DOCUMENTS:
+- If user specifies "1 page", ensure ALL content fits on a SINGLE page by being concise
+- Use clear section headings followed by colon (e.g., "Executive Summary:")
+- Use bullet points (- or •) for lists
+- Keep paragraphs short and focused (2-4 sentences max)
+- Organize content with proper hierarchy: Main headings → Subheadings → Bullet points
+- Example structure for 1-page report:
+  Sprint Summary: [2-3 sentences]
+  Key Metrics:
+  - Metric 1: [value and brief context]
+  - Metric 2: [value and brief context]
+  Team Performance:
+  - Developer 1: [brief stats]
+  - Developer 2: [brief stats]
+
+WHEN GENERATING EXCEL SPREADSHEETS:
+- ALWAYS structure as proper table with column headers in the first row
+- Use tab characters (\t) to separate columns clearly
+- First line MUST be column headers (e.g., "Developer\tTickets Completed\tStory Points\tCompletion Rate")
+- Each subsequent line is a data row with values aligned to columns
+- Keep data organized and aligned - each row should have the same number of columns
+- Use consistent formatting (e.g., percentages with %, numbers with 1 decimal)
+- Example structure:
+  Metric\tValue\tTarget\tStatus
+  Tickets Completed\t45\t50\t90%
+  Story Points\t123.5\t140\t88%
+- For multi-sheet requests, clearly separate with "SHEET: [Name]" markers
+
+WHEN GENERATING POWERPOINT PRESENTATIONS:
+- CRITICAL: Each slide MUST be separated by a blank line followed by another blank line
+- First line of each slide is the slide title (clear and concise)
+- Following lines are bullet points for that slide content
+- Limit to 4-6 bullet points per slide for readability
+- Keep bullet points concise (1 line each, max 10-12 words)
+- Use numbers (1., 2., 3.) for sequential steps, bullets (- or •) for lists
+- Example structure:
+
+  Sprint Overview
+  - Total tickets: 45 completed out of 50
+  - Story points: 123.5 delivered
+  - Team completion rate: 90%
+  - Average development time: 3.2 days
+
+  Top Performers
+  - John Smith: 15 tickets, 45 points
+  - Jane Doe: 12 tickets, 38 points
+  - Mike Johnson: 10 tickets, 30 points
+
+WHEN USER SAYS "1 PAGE" OR "SINGLE PAGE":
+- This means ALL content must be consolidated and fit on ONE page
+- Be extremely concise and selective with information
+- Prioritize the most important metrics and insights
+- Use abbreviated formats and compact layouts
+- Remove any unnecessary explanatory text
+- For Word: Use tight spacing, combine related items, limit to essential information
+- For PowerPoint: Create exactly 1 slide with the most critical points only
+- For Excel: Keep to essential columns and top 10-15 rows maximum
+
 ${context}
 
 User Question: ${query}
 
-Answer based on the dashboard data above. Be specific, cite numbers when relevant. Use natural language formatting. Only use markdown code blocks if the user specifically requests code or technical content. For document generation requests, use the special markers and provide structured content.`
+Answer based on the dashboard data above. Be specific, cite numbers when relevant. Use natural language formatting. Only use markdown code blocks if the user specifically requests code or technical content. For document generation requests, use the special markers and provide structured content following the CRITICAL DOCUMENT GENERATION INSTRUCTIONS above.`
 
     // Call Claude API
     const message = await anthropic.messages.create({
