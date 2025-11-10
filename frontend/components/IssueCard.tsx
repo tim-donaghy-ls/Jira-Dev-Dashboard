@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { JiraIssue, StatusHistory } from '@/types'
 import { fetchIssueDetails } from '@/lib/api'
+import AhaVerificationBadge from './AhaVerificationBadge'
 
 interface IssueCardProps {
   issue: JiraIssue
@@ -105,6 +106,11 @@ export function IssueCard({ issue, jiraBaseUrl, instance }: IssueCardProps) {
             ⏱️ To Do → QA: {issue.developmentTimeDays.toFixed(1)} days
           </span>
         )}
+        {/* Aha Verification Badge */}
+        <AhaVerificationBadge
+          jiraKey={issue.key}
+          apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}
+        />
         <span className="ml-auto text-xs text-secondary">
           {isExpanded ? 'Click to collapse' : 'Click to expand'}
         </span>

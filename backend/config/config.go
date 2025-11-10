@@ -21,10 +21,17 @@ type GitHubConfig struct {
 	Repos []string `json:"repos"` // Support multiple repositories
 }
 
+// AhaConfig represents Aha product management configuration
+type AhaConfig struct {
+	APIKey string `json:"apiKey"`
+	Domain string `json:"domain"`
+}
+
 // Config holds the application configuration
 type Config struct {
 	Instances  map[string]*JiraInstance
 	GitHub     *GitHubConfig
+	Aha        *AhaConfig
 	ServerPort string
 }
 
@@ -54,6 +61,17 @@ func LoadConfig() (*Config, error) {
 			Token: githubToken,
 			Owner: githubOwner,
 			Repos: repos,
+		}
+	}
+
+	// Load Aha configuration
+	ahaAPIKey := getEnv("AHA_API_KEY", "")
+	ahaDomain := getEnv("AHA_DOMAIN", "")
+
+	if ahaAPIKey != "" && ahaDomain != "" {
+		config.Aha = &AhaConfig{
+			APIKey: ahaAPIKey,
+			Domain: ahaDomain,
 		}
 	}
 

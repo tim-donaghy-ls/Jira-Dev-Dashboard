@@ -34,26 +34,50 @@ Priority: ${ticket.priority || 'N/A'}
 ${ticket.description ? `Description: ${ticket.description.substring(0, 500)}${ticket.description.length > 500 ? '...' : ''}` : ''}`
     }).join('\n\n---\n\n')
 
-    const prompt = `You are a technical writer creating release notes for a software sprint. Below are the JIRA tickets from ${sprintName || 'this sprint'}. Analyze these tickets and create professional release notes with the following sections:
+    const prompt = `You are a technical writer creating release notes for a software sprint. Below are the JIRA tickets from ${sprintName || 'this sprint'}.
 
-1. **New Features**: Major new functionality added
-2. **Improvements & Enhancements**: Updates to existing features
-3. **Bug Fixes**: Issues that were resolved
+Create professional, concise release notes formatted for email communication with the following structure:
 
-For each section:
-- Group related items together
-- Use clear, non-technical language where possible
-- Focus on user impact rather than technical details
-- Be concise but informative
+**Subject Line:** Release Notes - ${sprintName || 'Sprint'} - [Current Date]
 
-Here are the tickets:
+**Email Body:**
+
+Dear Team,
+
+We're pleased to share the release notes for ${sprintName || 'this sprint'}. Here's what we've delivered:
+
+## New Features
+[Summarize the major new functionality added. DO NOT include JIRA ticket keys. Group related items together and write concise bullet points (1 sentence each) that focus on user value and business impact. Use clear, non-technical language.]
+
+## Improvements & Enhancements
+[Summarize updates to existing features. DO NOT include JIRA ticket keys. Group related improvements together and highlight user benefits in concise bullet points.]
+
+## Bug Fixes
+[Summarize issues that were resolved. DO NOT include JIRA ticket keys. Group similar fixes together and keep descriptions brief and non-technical.]
+
+## Summary
+[Provide a brief closing paragraph (2-3 sentences) highlighting the sprint's key accomplishments and overall impact.]
+
+Best regards,
+[Your Team Name]
+
+---
+
+IMPORTANT INSTRUCTIONS:
+- DO NOT include any JIRA ticket keys (like "PROJ-123") in the output
+- Create concise, summarized bullet points that group similar items together
+- Focus on the "what" and "why" from a user perspective
+- Keep each bullet point to 1 sentence
+- Make the content professional and ready to send via email
+
+Here are the tickets to analyze and summarize:
 
 ${ticketSummaries}
 
-Please generate the release notes now in markdown format.`
+Please generate the release notes now following the format above.`
 
     const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-sonnet-4-5-20250929',
       max_tokens: 4096,
       messages: [
         {

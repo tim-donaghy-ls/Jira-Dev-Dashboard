@@ -117,14 +117,6 @@ func (a *Analyzer) calculateSummary() SummaryStats {
 		"Resolved":            true,
 	}
 
-	// Define eligible statuses for AVG Dev Time calculation
-	eligibleClosedStatuses := map[string]bool{
-		"Schedule Release":   true,
-		"Scheduled Release":  true,
-		"Production Release": true,
-		"Done":               true,
-	}
-
 	for _, issue := range a.issues {
 		// Sum up total story points
 		stats.TotalStoryPoints += issue.StoryPoints
@@ -147,38 +139,11 @@ func (a *Analyzer) calculateSummary() SummaryStats {
 			stats.ClosedStoryPoints += issue.StoryPoints
 		}
 
-		// Calculate AVG Dev Time: Time from "In Progress" to "QA Review"
-		// Only for tickets in "Scheduled Release", "Production Release", or "Done"
-		if eligibleClosedStatuses[issue.Status] && len(issue.StatusHistory) > 0 {
-			var inProgressTime *time.Time
-			var qaReviewTime *time.Time
-
-			// Find first "In Progress" timestamp
-			for i := 0; i < len(issue.StatusHistory); i++ {
-				history := issue.StatusHistory[i]
-				if history.Status == "In Progress" && inProgressTime == nil {
-					inProgressTime = &history.Timestamp
-					break
-				}
-			}
-
-			// Find first "QA Review" timestamp (after In Progress)
-			if inProgressTime != nil {
-				for i := 0; i < len(issue.StatusHistory); i++ {
-					history := issue.StatusHistory[i]
-					if history.Status == "QA Review" && history.Timestamp.After(*inProgressTime) {
-						qaReviewTime = &history.Timestamp
-						break
-					}
-				}
-			}
-
-			// Calculate duration from "In Progress" to "QA Review"
-			if inProgressTime != nil && qaReviewTime != nil {
-				duration := qaReviewTime.Sub(*inProgressTime)
-				totalResolutionDays += duration.Hours() / 24
-				resolutionCount++
-			}
+		// Calculate AVG Dev Time using the same calculation as in handlers
+		// This is the time from "To Do" to "Code Review" or "QA Review"
+		if issue.DevelopmentTimeDays > 0 {
+			totalResolutionDays += issue.DevelopmentTimeDays
+			resolutionCount++
 		}
 	}
 

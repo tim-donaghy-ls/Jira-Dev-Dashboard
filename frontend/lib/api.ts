@@ -80,3 +80,10 @@ export async function fetchGitHubDeveloperActivity(
   const url = `/api/github/developer-activity?start=${encodeURIComponent(startDate)}&end=${encodeURIComponent(endDate)}`
   return fetchAPI(url)
 }
+
+export async function testAhaConnection(): Promise<{
+  success: boolean
+  message?: string
+}> {
+  return fetchAPI('/api/aha/test-connection')
+}

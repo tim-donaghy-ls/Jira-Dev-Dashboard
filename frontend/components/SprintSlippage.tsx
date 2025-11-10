@@ -1,12 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { JiraIssue } from '@/types'
+import { JiraIssue, SprintInfo } from '@/types'
 
 interface SprintSlippageProps {
   allIssues: JiraIssue[]
   jiraBaseUrl: string
   currentSprintName?: string
+  sprintInfo?: SprintInfo
 }
 
 interface SlippedTicket {
@@ -27,7 +28,7 @@ interface SprintSlippageStats {
   slippedTickets: SlippedTicket[]
 }
 
-export function SprintSlippage({ allIssues, jiraBaseUrl, currentSprintName }: SprintSlippageProps) {
+export function SprintSlippage({ allIssues, jiraBaseUrl, currentSprintName, sprintInfo }: SprintSlippageProps) {
   const [isCollapsed, setIsCollapsed] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('jira_dashboard_slippage_collapsed')
@@ -39,6 +40,30 @@ export function SprintSlippage({ allIssues, jiraBaseUrl, currentSprintName }: Sp
   useEffect(() => {
     localStorage.setItem('jira_dashboard_slippage_collapsed', isCollapsed.toString())
   }, [isCollapsed])
+
+  // Calculate days remaining until end of sprint
+  const calculateDaysRemaining = (): { days: number; isUrgent: boolean } | null => {
+    if (!sprintInfo?.endDate) {
+      return null
+    }
+
+    const endDate = new Date(sprintInfo.endDate)
+    const now = new Date()
+
+    // Reset time to start of day for accurate day calculation
+    endDate.setHours(0, 0, 0, 0)
+    now.setHours(0, 0, 0, 0)
+
+    const diffTime = endDate.getTime() - now.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    return {
+      days: diffDays,
+      isUrgent: diffDays <= 3 && diffDays >= 0
+    }
+  }
+
+  const daysRemaining = calculateDaysRemaining()
 
   // Calculate sprint slippage based on committed vs completed story points
   // Sprint Slippage % = (Story Points Not Completed / Story Points Committed) × 100
@@ -161,7 +186,7 @@ export function SprintSlippage({ allIssues, jiraBaseUrl, currentSprintName }: Sp
   return (
     <div className="bg-container shadow-card border border-custom rounded-lg p-5 mb-5">
       <div className="flex justify-between items-center mb-4">
-        <div>
+        <div className="flex-1">
           <h3 className="text-xl font-bold text-primary">Sprint Slippage</h3>
           <p className="text-sm text-secondary mt-1">
             Tickets in progress but not completed ({currentSprintName || 'Current Sprint'})
@@ -169,12 +194,48 @@ export function SprintSlippage({ allIssues, jiraBaseUrl, currentSprintName }: Sp
         </div>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="w-8 h-8 flex items-center justify-center rounded text-2xl font-bold text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded text-2xl font-bold text-secondary hover:bg-black/5 dark:hover:bg-white/10 transition-colors ml-4"
           title="Collapse/Expand"
         >
           {isCollapsed ? '+' : '−'}
         </button>
       </div>
+
+      {/* Days Remaining Warning */}
+      {daysRemaining !== null && daysRemaining.isUrgent && daysRemaining.days >= 0 && (
+        <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-4 mb-4 rounded">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-800 dark:text-red-200">
+                <strong>ONLY {daysRemaining.days} day{daysRemaining.days !== 1 ? 's' : ''} remaining</strong> in the current sprint. Review slipped tickets and prioritize completion.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Non-urgent days remaining info */}
+      {daysRemaining !== null && !daysRemaining.isUrgent && daysRemaining.days >= 0 && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 p-3 mb-4 rounded">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-blue-800 dark:text-blue-200">
+                <strong>{daysRemaining.days} day{daysRemaining.days !== 1 ? 's' : ''} remaining</strong> until the end of the current sprint.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!isCollapsed && (
         <>

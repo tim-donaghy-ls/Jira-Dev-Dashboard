@@ -63,6 +63,7 @@ func TestCalculateSummary_AvgResolutionDays(t *testing.T) {
 				{Status: "In Progress", Timestamp: baseTime},
 				{Status: "QA Review", Timestamp: baseTime.Add(48 * time.Hour)}, // 2 days
 			},
+			DevelopmentTimeDays: 2.0, // Set the development time that the analyzer uses
 		},
 		{
 			Key:    "TEST-2",
@@ -71,6 +72,7 @@ func TestCalculateSummary_AvgResolutionDays(t *testing.T) {
 				{Status: "In Progress", Timestamp: baseTime},
 				{Status: "QA Review", Timestamp: baseTime.Add(96 * time.Hour)}, // 4 days
 			},
+			DevelopmentTimeDays: 4.0, // Set the development time that the analyzer uses
 		},
 	}
 

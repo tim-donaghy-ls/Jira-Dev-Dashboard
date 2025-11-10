@@ -50,10 +50,12 @@ export function SummaryCards({ data, jiraBaseUrl, sprintId, projectKey }: Summar
       <Card
         title="AVG Dev Time (Tickets)"
         value={`${data.avgResolutionDays.toFixed(1)} days`}
+        href={buildJqlUrl('closed')}
       />
       <Card
         title="Total Story Points"
         value={data.totalStoryPoints.toFixed(1)}
+        href={buildJqlUrl()}
       />
     </div>
   )

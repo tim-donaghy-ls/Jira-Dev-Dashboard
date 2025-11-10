@@ -16,6 +16,8 @@ interface ControlsProps {
   jiraConnectionMessage: string
   githubConnectionStatus: 'checking' | 'connected' | 'error'
   githubConnectionMessage: string
+  ahaConnectionStatus: 'checking' | 'connected' | 'error'
+  ahaConnectionMessage: string
 }
 
 export function Controls({
@@ -29,6 +31,8 @@ export function Controls({
   jiraConnectionMessage,
   githubConnectionStatus,
   githubConnectionMessage,
+  ahaConnectionStatus,
+  ahaConnectionMessage,
 }: ControlsProps) {
   const [instances, setInstances] = useState<JiraInstance[]>([])
   const [projects, setProjects] = useState<JiraProject[]>([])
@@ -212,6 +216,7 @@ export function Controls({
       <div className="flex items-center gap-4 ml-auto">
         <ConnectionStatus status={jiraConnectionStatus} message={jiraConnectionMessage} />
         <ConnectionStatus status={githubConnectionStatus} message={githubConnectionMessage} />
+        <ConnectionStatus status={ahaConnectionStatus} message={ahaConnectionMessage} />
       </div>
     </div>
   )

@@ -78,6 +78,10 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/github/commits", h.handleGitHubCommits)
 	mux.HandleFunc("/api/github/developer-activity", h.handleGitHubDeveloperActivity)
 
+	// Aha API routes
+	mux.HandleFunc("/api/aha/verify", h.VerifyAhaFeaturesHandler)
+	mux.HandleFunc("/api/aha/test-connection", h.TestAhaConnectionHandler)
+
 	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))
 	mux.Handle("/", fs)

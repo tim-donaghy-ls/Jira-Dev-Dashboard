@@ -14,8 +14,11 @@ import { SprintSlippage } from '@/components/SprintSlippage'
 import { IssueCard } from '@/components/IssueCard'
 import { StoryPointsWarning } from '@/components/StoryPointsWarning'
 import { UnassignedTicketsWarning } from '@/components/UnassignedTicketsWarning'
+import { AhaWarning } from '@/components/AhaWarning'
+import { ChatDrawer } from '@/components/ChatDrawer'
+import ReleaseNotesModal from '@/components/ReleaseNotesModal'
 import { DashboardData, AssigneeStats, GitHubActivity } from '@/types'
-import { fetchDashboardData, testConnection, testGitHubConnection, fetchGitHubDeveloperActivity } from '@/lib/api'
+import { fetchDashboardData, testConnection, testGitHubConnection, testAhaConnection, fetchGitHubDeveloperActivity } from '@/lib/api'
 import * as XLSX from 'xlsx'
 
 export default function DashboardPage() {
@@ -32,6 +35,8 @@ export default function DashboardPage() {
   const [jiraConnectionMessage, setJiraConnectionMessage] = useState('Checking connection...')
   const [githubConnectionStatus, setGithubConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
   const [githubConnectionMessage, setGithubConnectionMessage] = useState('Checking connection...')
+  const [ahaConnectionStatus, setAhaConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
+  const [ahaConnectionMessage, setAhaConnectionMessage] = useState('Checking connection...')
 
   // Sprint Tickets filters
   const [developerFilter, setDeveloperFilter] = useState('all')
@@ -45,6 +50,28 @@ export default function DashboardPage() {
     }
     return false
   })
+
+  // Release Notes Modal
+  const [showReleaseNotesModal, setShowReleaseNotesModal] = useState(false)
+  const [releaseNotes, setReleaseNotes] = useState('')
+  const [releaseNotesSprintName, setReleaseNotesSprintName] = useState('')
+  const [generatingReleaseNotes, setGeneratingReleaseNotes] = useState(false)
+
+  // Chat Drawer
+  const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false)
+
+  // Keyboard shortcut for Dashboard Assistant (Cmd+K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsChatDrawerOpen(prev => !prev)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   // Check JIRA connection when instance changes
   useEffect(() => {
@@ -112,6 +139,30 @@ export default function DashboardPage() {
     }
 
     checkGithubConnection()
+  }, [])
+
+  // Check Aha connection on mount
+  useEffect(() => {
+    async function checkAhaConnection() {
+      setAhaConnectionStatus('checking')
+      setAhaConnectionMessage('Checking Aha...')
+
+      try {
+        const result = await testAhaConnection()
+        if (result.success) {
+          setAhaConnectionStatus('connected')
+          setAhaConnectionMessage('Connected to Aha')
+        } else {
+          setAhaConnectionStatus('error')
+          setAhaConnectionMessage('Aha Not Configured')
+        }
+      } catch (err) {
+        setAhaConnectionStatus('error')
+        setAhaConnectionMessage('Aha Not Configured')
+      }
+    }
+
+    checkAhaConnection()
   }, [])
 
   const loadDashboard = async () => {
@@ -295,7 +346,7 @@ export default function DashboardPage() {
         issue.priority || '',
         issue.issueType || '',
         issue.assignee || 'Unassigned',
-        issue.storyPoints || 0,
+        issue.storyPoints?.toString() || '0',
         issue.created ? new Date(issue.created).toLocaleDateString() : '',
         issue.updated ? new Date(issue.updated).toLocaleDateString() : '',
         issue.description || ''
@@ -324,9 +375,7 @@ export default function DashboardPage() {
     }
 
     setIsSprintMenuOpen(false)
-
-    // Show loading indicator
-    const loadingAlert = alert('Generating release notes with Claude AI...')
+    setGeneratingReleaseNotes(true)
 
     try {
       const response = await fetch('/api/generate-release-notes', {
@@ -352,35 +401,25 @@ export default function DashboardPage() {
         throw new Error(error.error || 'Failed to generate release notes')
       }
 
-      const { releaseNotes } = await response.json()
+      const { releaseNotes: notes } = await response.json()
 
-      // Create a text file with the release notes
-      const timestamp = new Date().toISOString().split('T')[0]
-      const sprintName = data?.sprintInfo?.name ? `_${data.sprintInfo.name.replace(/[^a-zA-Z0-9]/g, '_')}` : ''
-      const filename = `Release_Notes${sprintName}_${timestamp}.md`
-
-      // Create blob and download
-      const blob = new Blob([releaseNotes], { type: 'text/markdown' })
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
-
-      alert('Release notes generated successfully!')
+      // Show modal with release notes
+      setReleaseNotes(notes)
+      setReleaseNotesSprintName(data?.sprintInfo?.name || 'Current Sprint')
+      setShowReleaseNotesModal(true)
     } catch (error) {
       console.error('Error generating release notes:', error)
       alert(`Failed to generate release notes: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    } finally {
+      setGeneratingReleaseNotes(false)
     }
   }
+
 
   return (
     <div className="min-h-screen">
       <div className="max-w-[1440px] mx-auto p-5">
-        <Header />
+        <Header onOpenChat={() => setIsChatDrawerOpen(true)} />
 
         <Controls
           selectedInstance={selectedInstance}
@@ -393,6 +432,8 @@ export default function DashboardPage() {
           jiraConnectionMessage={jiraConnectionMessage}
           githubConnectionStatus={githubConnectionStatus}
           githubConnectionMessage={githubConnectionMessage}
+          ahaConnectionStatus={ahaConnectionStatus}
+          ahaConnectionMessage={ahaConnectionMessage}
         />
 
         {error && <ErrorMessage message={error} />}
@@ -411,6 +452,13 @@ export default function DashboardPage() {
             <UnassignedTicketsWarning
               issues={data.allIssues || []}
               jiraBaseUrl={data.jiraBaseUrl}
+            />
+
+            {/* Aha Warning */}
+            <AhaWarning
+              issues={data.allIssues || []}
+              jiraBaseUrl={data.jiraBaseUrl}
+              apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}
             />
 
             {/* Sprint Info */}
@@ -470,6 +518,7 @@ export default function DashboardPage() {
               allIssues={data.allIssues}
               jiraBaseUrl={data.jiraBaseUrl}
               currentSprintName={data.sprintInfo?.name}
+              sprintInfo={data.sprintInfo}
             />
 
             {/* Sprint Tickets */}
@@ -496,9 +545,16 @@ export default function DashboardPage() {
                         </button>
                         <button
                           onClick={generateReleaseNotes}
-                          className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors last:rounded-b-lg"
+                          disabled={generatingReleaseNotes}
+                          className="w-full text-left px-4 py-3 text-sm text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors last:rounded-b-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
-                          Create Release Notes
+                          {generatingReleaseNotes && (
+                            <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                          )}
+                          {generatingReleaseNotes ? 'Creating...' : 'Create Release Notes'}
                         </button>
                       </div>
                     )}
@@ -599,6 +655,38 @@ export default function DashboardPage() {
           </div>
         </footer>
       </div>
+
+      {/* Release Notes Modal */}
+      <ReleaseNotesModal
+        isOpen={showReleaseNotesModal}
+        onClose={() => setShowReleaseNotesModal(false)}
+        releaseNotes={releaseNotes}
+        sprintName={releaseNotesSprintName}
+      />
+
+      {/* Loading Overlay for Release Notes Generation */}
+      {generatingReleaseNotes && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-8 flex flex-col items-center gap-4">
+            <svg className="animate-spin h-12 w-12 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <div className="text-center">
+              <p className="text-lg font-semibold text-gray-900 dark:text-white">Creating Release Notes...</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">This may take a few moments</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Chat Drawer */}
+      <ChatDrawer
+        isOpen={isChatDrawerOpen}
+        onClose={() => setIsChatDrawerOpen(false)}
+        dashboardData={data}
+        isLoading={loading}
+      />
     </div>
   )
 }

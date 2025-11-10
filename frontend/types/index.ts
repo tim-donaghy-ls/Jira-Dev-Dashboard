@@ -99,3 +99,30 @@ export interface FilterOptions {
   project: string
   sprint?: string
 }
+
+export interface AhaVerification {
+  jiraKey: string
+  existsInAha: boolean
+  ahaReference?: string
+  ahaUrl?: string
+  ahaStatus?: string
+  error?: string
+}
+
+// Chat types
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  timestamp: Date
+}
+
+export interface ChatQueryRequest {
+  query: string
+  dashboardData: DashboardData
+}
+
+export interface ChatQueryResponse {
+  answer: string
+  error?: string
+}

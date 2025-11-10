@@ -70,7 +70,7 @@ describe('SummaryCards', () => {
     )
 
     const links = screen.getAllByRole('link')
-    expect(links.length).toBe(3) // Total, Open, Closed
+    expect(links.length).toBe(5) // Total, Open, Closed, AVG Dev Time, Total Story Points
   })
 
   it('should build correct JQL URLs for cards', () => {

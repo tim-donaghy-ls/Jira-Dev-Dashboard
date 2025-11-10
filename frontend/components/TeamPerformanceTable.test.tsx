@@ -332,10 +332,12 @@ describe('TeamPerformanceTable', () => {
       const johnRow = screen.getByText('John Doe').closest('tr')!
       fireEvent.click(johnRow)
 
+      // The component now shows default values (0, -) for unavailable GitHub metrics
+      expect(screen.getByText('Commits in Sprint')).toBeInTheDocument()
+      expect(screen.getByText('PRs in Sprint')).toBeInTheDocument()
+      expect(screen.getByText('Test File Coverage in Sprint')).toBeInTheDocument()
+      // Verify that metrics without data show '-' or '0'
       expect(screen.getAllByText('-').length).toBeGreaterThan(0)
-      expect(screen.getByText('Check-ins in Sprint (No Data Yet)')).toBeInTheDocument()
-      expect(screen.getByText('PRs in Sprint (No Data Yet)')).toBeInTheDocument()
-      expect(screen.getByText('Coverage in Sprint (No Data Yet)')).toBeInTheDocument()
     })
 
     it('should collapse expanded row when clicked again', () => {

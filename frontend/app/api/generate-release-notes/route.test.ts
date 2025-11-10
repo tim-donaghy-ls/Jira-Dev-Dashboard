@@ -137,7 +137,7 @@ describe('Generate Release Notes API Route', () => {
       expect(response.status).toBe(200);
       expect(data.releaseNotes).toBe(mockReleaseNotes);
       expect(mockAnthropicInstance.messages.create).toHaveBeenCalledWith({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-sonnet-4-5-20250929',
         max_tokens: 4096,
         messages: [
           {
@@ -445,7 +445,7 @@ describe('Generate Release Notes API Route', () => {
 
       expect(mockAnthropicInstance.messages.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          model: 'claude-3-5-sonnet-20241022',
+          model: 'claude-sonnet-4-5-20250929',
         })
       );
     });

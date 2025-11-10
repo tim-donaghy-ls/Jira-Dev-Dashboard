@@ -5,7 +5,8 @@ import type { NextRequest } from 'next/server'
 // Middleware function that checks for SKIP_AUTH environment variable
 export default function middleware(req: NextRequest) {
   // Skip authentication for E2E tests
-  if (process.env.SKIP_AUTH === 'true') {
+  // Check both SKIP_AUTH (server-side) and NEXT_PUBLIC_SKIP_AUTH (client-side/middleware)
+  if (process.env.SKIP_AUTH === 'true' || process.env.NEXT_PUBLIC_SKIP_AUTH === 'true') {
     return NextResponse.next()
   }
 

@@ -56,21 +56,31 @@ export function TeamPerformanceTable({ data, allIssues, githubLoading = false }:
 
 
   // Calculate totals
+  // For dev time average, we need to calculate across all issues (not average of averages)
+  // Count total dev time across all tickets for all developers
+  let totalDevTimeDays = 0
+  let totalDevTimeTickets = 0
+
+  allIssues.forEach(issue => {
+    if (issue.developmentTimeDays && issue.developmentTimeDays > 0) {
+      totalDevTimeDays += issue.developmentTimeDays
+      totalDevTimeTickets++
+    }
+  })
+
   const totals = data.reduce(
     (acc, stats) => ({
       totalIssues: acc.totalIssues + stats.totalIssues,
       openIssues: acc.openIssues + stats.openIssues,
       closedIssues: acc.closedIssues + stats.closedIssues,
       totalStoryPoints: acc.totalStoryPoints + stats.totalStoryPoints,
-      devTimeCount: acc.devTimeCount + (stats.avgDevelopmentTimeDays > 0 ? 1 : 0),
-      totalDevTime: acc.totalDevTime + (stats.avgDevelopmentTimeDays > 0 ? stats.avgDevelopmentTimeDays : 0),
       qaTimeCount: acc.qaTimeCount + (stats.avgInProgressToQADays > 0 ? 1 : 0),
       totalQATime: acc.totalQATime + (stats.avgInProgressToQADays > 0 ? stats.avgInProgressToQADays : 0),
     }),
-    { totalIssues: 0, openIssues: 0, closedIssues: 0, totalStoryPoints: 0, devTimeCount: 0, totalDevTime: 0, qaTimeCount: 0, totalQATime: 0 }
+    { totalIssues: 0, openIssues: 0, closedIssues: 0, totalStoryPoints: 0, qaTimeCount: 0, totalQATime: 0 }
   )
 
-  const avgDevTime = totals.devTimeCount > 0 ? (totals.totalDevTime / totals.devTimeCount).toFixed(1) : '-'
+  const avgDevTime = totalDevTimeTickets > 0 ? (totalDevTimeDays / totalDevTimeTickets).toFixed(1) : '-'
   const avgQATime = totals.qaTimeCount > 0 ? (totals.totalQATime / totals.qaTimeCount).toFixed(1) : '-'
 
   // Calculate metrics for a specific developer
@@ -163,7 +173,7 @@ export function TeamPerformanceTable({ data, allIssues, githubLoading = false }:
     maxScore += 15
     let devTimeScore = 0
     if (stats.avgDevelopmentTimeDays > 0) {
-      const avgDevTimeNum = totals.devTimeCount > 0 ? totals.totalDevTime / totals.devTimeCount : 0
+      const avgDevTimeNum = totalDevTimeTickets > 0 ? totalDevTimeDays / totalDevTimeTickets : 0
       if (avgDevTimeNum > 0) {
         // Inverse score: faster developers get higher score
         devTimeScore = Math.max(0, 15 - ((stats.avgDevelopmentTimeDays / avgDevTimeNum) - 1) * 7.5)
@@ -329,18 +339,18 @@ export function TeamPerformanceTable({ data, allIssues, githubLoading = false }:
 
       combinedData.push([
         stats.name,
-        stats.totalIssues,
-        stats.openIssues,
-        stats.closedIssues,
+        stats.totalIssues.toString(),
+        stats.openIssues.toString(),
+        stats.closedIssues.toString(),
         stats.totalStoryPoints.toFixed(1),
         stats.avgDevelopmentTimeDays > 0 ? stats.avgDevelopmentTimeDays.toFixed(1) : '-',
         metrics.storyPoints.toFixed(1),
-        stats.githubActivity?.commits ?? '-', // Activity (Commits)
+        stats.githubActivity?.commits?.toString() ?? '-', // Activity (Commits)
         stats.githubActivity ? `${stats.githubActivity.prs} (${stats.githubActivity.prsMerged} merged)` : '-', // Contribution (PRs)
-        metrics.ticketFails,
-        metrics.ticketUnfailed,
+        metrics.ticketFails.toString(),
+        metrics.ticketUnfailed.toString(),
         stats.githubActivity?.testCoverage != null ? `${stats.githubActivity.testCoverage.toFixed(1)}%` : '-', // Test Coverage
-        starRating,
+        starRating.toString(),
         justification
       ])
     })
@@ -349,9 +359,9 @@ export function TeamPerformanceTable({ data, allIssues, githubLoading = false }:
     combinedData.push([])
     combinedData.push([
       'Total',
-      totals.totalIssues,
-      totals.openIssues,
-      totals.closedIssues,
+      totals.totalIssues.toString(),
+      totals.openIssues.toString(),
+      totals.closedIssues.toString(),
       totals.totalStoryPoints.toFixed(1),
       avgDevTime,
       '', '', '', '', '', '', '', '' // Empty cells for detailed metrics totals, rating, and justification
