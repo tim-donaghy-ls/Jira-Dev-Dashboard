@@ -2,6 +2,178 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { DashboardData } from '@/types'
 
+// Tool definitions for Claude
+const tools: Anthropic.Tool[] = [
+  {
+    name: 'search_jira_issues',
+    description: 'Search for JIRA issues using JQL (JIRA Query Language). Use this to find specific tickets, filter by status, assignee, labels, or any JIRA field. Returns detailed issue information including description, status, assignee, story points, and history.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        jql: {
+          type: 'string',
+          description: 'JIRA Query Language query. Examples: "assignee = john.smith AND status = \"In Progress\"", "labels = backend", "created >= -7d"'
+        },
+        instance: {
+          type: 'string',
+          description: 'JIRA instance ID (optional, defaults to current instance)'
+        }
+      },
+      required: ['jql']
+    }
+  },
+  {
+    name: 'get_github_commits',
+    description: 'Get recent commits from GitHub repositories. Returns commit details including author, date, message, and code changes (additions/deletions).',
+    input_schema: {
+      type: 'object',
+      properties: {
+        repo: {
+          type: 'string',
+          description: 'Repository name (optional, queries all repos if not specified)'
+        },
+        author: {
+          type: 'string',
+          description: 'Filter by commit author username (optional)'
+        },
+        days: {
+          type: 'number',
+          description: 'Number of days to look back (default: 7)'
+        }
+      },
+      required: []
+    }
+  },
+  {
+    name: 'get_github_pull_requests',
+    description: 'Get pull requests from GitHub repositories. Returns PR details including title, status, author, reviewers, and merge information.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        repo: {
+          type: 'string',
+          description: 'Repository name (optional, queries all repos if not specified)'
+        },
+        state: {
+          type: 'string',
+          description: 'PR state: "open", "closed", or "all" (default: "all")',
+          enum: ['open', 'closed', 'all']
+        },
+        days: {
+          type: 'number',
+          description: 'Number of days to look back (default: 30)'
+        }
+      },
+      required: []
+    }
+  },
+  {
+    name: 'get_github_developer_stats',
+    description: 'Get GitHub contribution statistics for developers. Returns metrics like commit count, PRs, code additions/deletions, and activity trends.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        repo: {
+          type: 'string',
+          description: 'Repository name (optional, aggregates all repos if not specified)'
+        },
+        days: {
+          type: 'number',
+          description: 'Number of days to look back (default: 30)'
+        }
+      },
+      required: []
+    }
+  },
+  {
+    name: 'verify_aha_features',
+    description: 'Verify if JIRA ticket IDs exist in Aha product management system. Returns which tickets are linked to Aha features and which are not.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        jiraKeys: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Array of JIRA ticket keys to verify (e.g., ["PROJ-123", "PROJ-456"])'
+        }
+      },
+      required: ['jiraKeys']
+    }
+  }
+]
+
+// Tool execution functions
+async function executeToolCall(toolName: string, toolInput: any): Promise<any> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+
+  try {
+    switch (toolName) {
+      case 'search_jira_issues': {
+        const { jql, instance } = toolInput
+        const params = new URLSearchParams({
+          jql,
+          ...(instance && { instance })
+        })
+        const response = await fetch(`${apiUrl}/api/search?${params}`)
+        if (!response.ok) throw new Error(`JIRA API error: ${response.statusText}`)
+        return await response.json()
+      }
+
+      case 'get_github_commits': {
+        const { repo, author, days = 7 } = toolInput
+        const params = new URLSearchParams({
+          days: days.toString(),
+          ...(repo && { repo }),
+          ...(author && { author })
+        })
+        const response = await fetch(`${apiUrl}/api/github/commits?${params}`)
+        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
+        return await response.json()
+      }
+
+      case 'get_github_pull_requests': {
+        const { repo, state = 'all', days = 30 } = toolInput
+        const params = new URLSearchParams({
+          days: days.toString(),
+          state,
+          ...(repo && { repo })
+        })
+        const response = await fetch(`${apiUrl}/api/github/prs?${params}`)
+        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
+        return await response.json()
+      }
+
+      case 'get_github_developer_stats': {
+        const { repo, days = 30 } = toolInput
+        const params = new URLSearchParams({
+          days: days.toString(),
+          ...(repo && { repo })
+        })
+        const response = await fetch(`${apiUrl}/api/github/stats?${params}`)
+        if (!response.ok) throw new Error(`GitHub API error: ${response.statusText}`)
+        return await response.json()
+      }
+
+      case 'verify_aha_features': {
+        const { jiraKeys } = toolInput
+        const response = await fetch(`${apiUrl}/api/aha/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jiraKeys })
+        })
+        if (!response.ok) throw new Error(`Aha API error: ${response.statusText}`)
+        return await response.json()
+      }
+
+      default:
+        throw new Error(`Unknown tool: ${toolName}`)
+    }
+  } catch (error) {
+    console.error(`Tool execution error for ${toolName}:`, error)
+    return { error: error instanceof Error ? error.message : 'Tool execution failed' }
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { query, dashboardData } = await request.json()
@@ -39,11 +211,26 @@ export async function POST(request: NextRequest) {
 
 CAPABILITIES:
 1. Analyze dashboard data and provide clear, easy-to-read insights
-2. Generate Word documents (.docx format) - for reports, summaries, meeting notes
-3. Generate Excel spreadsheets (.xlsx format) - for data tables, metrics, analysis
-4. Generate PowerPoint presentations (.pptx format) - for presentations, status reports
-5. Generate code snippets and configuration files when specifically requested
-6. Export data in CSV, JSON, or other formats
+2. Query live data from JIRA, GitHub, and Aha using available tools
+3. Generate Word documents (.docx format) - for reports, summaries, meeting notes
+4. Generate Excel spreadsheets (.xlsx format) - for data tables, metrics, analysis
+5. Generate PowerPoint presentations (.pptx format) - for presentations, status reports
+6. Generate code snippets and configuration files when specifically requested
+7. Export data in CSV, JSON, or other formats
+
+AVAILABLE TOOLS:
+- search_jira_issues: Query JIRA for specific tickets using JQL
+- get_github_commits: Fetch recent commits from GitHub repositories
+- get_github_pull_requests: Get PR information from GitHub
+- get_github_developer_stats: Get developer contribution statistics from GitHub
+- verify_aha_features: Check if JIRA tickets exist in Aha
+
+USE TOOLS WHEN:
+- User asks about specific tickets not in current dashboard view
+- User wants recent commits or PRs from GitHub
+- User asks about developer activity or contributions
+- User wants to verify Aha integration for tickets
+- You need fresh data beyond what's in the current dashboard context
 
 IMPORTANT FORMATTING RULES:
 - Write responses in clear, natural language without markdown formatting UNLESS specifically requested
@@ -132,26 +319,81 @@ User Question: ${query}
 
 Answer based on the dashboard data above. Be specific, cite numbers when relevant. Use natural language formatting. Only use markdown code blocks if the user specifically requests code or technical content. For document generation requests, use the special markers and provide structured content following the CRITICAL DOCUMENT GENERATION INSTRUCTIONS above.`
 
-    // Call Claude API
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 4096,
-      temperature: 0.3,
-      messages: [
-        {
-          role: 'user',
-          content: prompt
+    // Initialize conversation messages
+    const messages: Anthropic.MessageParam[] = [
+      {
+        role: 'user',
+        content: prompt
+      }
+    ]
+
+    // Agentic loop: Allow Claude to use tools and respond
+    let finalAnswer = ''
+    const maxIterations = 5 // Prevent infinite loops
+    let iteration = 0
+
+    while (iteration < maxIterations) {
+      iteration++
+
+      // Call Claude API with tools
+      const message = await anthropic.messages.create({
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 4096,
+        temperature: 0.3,
+        messages: messages,
+        tools: tools
+      })
+
+      console.log(`Iteration ${iteration}: Stop reason = ${message.stop_reason}`)
+
+      // Check if Claude wants to use a tool
+      if (message.stop_reason === 'tool_use') {
+        // Find tool use blocks
+        const toolUseBlocks = message.content.filter(
+          (block): block is Anthropic.ToolUseBlock => block.type === 'tool_use'
+        )
+
+        // Add Claude's response to conversation
+        messages.push({
+          role: 'assistant',
+          content: message.content
+        })
+
+        // Execute all tools
+        const toolResults: Anthropic.ToolResultBlockParam[] = []
+        for (const toolUse of toolUseBlocks) {
+          console.log(`Executing tool: ${toolUse.name}`, toolUse.input)
+          const result = await executeToolCall(toolUse.name, toolUse.input)
+          toolResults.push({
+            type: 'tool_result',
+            tool_use_id: toolUse.id,
+            content: JSON.stringify(result)
+          })
         }
-      ]
-    })
 
-    // Extract text response
-    const answer = message.content
-      .filter((block: any) => block.type === 'text')
-      .map((block: any) => block.text)
-      .join('\n')
+        // Add tool results to conversation
+        messages.push({
+          role: 'user',
+          content: toolResults
+        })
 
-    return NextResponse.json({ answer })
+        // Continue the loop to get Claude's response to the tool results
+        continue
+      }
+
+      // If no tools needed, extract final answer
+      const textBlocks = message.content.filter(
+        (block): block is Anthropic.TextBlock => block.type === 'text'
+      )
+      finalAnswer = textBlocks.map(block => block.text).join('\n')
+      break
+    }
+
+    if (!finalAnswer) {
+      finalAnswer = 'I apologize, but I was unable to complete your request. Please try rephrasing your question.'
+    }
+
+    return NextResponse.json({ answer: finalAnswer })
   } catch (error) {
     console.error('Chat API error:', error)
     return NextResponse.json(

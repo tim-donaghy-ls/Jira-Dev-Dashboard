@@ -82,6 +82,9 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/aha/verify", h.VerifyAhaFeaturesHandler)
 	mux.HandleFunc("/api/aha/test-connection", h.TestAhaConnectionHandler)
 
+	// Search API route
+	mux.HandleFunc("/api/search", h.handleJiraSearch)
+
 	// Serve static files
 	fs := http.FileServer(http.Dir("./static"))
 	mux.Handle("/", fs)
@@ -435,5 +438,41 @@ func (h *Handler) handleIssueChangelog(w http.ResponseWriter, r *http.Request) {
 		"statusHistory":       statusHistory,
 		"inProgressToQADays":  inProgressToQADays,
 		"developmentTimeDays": developmentTimeDays,
+	})
+}
+
+// handleJiraSearch searches JIRA using JQL
+func (h *Handler) handleJiraSearch(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	instanceID := r.URL.Query().Get("instance")
+	jiraClient, err := h.getJiraClient(instanceID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	jql := r.URL.Query().Get("jql")
+	if jql == "" {
+		http.Error(w, "jql parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	// Search using JQL
+	issues, err := jiraClient.SearchWithJQL(jql)
+	if err != nil {
+		log.Printf("Error searching JIRA with JQL: %v", err)
+		http.Error(w, "Error searching JIRA: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"jql":    jql,
+		"issues": issues,
+		"count":  len(issues),
 	})
 }

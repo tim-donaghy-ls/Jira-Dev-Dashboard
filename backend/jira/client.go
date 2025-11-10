@@ -88,6 +88,11 @@ func (c *Client) SearchIssues(jql string, maxResults int) ([]Issue, error) {
 	return issues, nil
 }
 
+// SearchWithJQL searches JIRA using a custom JQL query
+func (c *Client) SearchWithJQL(jql string) ([]Issue, error) {
+	return c.SearchIssues(jql, 100) // Limit to 100 results for chat queries
+}
+
 // GetIssuesByProject retrieves all issues for a specific project
 func (c *Client) GetIssuesByProject(projectKey string) ([]Issue, error) {
 	jql := fmt.Sprintf("project = \"%s\" ORDER BY created DESC", projectKey)

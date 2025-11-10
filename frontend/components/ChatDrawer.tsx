@@ -30,11 +30,21 @@ export function ChatDrawer({ isOpen, onClose, dashboardData, isLoading: parentLo
       const welcomeMessage: ChatMessage = {
         id: 'welcome',
         role: 'assistant',
-        content: `Hi! I'm your Dashboard Assistant. I can help you:
+        content: `Hi! I'm your Dashboard Assistant powered by Claude AI. I can help you:
 
 • Analyze sprint metrics and team performance
-• Generate Word docs, Excel sheets, or PowerPoint decks
+• Query live data from JIRA, GitHub, and Aha
+• Search for specific tickets using JIRA Query Language (JQL)
+• Get recent commits, pull requests, and developer stats from GitHub
+• Verify Aha integration for JIRA tickets
+• Generate Word docs, Excel sheets, or PowerPoint presentations
 • Export data and answer questions about your dashboard
+
+Try asking:
+- "Show me all high priority bugs assigned to John"
+- "What commits were made in the last 3 days?"
+- "Generate an Excel report of team performance"
+- "Which JIRA tickets are not in Aha?"
 
 What would you like to know?`,
         timestamp: new Date()
