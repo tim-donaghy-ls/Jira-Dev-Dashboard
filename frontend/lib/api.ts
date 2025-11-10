@@ -13,15 +13,30 @@ import {
 // In production, this should point to your Go backend
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 
-async function fetchAPI<T>(endpoint: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`)
+async function fetchAPI<T>(endpoint: string, timeoutMs: number = 30000): Promise<T> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
 
-  if (!response.ok) {
-    const errorText = await response.text()
-    throw new Error(errorText || 'Failed to fetch data')
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(errorText || 'Failed to fetch data')
+    }
+
+    return response.json()
+  } catch (error) {
+    clearTimeout(timeoutId)
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('Request timeout - please try again')
+    }
+    throw error
   }
-
-  return response.json()
 }
 
 export async function fetchInstances(): Promise<{ instances: JiraInstance[], count: number }> {
@@ -65,7 +80,8 @@ export async function testGitHubConnection(): Promise<{
   repoStatus?: Record<string, { connected: boolean; error?: string }>
   message?: string
 }> {
-  return fetchAPI('/api/github/status')
+  // Use 70s timeout for GitHub status check to accommodate many repos
+  return fetchAPI('/api/github/status', 70000)
 }
 
 export async function fetchGitHubDeveloperActivity(
@@ -86,4 +102,45 @@ export async function testAhaConnection(): Promise<{
   message?: string
 }> {
   return fetchAPI('/api/aha/test-connection')
+}
+
+export async function verifyAhaFeatures(jiraKeys: string[]): Promise<{
+  jiraKey: string
+  existsInAha: boolean
+  ahaReference?: string
+  ahaUrl?: string
+  ahaStatus?: string
+  error?: string
+}[]> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000)
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/aha/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ jiraKeys }),
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
+
+    if (!response.ok) {
+      if (response.status === 503) {
+        // Aha not configured - return empty array
+        return []
+      }
+      throw new Error('Failed to verify Aha features')
+    }
+
+    return response.json()
+  } catch (error) {
+    clearTimeout(timeoutId)
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('Aha verification timeout')
+    }
+    throw error
+  }
 }

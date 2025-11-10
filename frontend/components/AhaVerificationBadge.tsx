@@ -1,59 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { AhaVerification } from '@/types'
 
 interface AhaVerificationBadgeProps {
   jiraKey: string
-  apiUrl: string
+  verification?: AhaVerification
 }
 
-export default function AhaVerificationBadge({ jiraKey, apiUrl }: AhaVerificationBadgeProps) {
-  const [verification, setVerification] = useState<AhaVerification | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const verifyFeature = async () => {
-      setLoading(true)
-      setError(null)
-
-      try {
-        const response = await fetch(`${apiUrl}/api/aha/verify`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            jiraKeys: [jiraKey],
-          }),
-        })
-
-        if (!response.ok) {
-          if (response.status === 503) {
-            // Aha not configured - don't show anything
-            setLoading(false)
-            return
-          }
-          throw new Error(`Failed to verify feature: ${response.statusText}`)
-        }
-
-        const data: AhaVerification[] = await response.json()
-        if (data.length > 0) {
-          setVerification(data[0])
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    verifyFeature()
-  }, [jiraKey, apiUrl])
-
-  // Don't render anything if loading, error, or Aha not configured
-  if (loading || error || !verification) {
+export default function AhaVerificationBadge({ jiraKey, verification }: AhaVerificationBadgeProps) {
+  // Don't render anything if no verification data
+  if (!verification) {
     return null
   }
 

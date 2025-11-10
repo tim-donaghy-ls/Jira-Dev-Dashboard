@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { JiraIssue, StatusHistory } from '@/types'
+import { JiraIssue, StatusHistory, AhaVerification } from '@/types'
 import { fetchIssueDetails } from '@/lib/api'
 import AhaVerificationBadge from './AhaVerificationBadge'
 
@@ -9,9 +9,10 @@ interface IssueCardProps {
   issue: JiraIssue
   jiraBaseUrl: string
   instance: string
+  ahaVerification?: AhaVerification
 }
 
-export function IssueCard({ issue, jiraBaseUrl, instance }: IssueCardProps) {
+export function IssueCard({ issue, jiraBaseUrl, instance, ahaVerification }: IssueCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [statusHistory, setStatusHistory] = useState<StatusHistory[]>([])
   const [metrics, setMetrics] = useState<{ inProgressToQADays: number; developmentTimeDays: number } | null>(null)
@@ -109,7 +110,7 @@ export function IssueCard({ issue, jiraBaseUrl, instance }: IssueCardProps) {
         {/* Aha Verification Badge */}
         <AhaVerificationBadge
           jiraKey={issue.key}
-          apiUrl={process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}
+          verification={ahaVerification}
         />
         <span className="ml-auto text-xs text-secondary">
           {isExpanded ? 'Click to collapse' : 'Click to expand'}

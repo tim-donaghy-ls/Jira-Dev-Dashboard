@@ -31,7 +31,12 @@ describe('API Client', () => {
 
       const result = await fetchInstances();
 
-      expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/api/instances');
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:8080/api/instances',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
+      );
       expect(result).toEqual(mockResponse);
       expect(result.instances).toHaveLength(2);
     });
@@ -58,7 +63,10 @@ describe('API Client', () => {
       const result = await testConnection('instance1');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/test-connection?instance=instance1'
+        'http://localhost:8080/api/test-connection?instance=instance1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockResponse);
       expect(result.success).toBe(true);
@@ -92,7 +100,10 @@ describe('API Client', () => {
       await testConnection('instance with spaces');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/test-connection?instance=instance%20with%20spaces'
+        'http://localhost:8080/api/test-connection?instance=instance%20with%20spaces',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
     });
   });
@@ -115,7 +126,10 @@ describe('API Client', () => {
       const result = await fetchProjects('instance1');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/projects?instance=instance1'
+        'http://localhost:8080/api/projects?instance=instance1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockResponse);
       expect(result.projects).toHaveLength(2);
@@ -157,7 +171,10 @@ describe('API Client', () => {
       const result = await fetchSprints('instance1', 'PROJ1');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/sprints?instance=instance1&project=PROJ1'
+        'http://localhost:8080/api/sprints?instance=instance1&project=PROJ1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockResponse);
       expect(result.sprints).toHaveLength(2);
@@ -177,7 +194,10 @@ describe('API Client', () => {
       await fetchSprints('instance1', 'PROJ-TEST');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/sprints?instance=instance1&project=PROJ-TEST'
+        'http://localhost:8080/api/sprints?instance=instance1&project=PROJ-TEST',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
     });
   });
@@ -210,7 +230,10 @@ describe('API Client', () => {
       });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1&sprint=123'
+        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1&sprint=123',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockData);
     });
@@ -241,7 +264,10 @@ describe('API Client', () => {
       });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1'
+        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockData);
     });
@@ -273,7 +299,10 @@ describe('API Client', () => {
       });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1'
+        'http://localhost:8080/api/dashboard?instance=instance1&project=PROJ1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
     });
 
@@ -319,7 +348,10 @@ describe('API Client', () => {
       const result = await fetchIssueDetails('instance1', 'PROJ-123');
 
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8080/api/issue/PROJ-123?instance=instance1'
+        'http://localhost:8080/api/issue/PROJ-123?instance=instance1',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal)
+        })
       );
       expect(result).toEqual(mockDetails);
       expect(result.statusHistory).toHaveLength(2);

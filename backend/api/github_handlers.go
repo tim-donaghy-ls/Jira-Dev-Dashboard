@@ -344,22 +344,35 @@ func (h *Handler) handleGitHubStatus(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	// Increased timeout to 60s to handle many repos
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
-	// Test connection to all repositories
+	// Test connection to repositories with rate limiting
 	repoStatus := make(map[string]interface{})
 	var mu sync.Mutex
 	var wg sync.WaitGroup
+
+	// Limit concurrent connection tests to 5 at a time to avoid overwhelming the network
+	rateLimiter := make(chan struct{}, 5)
 
 	for repoName, client := range h.githubClients {
 		wg.Add(1)
 		go func(repo string, ghClient *github.Client) {
 			defer wg.Done()
 
-			err := ghClient.TestConnection(ctx)
+			// Acquire rate limiter token
+			rateLimiter <- struct{}{}
+			defer func() { <-rateLimiter }()
+
+			// Use a shorter timeout per repo test (10s)
+			testCtx, testCancel := context.WithTimeout(ctx, 10*time.Second)
+			defer testCancel()
+
+			err := ghClient.TestConnection(testCtx)
 			mu.Lock()
 			if err != nil {
+				log.Printf("GitHub connection test failed for %s: %v", repo, err)
 				repoStatus[repo] = map[string]interface{}{
 					"connected": false,
 					"error":     err.Error(),

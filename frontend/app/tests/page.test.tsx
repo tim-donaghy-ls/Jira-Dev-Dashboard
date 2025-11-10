@@ -410,7 +410,8 @@ describe('TestDashboardPage', () => {
       fireEvent.click(screen.getByText('Run All Tests'));
 
       await waitFor(() => {
-        expect(screen.getByText(/Error: Failed to run tests/)).toBeInTheDocument();
+        expect(screen.getByText('Test Execution Failed')).toBeInTheDocument();
+        expect(screen.getByText(/Failed to run tests/)).toBeInTheDocument();
       });
     });
 
@@ -421,7 +422,8 @@ describe('TestDashboardPage', () => {
       fireEvent.click(screen.getByText('Run All Tests'));
 
       await waitFor(() => {
-        expect(screen.getByText(/Error: Network error/)).toBeInTheDocument();
+        expect(screen.getByText('Test Execution Failed')).toBeInTheDocument();
+        expect(screen.getByText(/Network error/)).toBeInTheDocument();
       });
     });
 
@@ -435,7 +437,7 @@ describe('TestDashboardPage', () => {
       fireEvent.click(screen.getByText('Run All Tests'));
 
       await waitFor(() => {
-        expect(screen.getByText(/Error:/)).toBeInTheDocument();
+        expect(screen.getByText('Test Execution Failed')).toBeInTheDocument();
       });
 
       // Second call succeeds
@@ -456,7 +458,7 @@ describe('TestDashboardPage', () => {
       fireEvent.click(screen.getByText('Run All Tests'));
 
       await waitFor(() => {
-        expect(screen.queryByText(/Error:/)).not.toBeInTheDocument();
+        expect(screen.queryByText('Test Execution Failed')).not.toBeInTheDocument();
       });
     });
   });

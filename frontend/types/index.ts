@@ -92,6 +92,7 @@ export interface DashboardData {
   assigneeStats: AssigneeStats[]
   recentIssues: JiraIssue[]
   allIssues: JiraIssue[]
+  ahaVerifications?: Record<string, AhaVerification> // Map of JIRA key -> Aha verification
 }
 
 export interface FilterOptions {

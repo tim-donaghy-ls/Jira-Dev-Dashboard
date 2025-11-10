@@ -101,7 +101,7 @@ func NewClient(token, owner, repo string) *Client {
 		Owner:   owner,
 		Repo:    repo,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 45 * time.Second, // Increased from 30s to handle slower connections
 		},
 	}
 }

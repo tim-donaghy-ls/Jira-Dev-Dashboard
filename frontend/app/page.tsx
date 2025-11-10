@@ -18,7 +18,7 @@ import { AhaWarning } from '@/components/AhaWarning'
 import { ChatDrawer } from '@/components/ChatDrawer'
 import ReleaseNotesModal from '@/components/ReleaseNotesModal'
 import { DashboardData, AssigneeStats, GitHubActivity } from '@/types'
-import { fetchDashboardData, testConnection, testGitHubConnection, testAhaConnection, fetchGitHubDeveloperActivity } from '@/lib/api'
+import { fetchDashboardData, testConnection, testGitHubConnection, testAhaConnection, fetchGitHubDeveloperActivity, verifyAhaFeatures } from '@/lib/api'
 import * as XLSX from 'xlsx'
 
 export default function DashboardPage() {
@@ -126,15 +126,16 @@ export default function DashboardPage() {
             setGithubConnectionMessage(`Connected to GitHub (${connectedCount} repos)`)
           } else if (connectedCount > 0) {
             setGithubConnectionStatus('connected')
-            setGithubConnectionMessage(`GitHub: ${connectedCount}/${totalCount} repos`)
+            setGithubConnectionMessage(`GitHub: ${connectedCount}/${totalCount} repos connected`)
           } else {
             setGithubConnectionStatus('error')
-            setGithubConnectionMessage('GitHub Connection Failed')
+            setGithubConnectionMessage('GitHub: All repos failed to connect')
           }
         }
       } catch (err) {
+        console.error('GitHub connection check failed:', err)
         setGithubConnectionStatus('error')
-        setGithubConnectionMessage('GitHub Connection Error')
+        setGithubConnectionMessage('GitHub Connection Timeout')
       }
     }
 
@@ -181,8 +182,13 @@ export default function DashboardPage() {
         sprint: selectedSprint,
       })
 
-      // Set dashboard data immediately - don't wait for GitHub
+      // Set dashboard data immediately - don't wait for GitHub or Aha
       setData(result)
+
+      // Fetch Aha verifications asynchronously in the background
+      if (result.allIssues && result.allIssues.length > 0) {
+        loadAhaVerifications(result)
+      }
 
       // Fetch GitHub activity asynchronously in the background
       if (result.sprintInfo?.startDate && result.sprintInfo?.endDate) {
@@ -193,6 +199,35 @@ export default function DashboardPage() {
       console.error('Dashboard error:', err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadAhaVerifications = async (dashboardData: DashboardData) => {
+    try {
+      // Extract all JIRA keys from the dashboard
+      const jiraKeys = dashboardData.allIssues.map(issue => issue.key)
+
+      console.log(`Fetching Aha verifications for ${jiraKeys.length} tickets in a single batch...`)
+
+      // Fetch all verifications in one API call
+      const verifications = await verifyAhaFeatures(jiraKeys)
+
+      // Convert array to map for easy lookup
+      const verificationMap = verifications.reduce((acc, verification) => {
+        acc[verification.jiraKey] = verification
+        return acc
+      }, {} as Record<string, typeof verifications[0]>)
+
+      console.log(`Received ${verifications.length} Aha verifications`)
+
+      // Update the dashboard data with verifications
+      setData(prev => prev ? {
+        ...prev,
+        ahaVerifications: verificationMap
+      } : null)
+    } catch (err) {
+      console.error('Failed to load Aha verifications:', err)
+      // Don't set error state - Aha failures shouldn't block the dashboard
     }
   }
 
@@ -614,6 +649,7 @@ export default function DashboardPage() {
                           issue={issue}
                           jiraBaseUrl={data.jiraBaseUrl}
                           instance={selectedInstance}
+                          ahaVerification={data.ahaVerifications?.[issue.key]}
                         />
                       ))
                     ) : (
