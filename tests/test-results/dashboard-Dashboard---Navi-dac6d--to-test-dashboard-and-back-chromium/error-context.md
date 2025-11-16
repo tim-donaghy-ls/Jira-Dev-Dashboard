@@ -1,0 +1,78 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e6] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e7]:
+      - img [ref=e8]
+    - generic [ref=e11]:
+      - button "Open issues overlay" [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: "0"
+          - generic [ref=e15]: "1"
+        - generic [ref=e16]: Issue
+      - button "Collapse issues badge" [ref=e17]:
+        - img [ref=e18]
+  - alert [ref=e20]
+  - generic [ref=e21]:
+    - generic [ref=e22]:
+      - banner [ref=e23]:
+        - button "Switch to dark mode" [ref=e25] [cursor=pointer]: 🌙
+        - generic [ref=e26]:
+          - img "Legal Sifter" [ref=e27]
+          - heading "Development Metrics Dashboard" [level=1] [ref=e28]
+          - button "Dashboard Assistant (⌘K)" [ref=e29] [cursor=pointer]:
+            - img [ref=e30]
+            - generic [ref=e32]: Assistant
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e35]: "JIRA Instance:"
+          - combobox "JIRA Instance:" [ref=e36]:
+            - option "ContractLogix" [selected]
+            - option "Legal Sifter"
+        - generic [ref=e37]:
+          - generic [ref=e38]: "Project:"
+          - combobox "Project:" [ref=e39]:
+            - option "Select a project..." [selected]
+            - option "CLX - LS-CLX Platform"
+            - option "CMP - Customer Mgmt Portal"
+            - option "CS - Customer Support"
+            - option "CSF - CLX SIG Findings"
+            - option "DM - Data Migration"
+            - option "FNY - Fleet - New York(test)"
+            - option "IT - IT / Dev Ops"
+            - option "ITSEC - IT - Security"
+            - option "MDP - My discovery project"
+            - option "PRG1 - PR-G1-Appeon Platform"
+            - option "QA - QA"
+            - option "RP2 - PR-RP2"
+            - option "TL - Technology Logs"
+            - option "TTS - Service Desk"
+        - generic [ref=e40]:
+          - generic [ref=e41]: "Sprint:"
+          - combobox "Sprint:" [disabled] [ref=e42]:
+            - option "Select a project first..." [selected]
+        - generic [ref=e43]:
+          - generic [ref=e46]: Connected to JIRA
+          - generic [ref=e49]: "GitHub: All repos failed to connect"
+          - generic [ref=e52]: Connected to Aha
+      - paragraph [ref=e54]: Select a project and sprint to load the dashboard
+      - contentinfo [ref=e55]:
+        - link "Test Application" [ref=e57] [cursor=pointer]:
+          - /url: /tests
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - img [ref=e62]
+          - generic [ref=e64]:
+            - heading "Dashboard Assistant" [level=2] [ref=e65]
+            - paragraph [ref=e66]: Powered by Claude AI
+        - button [ref=e68] [cursor=pointer]:
+          - img [ref=e69]
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - textbox "Ask questions or request Word docs, Excel sheets, PowerPoint decks..." [ref=e74]
+          - button [disabled] [ref=e75]:
+            - img [ref=e76]
+        - paragraph [ref=e78]: Press Enter to send, Shift+Enter for new line
+```

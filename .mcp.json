@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "test-pipeline": {
+      "command": "python3",
+      "args": [".claude/mcp/server.py"],
+      "env": {
+        "PIPELINE_ROOT": "."
+      }
+    },
+    "doc-pipeline": {
+      "command": "python3",
+      "args": [".claude/doc-pipeline/mcp/server.py"],
+      "env": {
+        "DOC_PIPELINE_ROOT": "."
+      }
+    }
+  }
+}

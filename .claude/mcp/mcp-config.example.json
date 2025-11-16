@@ -1,0 +1,12 @@
+
+{
+  "mcpServers": {
+    "test-pipeline": {
+      "command": "python",
+      "args": ["mcp/server.py"],
+      "env": {
+        "PIPELINE_ROOT": ".."
+      }
+    }
+  }
+}

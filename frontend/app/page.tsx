@@ -207,10 +207,45 @@ export default function DashboardPage() {
       // Extract all JIRA keys from the dashboard
       const jiraKeys = dashboardData.allIssues.map(issue => issue.key)
 
+      // Check cache first
+      const cacheKey = `aha_verifications_${jiraKeys.sort().join(',')}`
+      const cached = localStorage.getItem(cacheKey)
+      const cacheTimestamp = localStorage.getItem(`${cacheKey}_timestamp`)
+
+      // Use cache if less than 5 minutes old
+      if (cached && cacheTimestamp) {
+        const age = Date.now() - parseInt(cacheTimestamp)
+        if (age < 5 * 60 * 1000) { // 5 minutes
+          console.log(`Using cached Aha verifications for ${jiraKeys.length} tickets`)
+          const verifications = JSON.parse(cached)
+
+          // Convert array to map
+          const verificationMap = verifications.reduce((acc: any, verification: any) => {
+            acc[verification.jiraKey] = verification
+            return acc
+          }, {})
+
+          // Update state with cached data
+          setData(prev => prev ? {
+            ...prev,
+            allIssues: prev.allIssues.map(issue => ({
+              ...issue,
+              ahaVerification: verificationMap[issue.key]
+            }))
+          } : null)
+
+          return
+        }
+      }
+
       console.log(`Fetching Aha verifications for ${jiraKeys.length} tickets in a single batch...`)
 
       // Fetch all verifications in one API call
       const verifications = await verifyAhaFeatures(jiraKeys)
+
+      // Cache the results
+      localStorage.setItem(cacheKey, JSON.stringify(verifications))
+      localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
 
       // Convert array to map for easy lookup
       const verificationMap = verifications.reduce((acc, verification) => {

@@ -1,0 +1,12 @@
+
+{
+  "mcpServers": {
+    "doc-pipeline-multilang": {
+      "command": "python",
+      "args": ["mcp/server.py"],
+      "env": {
+        "DOC_PIPELINE_ROOT": ".."
+      }
+    }
+  }
+}

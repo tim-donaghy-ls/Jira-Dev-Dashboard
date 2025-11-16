@@ -1,0 +1,68 @@
+{
+  "developers": [
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "commits": 28,
+      "pullRequests": 5,
+      "mergedPRs": 4,
+      "linesAdded": 1250,
+      "linesDeleted": 380
+    },
+    {
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "commits": 35,
+      "pullRequests": 7,
+      "mergedPRs": 6,
+      "linesAdded": 1840,
+      "linesDeleted": 520
+    },
+    {
+      "name": "Bob Wilson",
+      "email": "bob.wilson@example.com",
+      "commits": 22,
+      "pullRequests": 4,
+      "mergedPRs": 3,
+      "linesAdded": 980,
+      "linesDeleted": 240
+    },
+    {
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "commits": 18,
+      "pullRequests": 3,
+      "mergedPRs": 3,
+      "linesAdded": 720,
+      "linesDeleted": 180
+    }
+  ],
+  "repositories": [
+    {
+      "name": "jira-dashboard",
+      "commits": 103,
+      "pullRequests": 19,
+      "contributors": 4
+    }
+  ],
+  "recentCommits": [
+    {
+      "sha": "abc123",
+      "message": "Implement real-time data refresh",
+      "author": "John Doe",
+      "date": "2025-11-08T16:30:00Z"
+    },
+    {
+      "sha": "def456",
+      "message": "Fix memory leak in chart rendering",
+      "author": "Jane Smith",
+      "date": "2025-11-05T14:00:00Z"
+    },
+    {
+      "sha": "ghi789",
+      "message": "Add dark mode support",
+      "author": "Alice Johnson",
+      "date": "2025-11-09T15:00:00Z"
+    }
+  ]
+}

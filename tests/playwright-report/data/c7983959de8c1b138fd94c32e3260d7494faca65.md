@@ -1,0 +1,891 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - button "Switch to dark mode" [ref=e6] [cursor=pointer]: 🌙
+        - generic [ref=e7]:
+          - img "Legal Sifter" [ref=e8]
+          - heading "Development Metrics Dashboard" [level=1] [ref=e9]
+          - button "Dashboard Assistant (⌘K)" [ref=e10] [cursor=pointer]:
+            - img [ref=e11]
+            - generic [ref=e13]: Assistant
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: "JIRA Instance:"
+          - combobox "JIRA Instance:" [ref=e17]:
+            - option "Legal Sifter"
+            - option "ContractLogix" [selected]
+        - generic [ref=e18]:
+          - generic [ref=e19]: "Project:"
+          - combobox "Project:" [ref=e20]:
+            - option "Select a project..."
+            - option "CLX - LS-CLX Platform" [selected]
+            - option "CMP - Customer Mgmt Portal"
+            - option "CS - Customer Support"
+            - option "CSF - CLX SIG Findings"
+            - option "DM - Data Migration"
+            - option "FNY - Fleet - New York(test)"
+            - option "IT - IT / Dev Ops"
+            - option "ITSEC - IT - Security"
+            - option "MDP - My discovery project"
+            - option "PRG1 - PR-G1-Appeon Platform"
+            - option "QA - QA"
+            - option "RP2 - PR-RP2"
+            - option "TL - Technology Logs"
+            - option "TTS - Service Desk"
+        - generic [ref=e21]:
+          - generic [ref=e22]: "Sprint:"
+          - combobox "Sprint:" [ref=e23]:
+            - option "All Sprints"
+            - option "🟢 Sprint 23" [selected]
+            - option "🔵 Sprint 24"
+            - option "⚫ Sprint 22"
+            - option "⚫ Sprint 21"
+            - option "⚫ Sprint 20"
+            - option "⚫ Sprint 19"
+            - option "⚫ Sprint 18"
+            - option "⚫ Sprint 17"
+            - option "⚫ 2025 Sprint 16"
+            - option "⚫ 2025 Sprint 5"
+            - option "⚫ 2025 Sprint 4"
+            - option "⚫ 2025 Sprint 3"
+        - generic [ref=e24]:
+          - generic [ref=e27]: Connected to JIRA
+          - generic [ref=e30]: "GitHub: All repos failed to connect"
+          - generic [ref=e33]: Connected to Aha
+      - generic [ref=e35]:
+        - img [ref=e37]
+        - paragraph [ref=e40]:
+          - strong [ref=e41]: "3"
+          - text: tickets are not in Aha.
+          - button "View Tickets" [ref=e42] [cursor=pointer]
+          - text: to ensure proper feature tracking.
+      - generic [ref=e43]:
+        - generic [ref=e44]: Sprint 23
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]: "Start:"
+            - generic [ref=e48]: Nov 11, 2025
+          - generic [ref=e49]:
+            - generic [ref=e50]: "End:"
+            - generic [ref=e51]: Nov 24, 2025
+      - generic [ref=e52]:
+        - link "Total Issues 17 34.0 story points" [ref=e53] [cursor=pointer]:
+          - /url: https://contractlogix.atlassian.net/issues/?jql=sprint%3D688%20AND%20project%3DCLX
+          - generic [ref=e54]: Total Issues
+          - generic [ref=e55]: "17"
+          - generic [ref=e56]: 34.0 story points
+        - link "Open 17 34.0 story points" [ref=e57] [cursor=pointer]:
+          - /url: https://contractlogix.atlassian.net/issues/?jql=sprint%3D688%20AND%20project%3DCLX%20AND%20status!%3D%22Production%20Release%22
+          - generic [ref=e58]: Open
+          - generic [ref=e59]: "17"
+          - generic [ref=e60]: 34.0 story points
+        - link "Closed 0 0.0 story points" [ref=e61] [cursor=pointer]:
+          - /url: https://contractlogix.atlassian.net/issues/?jql=sprint%3D688%20AND%20project%3DCLX%20AND%20status%3D%22Production%20Release%22
+          - generic [ref=e62]: Closed
+          - generic [ref=e63]: "0"
+          - generic [ref=e64]: 0.0 story points
+        - link "AVG Dev Time (Tickets) 0.6 days" [ref=e65] [cursor=pointer]:
+          - /url: https://contractlogix.atlassian.net/issues/?jql=sprint%3D688%20AND%20project%3DCLX%20AND%20status%3D%22Production%20Release%22
+          - generic [ref=e66]: AVG Dev Time (Tickets)
+          - generic [ref=e67]: 0.6 days
+        - link "Total Story Points 34.0" [ref=e68] [cursor=pointer]:
+          - /url: https://contractlogix.atlassian.net/issues/?jql=sprint%3D688%20AND%20project%3DCLX
+          - generic [ref=e69]: Total Story Points
+          - generic [ref=e70]: "34.0"
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - heading "Charts Overview" [level=3] [ref=e73]
+          - button "−" [ref=e74] [cursor=pointer]
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - heading "Status Distribution" [level=3] [ref=e78]
+              - button "⛶" [ref=e79] [cursor=pointer]
+            - img [ref=e81]
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - heading "Developer Story Points" [level=3] [ref=e84]
+              - button "⛶" [ref=e85] [cursor=pointer]
+            - img [ref=e87]
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - heading "Average Development Time" [level=3] [ref=e90]
+              - button "⛶" [ref=e91] [cursor=pointer]
+            - img [ref=e93]
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - heading "Ticket Failure Analysis" [level=3] [ref=e96]
+              - button "⛶" [ref=e97] [cursor=pointer]
+            - img [ref=e99]
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - heading "Team Performance" [level=3] [ref=e102]
+          - generic [ref=e103]:
+            - button "+" [ref=e104] [cursor=pointer]
+            - button "⋮" [ref=e106] [cursor=pointer]
+            - button "−" [ref=e107] [cursor=pointer]
+        - generic [ref=e108]: Click on a row to display developer individual performance metrics.
+        - table [ref=e110]:
+          - rowgroup [ref=e111]:
+            - row "Assignee Total Open Closed Story Points Avg Development Time (days) Rating" [ref=e112]:
+              - cell "Assignee" [ref=e113]
+              - cell "Total" [ref=e114]
+              - cell "Open" [ref=e115]
+              - cell "Closed" [ref=e116]
+              - cell "Story Points" [ref=e117]
+              - cell "Avg Development Time (days)" [ref=e118]
+              - cell "Rating" [ref=e119]
+          - rowgroup [ref=e120]:
+            - row "Emmanuel Rosario 6 6 0 14 - ⭐" [ref=e121] [cursor=pointer]:
+              - cell "Emmanuel Rosario" [ref=e122]
+              - cell "6" [ref=e123]
+              - cell "6" [ref=e124]
+              - cell "0" [ref=e125]
+              - cell "14" [ref=e126]
+              - cell "-" [ref=e127]
+              - cell "⭐" [ref=e128]:
+                - generic [ref=e129]: ⭐
+            - row "William McCarty 4 4 0 8 - ⭐" [ref=e130] [cursor=pointer]:
+              - cell "William McCarty" [ref=e131]
+              - cell "4" [ref=e132]
+              - cell "4" [ref=e133]
+              - cell "0" [ref=e134]
+              - cell "8" [ref=e135]
+              - cell "-" [ref=e136]
+              - cell "⭐" [ref=e137]:
+                - generic [ref=e138]: ⭐
+            - row "Rob Guempel 3 3 0 6 - ⭐" [ref=e139] [cursor=pointer]:
+              - cell "Rob Guempel" [ref=e140]
+              - cell "3" [ref=e141]
+              - cell "3" [ref=e142]
+              - cell "0" [ref=e143]
+              - cell "6" [ref=e144]
+              - cell "-" [ref=e145]
+              - cell "⭐" [ref=e146]:
+                - generic [ref=e147]: ⭐
+            - row "Brandon Shuey 2 2 0 4 - ⭐" [ref=e148] [cursor=pointer]:
+              - cell "Brandon Shuey" [ref=e149]
+              - cell "2" [ref=e150]
+              - cell "2" [ref=e151]
+              - cell "0" [ref=e152]
+              - cell "4" [ref=e153]
+              - cell "-" [ref=e154]
+              - cell "⭐" [ref=e155]:
+                - generic [ref=e156]: ⭐
+            - row "Alex Dyachenko 2 2 0 2 0.6 ⭐" [ref=e157] [cursor=pointer]:
+              - cell "Alex Dyachenko" [ref=e158]
+              - cell "2" [ref=e159]
+              - cell "2" [ref=e160]
+              - cell "0" [ref=e161]
+              - cell "2" [ref=e162]
+              - cell "0.6" [ref=e163]
+              - cell "⭐" [ref=e164]:
+                - generic [ref=e165]: ⭐
+          - rowgroup [ref=e166]:
+            - row "Total 17 17 0 34 0.6 -" [ref=e167]:
+              - cell "Total" [ref=e168]
+              - cell "17" [ref=e169]
+              - cell "17" [ref=e170]
+              - cell "0" [ref=e171]
+              - cell "34" [ref=e172]
+              - cell "0.6" [ref=e173]
+              - cell "-" [ref=e174]
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - heading "Developer Workload by Status" [level=3] [ref=e177]
+          - button "−" [ref=e178] [cursor=pointer]
+        - generic [ref=e179]: Click on a row to display assisted tickets.
+        - table [ref=e181]:
+          - rowgroup [ref=e182]:
+            - row "Developer To Do In Progress Code Review QA Review Schedule Release Production Release Total Story Points Commits PRs" [ref=e183]:
+              - cell "Developer" [ref=e184]
+              - cell "To Do" [ref=e185]
+              - cell "In Progress" [ref=e186]
+              - cell "Code Review" [ref=e187]
+              - cell "QA Review" [ref=e188]
+              - cell "Schedule Release" [ref=e189]
+              - cell "Production Release" [ref=e190]
+              - cell "Total" [ref=e191]
+              - cell "Story Points" [ref=e192]
+              - cell "Commits" [ref=e193]
+              - cell "PRs" [ref=e194]
+          - rowgroup [ref=e195]:
+            - row "Emmanuel Rosario - 6 - - - - 6 14 0 0 (0)" [ref=e196] [cursor=pointer]:
+              - cell "Emmanuel Rosario" [ref=e197]
+              - cell "-" [ref=e198]
+              - cell "6" [ref=e199]
+              - cell "-" [ref=e200]
+              - cell "-" [ref=e201]
+              - cell "-" [ref=e202]
+              - cell "-" [ref=e203]
+              - cell "6" [ref=e204]
+              - cell "14" [ref=e205]
+              - cell "0" [ref=e206]
+              - cell "0 (0)" [ref=e207]
+            - row "William McCarty - 4 - - - - 4 8 0 0 (0)" [ref=e208] [cursor=pointer]:
+              - cell "William McCarty" [ref=e209]
+              - cell "-" [ref=e210]
+              - cell "4" [ref=e211]
+              - cell "-" [ref=e212]
+              - cell "-" [ref=e213]
+              - cell "-" [ref=e214]
+              - cell "-" [ref=e215]
+              - cell "4" [ref=e216]
+              - cell "8" [ref=e217]
+              - cell "0" [ref=e218]
+              - cell "0 (0)" [ref=e219]
+            - row "Rob Guempel 1 2 - - - - 3 6 0 0 (0)" [ref=e220] [cursor=pointer]:
+              - cell "Rob Guempel" [ref=e221]
+              - cell "1" [ref=e222]
+              - cell "2" [ref=e223]
+              - cell "-" [ref=e224]
+              - cell "-" [ref=e225]
+              - cell "-" [ref=e226]
+              - cell "-" [ref=e227]
+              - cell "3" [ref=e228]
+              - cell "6" [ref=e229]
+              - cell "0" [ref=e230]
+              - cell "0 (0)" [ref=e231]
+            - row "Brandon Shuey - 2 - - - - 2 4 0 0 (0)" [ref=e232] [cursor=pointer]:
+              - cell "Brandon Shuey" [ref=e233]
+              - cell "-" [ref=e234]
+              - cell "2" [ref=e235]
+              - cell "-" [ref=e236]
+              - cell "-" [ref=e237]
+              - cell "-" [ref=e238]
+              - cell "-" [ref=e239]
+              - cell "2" [ref=e240]
+              - cell "4" [ref=e241]
+              - cell "0" [ref=e242]
+              - cell "0 (0)" [ref=e243]
+            - row "Alex Dyachenko - - - 2 - - 2 2 0 0 (0)" [ref=e244] [cursor=pointer]:
+              - cell "Alex Dyachenko" [ref=e245]
+              - cell "-" [ref=e246]
+              - cell "-" [ref=e247]
+              - cell "-" [ref=e248]
+              - cell "2" [ref=e249]
+              - cell "-" [ref=e250]
+              - cell "-" [ref=e251]
+              - cell "2" [ref=e252]
+              - cell "2" [ref=e253]
+              - cell "0" [ref=e254]
+              - cell "0 (0)" [ref=e255]
+          - rowgroup [ref=e256]:
+            - row "Total 1 14 0 2 0 0 17 34 0 0 (0)" [ref=e257]:
+              - cell "Total" [ref=e258]
+              - cell "1" [ref=e259]
+              - cell "14" [ref=e260]
+              - cell "0" [ref=e261]
+              - cell "2" [ref=e262]
+              - cell "0" [ref=e263]
+              - cell "0" [ref=e264]
+              - cell "17" [ref=e265]
+              - cell "34" [ref=e266]
+              - cell "0" [ref=e267]
+              - cell "0 (0)" [ref=e268]
+      - generic [ref=e269]:
+        - generic [ref=e270]:
+          - generic [ref=e271]:
+            - heading "Sprint Slippage" [level=3] [ref=e272]
+            - paragraph [ref=e273]: Tickets in progress but not completed (Sprint 23)
+          - button "−" [ref=e274] [cursor=pointer]
+        - generic [ref=e276]:
+          - img [ref=e278]
+          - paragraph [ref=e281]:
+            - strong [ref=e282]: 9 days remaining
+            - text: until the end of the current sprint.
+        - generic [ref=e283]:
+          - generic [ref=e284]:
+            - generic [ref=e285]: Committed Points
+            - generic [ref=e286]: "34"
+          - generic [ref=e287]:
+            - generic [ref=e288]: Completed Points
+            - generic [ref=e289]: "0"
+          - generic [ref=e290]:
+            - generic [ref=e291]: Slipped Points
+            - generic [ref=e292]: "34"
+          - generic [ref=e293]:
+            - generic [ref=e294]: Slippage %
+            - generic [ref=e295]: 100.0%
+        - generic [ref=e296]:
+          - generic [ref=e297]:
+            - generic [ref=e299]:
+              - heading "Emmanuel Rosario" [level=4] [ref=e300]
+              - generic [ref=e301]:
+                - generic [ref=e302]: 6 tickets
+                - generic [ref=e303]: 14 points
+            - table [ref=e305]:
+              - rowgroup [ref=e306]:
+                - row "Ticket Summary Status Priority Points Age" [ref=e307]:
+                  - cell "Ticket" [ref=e308]
+                  - cell "Summary" [ref=e309]
+                  - cell "Status" [ref=e310]
+                  - cell "Priority" [ref=e311]
+                  - cell "Points" [ref=e312]
+                  - cell "Age" [ref=e313]
+              - rowgroup [ref=e314]:
+                - row "CLX-307 Implement Contract Logix Request List/Grid Page (Figma Migration) In Progress Critical / Must Fix 3 9 days ago" [ref=e315]:
+                  - cell "CLX-307" [ref=e316]:
+                    - link "CLX-307" [ref=e317] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-307
+                  - cell "Implement Contract Logix Request List/Grid Page (Figma Migration)" [ref=e318]
+                  - cell "In Progress" [ref=e319]
+                  - cell "Critical / Must Fix" [ref=e320]
+                  - cell "3" [ref=e321]
+                  - cell "9 days ago" [ref=e322]
+                - row "CLX-301 Implement Contract Logix Contracts List/Grid Page (Figma Migration) In Progress Critical / Must Fix 3 10 days ago" [ref=e323]:
+                  - cell "CLX-301" [ref=e324]:
+                    - link "CLX-301" [ref=e325] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-301
+                  - cell "Implement Contract Logix Contracts List/Grid Page (Figma Migration)" [ref=e326]
+                  - cell "In Progress" [ref=e327]
+                  - cell "Critical / Must Fix" [ref=e328]
+                  - cell "3" [ref=e329]
+                  - cell "10 days ago" [ref=e330]
+                - row "CLX-313 Implement Contract Logix Custom Object Index (Figma Migration) In Progress Critical / Must Fix 2 9 days ago" [ref=e331]:
+                  - cell "CLX-313" [ref=e332]:
+                    - link "CLX-313" [ref=e333] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-313
+                  - cell "Implement Contract Logix Custom Object Index (Figma Migration)" [ref=e334]
+                  - cell "In Progress" [ref=e335]
+                  - cell "Critical / Must Fix" [ref=e336]
+                  - cell "2" [ref=e337]
+                  - cell "9 days ago" [ref=e338]
+                - row "CLX-309 Implement Contract Logix Tasks List/Grid Page (Figma Migration) In Progress Critical / Must Fix 2 9 days ago" [ref=e339]:
+                  - cell "CLX-309" [ref=e340]:
+                    - link "CLX-309" [ref=e341] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-309
+                  - cell "Implement Contract Logix Tasks List/Grid Page (Figma Migration)" [ref=e342]
+                  - cell "In Progress" [ref=e343]
+                  - cell "Critical / Must Fix" [ref=e344]
+                  - cell "2" [ref=e345]
+                  - cell "9 days ago" [ref=e346]
+                - row "CLX-305 Implement Contract Logix People List/Grid Page (Figma Migration) In Progress Critical / Must Fix 2 9 days ago" [ref=e347]:
+                  - cell "CLX-305" [ref=e348]:
+                    - link "CLX-305" [ref=e349] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-305
+                  - cell "Implement Contract Logix People List/Grid Page (Figma Migration)" [ref=e350]
+                  - cell "In Progress" [ref=e351]
+                  - cell "Critical / Must Fix" [ref=e352]
+                  - cell "2" [ref=e353]
+                  - cell "9 days ago" [ref=e354]
+                - row "CLX-303 Implement Contract Logix Organizations List/Grid Page (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e355]:
+                  - cell "CLX-303" [ref=e356]:
+                    - link "CLX-303" [ref=e357] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-303
+                  - cell "Implement Contract Logix Organizations List/Grid Page (Figma Migration)" [ref=e358]
+                  - cell "In Progress" [ref=e359]
+                  - cell "Critical / Must Fix" [ref=e360]
+                  - cell "2" [ref=e361]
+                  - cell "10 days ago" [ref=e362]
+          - generic [ref=e363]:
+            - generic [ref=e365]:
+              - heading "William McCarty" [level=4] [ref=e366]
+              - generic [ref=e367]:
+                - generic [ref=e368]: 4 tickets
+                - generic [ref=e369]: 8 points
+            - table [ref=e371]:
+              - rowgroup [ref=e372]:
+                - row "Ticket Summary Status Priority Points Age" [ref=e373]:
+                  - cell "Ticket" [ref=e374]
+                  - cell "Summary" [ref=e375]
+                  - cell "Status" [ref=e376]
+                  - cell "Priority" [ref=e377]
+                  - cell "Points" [ref=e378]
+                  - cell "Age" [ref=e379]
+              - rowgroup [ref=e380]:
+                - row "CLX-308 Implement Contract Logix Request Detail Page (Figma Migration) In Progress Critical / Must Fix 2 9 days ago" [ref=e381]:
+                  - cell "CLX-308" [ref=e382]:
+                    - link "CLX-308" [ref=e383] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-308
+                  - cell "Implement Contract Logix Request Detail Page (Figma Migration)" [ref=e384]
+                  - cell "In Progress" [ref=e385]
+                  - cell "Critical / Must Fix" [ref=e386]
+                  - cell "2" [ref=e387]
+                  - cell "9 days ago" [ref=e388]
+                - row "CLX-306 Implement Contract Logix People/Contact Detail Page (Figma Migration) In Progress Critical / Must Fix 2 9 days ago" [ref=e389]:
+                  - cell "CLX-306" [ref=e390]:
+                    - link "CLX-306" [ref=e391] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-306
+                  - cell "Implement Contract Logix People/Contact Detail Page (Figma Migration)" [ref=e392]
+                  - cell "In Progress" [ref=e393]
+                  - cell "Critical / Must Fix" [ref=e394]
+                  - cell "2" [ref=e395]
+                  - cell "9 days ago" [ref=e396]
+                - row "CLX-304 Implement Contract Logix Organization Detail Page (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e397]:
+                  - cell "CLX-304" [ref=e398]:
+                    - link "CLX-304" [ref=e399] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-304
+                  - cell "Implement Contract Logix Organization Detail Page (Figma Migration)" [ref=e400]
+                  - cell "In Progress" [ref=e401]
+                  - cell "Critical / Must Fix" [ref=e402]
+                  - cell "2" [ref=e403]
+                  - cell "10 days ago" [ref=e404]
+                - row "CLX-300 Implement Contract Logix Contract Details (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e405]:
+                  - cell "CLX-300" [ref=e406]:
+                    - link "CLX-300" [ref=e407] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-300
+                  - cell "Implement Contract Logix Contract Details (Figma Migration)" [ref=e408]
+                  - cell "In Progress" [ref=e409]
+                  - cell "Critical / Must Fix" [ref=e410]
+                  - cell "2" [ref=e411]
+                  - cell "10 days ago" [ref=e412]
+          - generic [ref=e413]:
+            - generic [ref=e415]:
+              - heading "Rob Guempel" [level=4] [ref=e416]
+              - generic [ref=e417]:
+                - generic [ref=e418]: 3 tickets
+                - generic [ref=e419]: 6 points
+            - table [ref=e421]:
+              - rowgroup [ref=e422]:
+                - row "Ticket Summary Status Priority Points Age" [ref=e423]:
+                  - cell "Ticket" [ref=e424]
+                  - cell "Summary" [ref=e425]
+                  - cell "Status" [ref=e426]
+                  - cell "Priority" [ref=e427]
+                  - cell "Points" [ref=e428]
+                  - cell "Age" [ref=e429]
+              - rowgroup [ref=e430]:
+                - row "CLX-298 Implement Contract Logix Advanced Search (Figma Migration) In Progress Critical / Must Fix 3 10 days ago" [ref=e431]:
+                  - cell "CLX-298" [ref=e432]:
+                    - link "CLX-298" [ref=e433] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-298
+                  - cell "Implement Contract Logix Advanced Search (Figma Migration)" [ref=e434]
+                  - cell "In Progress" [ref=e435]
+                  - cell "Critical / Must Fix" [ref=e436]
+                  - cell "3" [ref=e437]
+                  - cell "10 days ago" [ref=e438]
+                - row "CLX-302 Implement Contract Logix Dashboard (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e439]:
+                  - cell "CLX-302" [ref=e440]:
+                    - link "CLX-302" [ref=e441] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-302
+                  - cell "Implement Contract Logix Dashboard (Figma Migration)" [ref=e442]
+                  - cell "In Progress" [ref=e443]
+                  - cell "Critical / Must Fix" [ref=e444]
+                  - cell "2" [ref=e445]
+                  - cell "10 days ago" [ref=e446]
+                - row "CLX-310 UI Refactor > Add Light Mode, Dark Mode, Classic Mode Toggle to User Preference Dropdown ToDo High 1 9 days ago" [ref=e447]:
+                  - cell "CLX-310" [ref=e448]:
+                    - link "CLX-310" [ref=e449] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-310
+                  - cell "UI Refactor > Add Light Mode, Dark Mode, Classic Mode Toggle to User Preference Dropdown" [ref=e450]
+                  - cell "ToDo" [ref=e451]
+                  - cell "High" [ref=e452]
+                  - cell "1" [ref=e453]
+                  - cell "9 days ago" [ref=e454]
+          - generic [ref=e455]:
+            - generic [ref=e457]:
+              - heading "Brandon Shuey" [level=4] [ref=e458]
+              - generic [ref=e459]:
+                - generic [ref=e460]: 2 tickets
+                - generic [ref=e461]: 4 points
+            - table [ref=e463]:
+              - rowgroup [ref=e464]:
+                - row "Ticket Summary Status Priority Points Age" [ref=e465]:
+                  - cell "Ticket" [ref=e466]
+                  - cell "Summary" [ref=e467]
+                  - cell "Status" [ref=e468]
+                  - cell "Priority" [ref=e469]
+                  - cell "Points" [ref=e470]
+                  - cell "Age" [ref=e471]
+              - rowgroup [ref=e472]:
+                - row "CLX-297 Implement Contract Logix Login (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e473]:
+                  - cell "CLX-297" [ref=e474]:
+                    - link "CLX-297" [ref=e475] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-297
+                  - cell "Implement Contract Logix Login (Figma Migration)" [ref=e476]
+                  - cell "In Progress" [ref=e477]
+                  - cell "Critical / Must Fix" [ref=e478]
+                  - cell "2" [ref=e479]
+                  - cell "10 days ago" [ref=e480]
+                - row "CLX-296 Implement Contract Logix Homepage (Figma Migration) In Progress Critical / Must Fix 2 10 days ago" [ref=e481]:
+                  - cell "CLX-296" [ref=e482]:
+                    - link "CLX-296" [ref=e483] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-296
+                  - cell "Implement Contract Logix Homepage (Figma Migration)" [ref=e484]
+                  - cell "In Progress" [ref=e485]
+                  - cell "Critical / Must Fix" [ref=e486]
+                  - cell "2" [ref=e487]
+                  - cell "10 days ago" [ref=e488]
+          - generic [ref=e489]:
+            - generic [ref=e491]:
+              - heading "Alex Dyachenko" [level=4] [ref=e492]
+              - generic [ref=e493]:
+                - generic [ref=e494]: 2 tickets
+                - generic [ref=e495]: 2 points
+            - table [ref=e497]:
+              - rowgroup [ref=e498]:
+                - row "Ticket Summary Status Priority Points Age" [ref=e499]:
+                  - cell "Ticket" [ref=e500]
+                  - cell "Summary" [ref=e501]
+                  - cell "Status" [ref=e502]
+                  - cell "Priority" [ref=e503]
+                  - cell "Points" [ref=e504]
+                  - cell "Age" [ref=e505]
+              - rowgroup [ref=e506]:
+                - row "CLX-326 Validation Rules > Orgs to Contacts > Remove Association field QA Review Medium 1 5 days ago" [ref=e507]:
+                  - cell "CLX-326" [ref=e508]:
+                    - link "CLX-326" [ref=e509] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-326
+                  - cell "Validation Rules > Orgs to Contacts > Remove Association field" [ref=e510]
+                  - cell "QA Review" [ref=e511]
+                  - cell "Medium" [ref=e512]
+                  - cell "1" [ref=e513]
+                  - cell "5 days ago" [ref=e514]
+                - row "CLX-325 Association field has problems in Validation Rules QA Review Medium 1 8 days ago" [ref=e515]:
+                  - cell "CLX-325" [ref=e516]:
+                    - link "CLX-325" [ref=e517] [cursor=pointer]:
+                      - /url: https://contractlogix.atlassian.net/browse/CLX-325
+                  - cell "Association field has problems in Validation Rules" [ref=e518]
+                  - cell "QA Review" [ref=e519]
+                  - cell "Medium" [ref=e520]
+                  - cell "1" [ref=e521]
+                  - cell "8 days ago" [ref=e522]
+      - generic [ref=e523]:
+        - generic [ref=e524]:
+          - heading "Sprint Tickets" [level=3] [ref=e525]
+          - generic [ref=e526]:
+            - button "⋮" [ref=e528] [cursor=pointer]
+            - button "−" [ref=e529] [cursor=pointer]
+        - generic [ref=e530]:
+          - generic [ref=e531]:
+            - generic [ref=e532]: "Filter by Developer:"
+            - combobox "Filter by Developer:" [ref=e533]:
+              - option "All Developers" [selected]
+              - option "Alex Dyachenko"
+              - option "Brandon Shuey"
+              - option "Emmanuel Rosario"
+              - option "Rob Guempel"
+              - option "William McCarty"
+          - generic [ref=e534]:
+            - generic [ref=e535]: "Search:"
+            - textbox "Search:" [ref=e536]:
+              - /placeholder: Ticket ID, keyword, text...
+        - generic [ref=e537]:
+          - generic [ref=e538] [cursor=pointer]:
+            - generic [ref=e539]:
+              - link "CLX-309" [ref=e540]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-309
+              - generic [ref=e541]: 2 SP
+              - generic [ref=e542]: In Progress
+              - 'link "Aha: CL-315" [ref=e543]':
+                - /url: https://legalsifter1.aha.io/features/CL-315
+                - img [ref=e544]
+                - generic [ref=e546]: "Aha: CL-315"
+              - generic [ref=e547]: Click to expand
+            - generic [ref=e548]: Implement Contract Logix Tasks List/Grid Page (Figma Migration)
+            - generic [ref=e549]:
+              - generic [ref=e550]: 📋 Story
+              - generic [ref=e551]: 🎯 Critical / Must Fix
+              - generic [ref=e552]: 👤 Emmanuel Rosario
+              - generic [ref=e553]: "📅 Updated: 11/13/2025"
+          - generic [ref=e554] [cursor=pointer]:
+            - generic [ref=e555]:
+              - link "CLX-307" [ref=e556]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-307
+              - generic [ref=e557]: 3 SP
+              - generic [ref=e558]: In Progress
+              - 'link "Aha: CL-313" [ref=e559]':
+                - /url: https://legalsifter1.aha.io/features/CL-313
+                - img [ref=e560]
+                - generic [ref=e562]: "Aha: CL-313"
+              - generic [ref=e563]: Click to expand
+            - generic [ref=e564]: Implement Contract Logix Request List/Grid Page (Figma Migration)
+            - generic [ref=e565]:
+              - generic [ref=e566]: 📋 Story
+              - generic [ref=e567]: 🎯 Critical / Must Fix
+              - generic [ref=e568]: 👤 Emmanuel Rosario
+              - generic [ref=e569]: "📅 Updated: 11/13/2025"
+          - generic [ref=e570] [cursor=pointer]:
+            - generic [ref=e571]:
+              - link "CLX-301" [ref=e572]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-301
+              - generic [ref=e573]: 3 SP
+              - generic [ref=e574]: In Progress
+              - 'link "Aha: CL-307" [ref=e575]':
+                - /url: https://legalsifter1.aha.io/features/CL-307
+                - img [ref=e576]
+                - generic [ref=e578]: "Aha: CL-307"
+              - generic [ref=e579]: Click to expand
+            - generic [ref=e580]: Implement Contract Logix Contracts List/Grid Page (Figma Migration)
+            - generic [ref=e581]:
+              - generic [ref=e582]: 📋 Story
+              - generic [ref=e583]: 🎯 Critical / Must Fix
+              - generic [ref=e584]: 👤 Emmanuel Rosario
+              - generic [ref=e585]: "📅 Updated: 11/13/2025"
+          - generic [ref=e586] [cursor=pointer]:
+            - generic [ref=e587]:
+              - link "CLX-303" [ref=e588]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-303
+              - generic [ref=e589]: 2 SP
+              - generic [ref=e590]: In Progress
+              - 'link "Aha: CL-309" [ref=e591]':
+                - /url: https://legalsifter1.aha.io/features/CL-309
+                - img [ref=e592]
+                - generic [ref=e594]: "Aha: CL-309"
+              - generic [ref=e595]: Click to expand
+            - generic [ref=e596]: Implement Contract Logix Organizations List/Grid Page (Figma Migration)
+            - generic [ref=e597]:
+              - generic [ref=e598]: 📋 Story
+              - generic [ref=e599]: 🎯 Critical / Must Fix
+              - generic [ref=e600]: 👤 Emmanuel Rosario
+              - generic [ref=e601]: "📅 Updated: 11/13/2025"
+          - generic [ref=e602] [cursor=pointer]:
+            - generic [ref=e603]:
+              - link "CLX-313" [ref=e604]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-313
+              - generic [ref=e605]: 2 SP
+              - generic [ref=e606]: In Progress
+              - 'link "Aha: CL-317" [ref=e607]':
+                - /url: https://legalsifter1.aha.io/features/CL-317
+                - img [ref=e608]
+                - generic [ref=e610]: "Aha: CL-317"
+              - generic [ref=e611]: Click to expand
+            - generic [ref=e612]: Implement Contract Logix Custom Object Index (Figma Migration)
+            - generic [ref=e613]:
+              - generic [ref=e614]: 📋 Story
+              - generic [ref=e615]: 🎯 Critical / Must Fix
+              - generic [ref=e616]: 👤 Emmanuel Rosario
+              - generic [ref=e617]: "📅 Updated: 11/13/2025"
+          - generic [ref=e618] [cursor=pointer]:
+            - generic [ref=e619]:
+              - link "CLX-308" [ref=e620]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-308
+              - generic [ref=e621]: 2 SP
+              - generic [ref=e622]: In Progress
+              - 'link "Aha: CL-314" [ref=e623]':
+                - /url: https://legalsifter1.aha.io/features/CL-314
+                - img [ref=e624]
+                - generic [ref=e626]: "Aha: CL-314"
+              - generic [ref=e627]: Click to expand
+            - generic [ref=e628]: Implement Contract Logix Request Detail Page (Figma Migration)
+            - generic [ref=e629]:
+              - generic [ref=e630]: 📋 Story
+              - generic [ref=e631]: 🎯 Critical / Must Fix
+              - generic [ref=e632]: 👤 William McCarty
+              - generic [ref=e633]: "📅 Updated: 11/13/2025"
+          - generic [ref=e634] [cursor=pointer]:
+            - generic [ref=e635]:
+              - link "CLX-310" [ref=e636]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-310
+              - generic [ref=e637]: 1 SP
+              - generic [ref=e638]: ToDo
+              - generic "This ticket does not exist in Aha" [ref=e639]:
+                - img [ref=e640]
+                - generic [ref=e642]: Not in Aha
+              - generic [ref=e643]: Click to expand
+            - generic [ref=e644]: UI Refactor > Add Light Mode, Dark Mode, Classic Mode Toggle to User Preference Dropdown
+            - generic [ref=e645]:
+              - generic [ref=e646]: 📋 Bug
+              - generic [ref=e647]: 🎯 High
+              - generic [ref=e648]: 👤 Rob Guempel
+              - generic [ref=e649]: "📅 Updated: 11/13/2025"
+          - generic [ref=e650] [cursor=pointer]:
+            - generic [ref=e651]:
+              - link "CLX-302" [ref=e652]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-302
+              - generic [ref=e653]: 2 SP
+              - generic [ref=e654]: In Progress
+              - 'link "Aha: CL-308" [ref=e655]':
+                - /url: https://legalsifter1.aha.io/features/CL-308
+                - img [ref=e656]
+                - generic [ref=e658]: "Aha: CL-308"
+              - generic [ref=e659]: Click to expand
+            - generic [ref=e660]: Implement Contract Logix Dashboard (Figma Migration)
+            - generic [ref=e661]:
+              - generic [ref=e662]: 📋 Story
+              - generic [ref=e663]: 🎯 Critical / Must Fix
+              - generic [ref=e664]: 👤 Rob Guempel
+              - generic [ref=e665]: "📅 Updated: 11/12/2025"
+          - generic [ref=e666] [cursor=pointer]:
+            - generic [ref=e667]:
+              - link "CLX-305" [ref=e668]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-305
+              - generic [ref=e669]: 2 SP
+              - generic [ref=e670]: In Progress
+              - 'link "Aha: CL-311" [ref=e671]':
+                - /url: https://legalsifter1.aha.io/features/CL-311
+                - img [ref=e672]
+                - generic [ref=e674]: "Aha: CL-311"
+              - generic [ref=e675]: Click to expand
+            - generic [ref=e676]: Implement Contract Logix People List/Grid Page (Figma Migration)
+            - generic [ref=e677]:
+              - generic [ref=e678]: 📋 Story
+              - generic [ref=e679]: 🎯 Critical / Must Fix
+              - generic [ref=e680]: 👤 Emmanuel Rosario
+              - generic [ref=e681]: "📅 Updated: 11/12/2025"
+          - generic [ref=e682] [cursor=pointer]:
+            - generic [ref=e683]:
+              - link "CLX-306" [ref=e684]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-306
+              - generic [ref=e685]: 2 SP
+              - generic [ref=e686]: In Progress
+              - 'link "Aha: CL-312" [ref=e687]':
+                - /url: https://legalsifter1.aha.io/features/CL-312
+                - img [ref=e688]
+                - generic [ref=e690]: "Aha: CL-312"
+              - generic [ref=e691]: Click to expand
+            - generic [ref=e692]: Implement Contract Logix People/Contact Detail Page (Figma Migration)
+            - generic [ref=e693]:
+              - generic [ref=e694]: 📋 Story
+              - generic [ref=e695]: 🎯 Critical / Must Fix
+              - generic [ref=e696]: 👤 William McCarty
+              - generic [ref=e697]: "📅 Updated: 11/12/2025"
+          - generic [ref=e698] [cursor=pointer]:
+            - generic [ref=e699]:
+              - link "CLX-304" [ref=e700]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-304
+              - generic [ref=e701]: 2 SP
+              - generic [ref=e702]: In Progress
+              - 'link "Aha: CL-310" [ref=e703]':
+                - /url: https://legalsifter1.aha.io/features/CL-310
+                - img [ref=e704]
+                - generic [ref=e706]: "Aha: CL-310"
+              - generic [ref=e707]: Click to expand
+            - generic [ref=e708]: Implement Contract Logix Organization Detail Page (Figma Migration)
+            - generic [ref=e709]:
+              - generic [ref=e710]: 📋 Story
+              - generic [ref=e711]: 🎯 Critical / Must Fix
+              - generic [ref=e712]: 👤 William McCarty
+              - generic [ref=e713]: "📅 Updated: 11/12/2025"
+          - generic [ref=e714] [cursor=pointer]:
+            - generic [ref=e715]:
+              - link "CLX-296" [ref=e716]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-296
+              - generic [ref=e717]: 2 SP
+              - generic [ref=e718]: In Progress
+              - 'link "Aha: CL-302" [ref=e719]':
+                - /url: https://legalsifter1.aha.io/features/CL-302
+                - img [ref=e720]
+                - generic [ref=e722]: "Aha: CL-302"
+              - generic [ref=e723]: Click to expand
+            - generic [ref=e724]: Implement Contract Logix Homepage (Figma Migration)
+            - generic [ref=e725]:
+              - generic [ref=e726]: 📋 Story
+              - generic [ref=e727]: 🎯 Critical / Must Fix
+              - generic [ref=e728]: 👤 Brandon Shuey
+              - generic [ref=e729]: "📅 Updated: 11/12/2025"
+          - generic [ref=e730] [cursor=pointer]:
+            - generic [ref=e731]:
+              - link "CLX-297" [ref=e732]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-297
+              - generic [ref=e733]: 2 SP
+              - generic [ref=e734]: In Progress
+              - 'link "Aha: CL-303" [ref=e735]':
+                - /url: https://legalsifter1.aha.io/features/CL-303
+                - img [ref=e736]
+                - generic [ref=e738]: "Aha: CL-303"
+              - generic [ref=e739]: Click to expand
+            - generic [ref=e740]: Implement Contract Logix Login (Figma Migration)
+            - generic [ref=e741]:
+              - generic [ref=e742]: 📋 Story
+              - generic [ref=e743]: 🎯 Critical / Must Fix
+              - generic [ref=e744]: 👤 Brandon Shuey
+              - generic [ref=e745]: "📅 Updated: 11/12/2025"
+          - generic [ref=e746] [cursor=pointer]:
+            - generic [ref=e747]:
+              - link "CLX-298" [ref=e748]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-298
+              - generic [ref=e749]: 3 SP
+              - generic [ref=e750]: In Progress
+              - 'link "Aha: CL-304" [ref=e751]':
+                - /url: https://legalsifter1.aha.io/features/CL-304
+                - img [ref=e752]
+                - generic [ref=e754]: "Aha: CL-304"
+              - generic [ref=e755]: Click to expand
+            - generic [ref=e756]: Implement Contract Logix Advanced Search (Figma Migration)
+            - generic [ref=e757]:
+              - generic [ref=e758]: 📋 Story
+              - generic [ref=e759]: 🎯 Critical / Must Fix
+              - generic [ref=e760]: 👤 Rob Guempel
+              - generic [ref=e761]: "📅 Updated: 11/12/2025"
+          - generic [ref=e762] [cursor=pointer]:
+            - generic [ref=e763]:
+              - link "CLX-325" [ref=e764]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-325
+              - generic [ref=e765]: 1 SP
+              - generic [ref=e766]: QA Review
+              - generic [ref=e767]: "⏱️ To Do → QA: 0.0 days"
+              - generic "This ticket does not exist in Aha" [ref=e768]:
+                - img [ref=e769]
+                - generic [ref=e771]: Not in Aha
+              - generic [ref=e772]: Click to expand
+            - generic [ref=e773]: Association field has problems in Validation Rules
+            - generic [ref=e774]:
+              - generic [ref=e775]: 📋 Bug
+              - generic [ref=e776]: 🎯 Medium
+              - generic [ref=e777]: 👤 Alex Dyachenko
+              - generic [ref=e778]: "📅 Updated: 11/11/2025"
+          - generic [ref=e779] [cursor=pointer]:
+            - generic [ref=e780]:
+              - link "CLX-326" [ref=e781]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-326
+              - generic [ref=e782]: 1 SP
+              - generic [ref=e783]: QA Review
+              - generic [ref=e784]: "⏱️ To Do → QA: 1.2 days"
+              - generic "This ticket does not exist in Aha" [ref=e785]:
+                - img [ref=e786]
+                - generic [ref=e788]: Not in Aha
+              - generic [ref=e789]: Click to expand
+            - generic [ref=e790]: Validation Rules > Orgs to Contacts > Remove Association field
+            - generic [ref=e791]:
+              - generic [ref=e792]: 📋 Bug
+              - generic [ref=e793]: 🎯 Medium
+              - generic [ref=e794]: 👤 Alex Dyachenko
+              - generic [ref=e795]: "📅 Updated: 11/11/2025"
+          - generic [ref=e796] [cursor=pointer]:
+            - generic [ref=e797]:
+              - link "CLX-300" [ref=e798]:
+                - /url: https://contractlogix.atlassian.net/browse/CLX-300
+              - generic [ref=e799]: 2 SP
+              - generic [ref=e800]: In Progress
+              - 'link "Aha: CL-306" [ref=e801]':
+                - /url: https://legalsifter1.aha.io/features/CL-306
+                - img [ref=e802]
+                - generic [ref=e804]: "Aha: CL-306"
+              - generic [ref=e805]: Click to expand
+            - generic [ref=e806]: Implement Contract Logix Contract Details (Figma Migration)
+            - generic [ref=e807]:
+              - generic [ref=e808]: 📋 Story
+              - generic [ref=e809]: 🎯 Critical / Must Fix
+              - generic [ref=e810]: 👤 William McCarty
+              - generic [ref=e811]: "📅 Updated: 11/11/2025"
+        - generic [ref=e813]: Showing 17 of 17 tickets
+      - contentinfo [ref=e814]:
+        - link "Test Application" [ref=e816] [cursor=pointer]:
+          - /url: /tests
+    - generic [ref=e817]:
+      - generic [ref=e818]:
+        - generic [ref=e819]:
+          - img [ref=e821]
+          - generic [ref=e823]:
+            - heading "Dashboard Assistant" [level=2] [ref=e824]
+            - paragraph [ref=e825]: Powered by Claude AI
+        - button [ref=e827] [cursor=pointer]:
+          - img [ref=e828]
+      - generic [ref=e832]:
+        - generic [ref=e834]: Generate a PowerPoint presentation for sprint review
+        - paragraph [ref=e835]: 7:54:38 PM
+      - generic [ref=e842]:
+        - generic [ref=e843]:
+          - textbox "Select a project or sprint to start..." [disabled] [ref=e844]
+          - button [disabled] [ref=e845]:
+            - img [ref=e846]
+        - paragraph [ref=e849]: Press Enter to send, Shift+Enter for new line
+  - generic [ref=e854] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e855]:
+      - img [ref=e856]
+    - generic [ref=e859]:
+      - button "Open issues overlay" [ref=e860]:
+        - generic [ref=e861]:
+          - generic [ref=e862]: "0"
+          - generic [ref=e863]: "1"
+        - generic [ref=e864]: Issue
+      - button "Collapse issues badge" [ref=e865]:
+        - img [ref=e866]
+  - alert [ref=e868]
+```

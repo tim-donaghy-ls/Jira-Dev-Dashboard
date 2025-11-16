@@ -1,0 +1,191 @@
+{
+  "summary": {
+    "total": 45,
+    "done": 28,
+    "inProgress": 12,
+    "toDo": 5,
+    "avgResolutionDays": 4.2,
+    "totalStoryPoints": 89
+  },
+  "sprintInfo": {
+    "name": "Sprint 24",
+    "state": "active",
+    "startDate": "2025-11-01T00:00:00Z",
+    "endDate": "2025-11-15T00:00:00Z",
+    "goal": "Improve dashboard performance and add new analytics features"
+  },
+  "issues": [
+    {
+      "key": "DASH-101",
+      "summary": "Implement real-time data refresh",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "John Doe",
+      "storyPoints": 8,
+      "created": "2025-11-01T09:00:00Z",
+      "resolved": "2025-11-08T16:30:00Z",
+      "issueType": "Story"
+    },
+    {
+      "key": "DASH-102",
+      "summary": "Fix memory leak in chart rendering",
+      "status": "Done",
+      "priority": "Critical",
+      "assignee": "Jane Smith",
+      "storyPoints": 5,
+      "created": "2025-11-02T10:00:00Z",
+      "resolved": "2025-11-05T14:00:00Z",
+      "issueType": "Bug"
+    },
+    {
+      "key": "DASH-103",
+      "summary": "Add export to PDF functionality",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "John Doe",
+      "storyPoints": 13,
+      "created": "2025-11-03T11:00:00Z",
+      "issueType": "Story"
+    },
+    {
+      "key": "DASH-104",
+      "summary": "Optimize database queries",
+      "status": "In Progress",
+      "priority": "High",
+      "assignee": "Bob Wilson",
+      "storyPoints": 8,
+      "created": "2025-11-04T09:30:00Z",
+      "issueType": "Task"
+    },
+    {
+      "key": "DASH-105",
+      "summary": "Update UI design system",
+      "status": "To Do",
+      "priority": "Low",
+      "assignee": "Alice Johnson",
+      "storyPoints": 5,
+      "created": "2025-11-05T10:00:00Z",
+      "issueType": "Story"
+    },
+    {
+      "key": "DASH-106",
+      "summary": "Add user authentication",
+      "status": "Done",
+      "priority": "Critical",
+      "assignee": "Jane Smith",
+      "storyPoints": 13,
+      "created": "2025-11-01T08:00:00Z",
+      "resolved": "2025-11-10T17:00:00Z",
+      "issueType": "Story"
+    },
+    {
+      "key": "DASH-107",
+      "summary": "Fix mobile responsiveness",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "John Doe",
+      "storyPoints": 5,
+      "created": "2025-11-06T09:00:00Z",
+      "issueType": "Bug"
+    },
+    {
+      "key": "DASH-108",
+      "summary": "Add dark mode support",
+      "status": "Done",
+      "priority": "Medium",
+      "assignee": "Alice Johnson",
+      "storyPoints": 8,
+      "created": "2025-11-02T11:00:00Z",
+      "resolved": "2025-11-09T15:00:00Z",
+      "issueType": "Feature"
+    }
+  ],
+  "statusBreakdown": {
+    "Done": 28,
+    "In Progress": 12,
+    "To Do": 5
+  },
+  "priorityBreakdown": {
+    "Critical": 8,
+    "High": 15,
+    "Medium": 18,
+    "Low": 4
+  },
+  "typeBreakdown": {
+    "Story": 20,
+    "Bug": 12,
+    "Task": 8,
+    "Feature": 5
+  },
+  "assigneeStats": [
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "totalIssues": 12,
+      "done": 7,
+      "inProgress": 3,
+      "toDo": 2,
+      "storyPoints": 34,
+      "avgResolutionDays": 3.8
+    },
+    {
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "totalIssues": 15,
+      "done": 10,
+      "inProgress": 4,
+      "toDo": 1,
+      "storyPoints": 38,
+      "avgResolutionDays": 4.2
+    },
+    {
+      "name": "Bob Wilson",
+      "email": "bob.wilson@example.com",
+      "totalIssues": 10,
+      "done": 6,
+      "inProgress": 3,
+      "toDo": 1,
+      "storyPoints": 25,
+      "avgResolutionDays": 5.1
+    },
+    {
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "totalIssues": 8,
+      "done": 5,
+      "inProgress": 2,
+      "toDo": 1,
+      "storyPoints": 21,
+      "avgResolutionDays": 3.5
+    }
+  ],
+  "timeline": [
+    {"date": "2025-11-01", "created": 3, "resolved": 1},
+    {"date": "2025-11-02", "created": 2, "resolved": 0},
+    {"date": "2025-11-03", "created": 1, "resolved": 2},
+    {"date": "2025-11-04", "created": 2, "resolved": 1},
+    {"date": "2025-11-05", "created": 1, "resolved": 3},
+    {"date": "2025-11-06", "created": 2, "resolved": 2},
+    {"date": "2025-11-07", "created": 0, "resolved": 1},
+    {"date": "2025-11-08", "created": 1, "resolved": 4},
+    {"date": "2025-11-09", "created": 1, "resolved": 2},
+    {"date": "2025-11-10", "created": 2, "resolved": 3}
+  ],
+  "recentIssues": [
+    {
+      "key": "DASH-108",
+      "summary": "Add dark mode support",
+      "created": "2025-11-02T11:00:00Z"
+    },
+    {
+      "key": "DASH-107",
+      "summary": "Fix mobile responsiveness",
+      "created": "2025-11-06T09:00:00Z"
+    },
+    {
+      "key": "DASH-106",
+      "summary": "Add user authentication",
+      "created": "2025-11-01T08:00:00Z"
+    }
+  ]
+}

@@ -42,6 +42,7 @@ export default function UserMenu() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 bg-transparent border border-custom rounded-lg cursor-pointer transition-all text-sm text-primary hover:bg-black/5 dark:hover:bg-white/5 hover:border-primary"
         title="User menu"
+        aria-label="User menu"
       >
         <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold overflow-hidden">
           {session.user.image ? (

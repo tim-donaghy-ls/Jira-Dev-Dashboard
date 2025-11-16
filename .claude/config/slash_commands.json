@@ -1,0 +1,22 @@
+{
+  "commands": [
+    {
+      "name": "/run-test-pipeline",
+      "description": "Run full test pipeline (backend, frontend, E2E, AI Code Fixer, reporting).",
+      "mapped_action": "orchestrator.run_pipeline"
+    },
+    {
+      "name": "/run-test-pipeline-focus",
+      "description": "Run the test pipeline focused on a specific topic or area (e.g. 'api tests', 'auth', 'frontend components').",
+      "mapped_action": "orchestrator.run_pipeline",
+      "params": [
+        "focus"
+      ]
+    },
+    {
+      "name": "/fix-tests",
+      "description": "Run AI Code Fixer against last known test results.",
+      "mapped_action": "ai_code_fixer.run_last_results"
+    }
+  ]
+}

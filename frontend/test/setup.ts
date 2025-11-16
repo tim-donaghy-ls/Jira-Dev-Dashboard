@@ -13,5 +13,8 @@ process.env.NEXT_PUBLIC_API_URL = 'http://localhost:8080';
 // Mock fetch globally
 global.fetch = vi.fn();
 
+// Mock DOM APIs not available in jsdom
+Element.prototype.scrollIntoView = vi.fn();
+
 // Add custom matchers
 expect.extend({});

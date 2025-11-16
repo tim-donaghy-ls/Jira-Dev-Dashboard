@@ -1,0 +1,80 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - button "Switch to dark mode" [ref=e6] [cursor=pointer]: 🌙
+        - generic [ref=e7]:
+          - img "Legal Sifter" [ref=e8]
+          - heading "Development Metrics Dashboard" [level=1] [ref=e9]
+          - button "Dashboard Assistant (⌘K)" [ref=e10] [cursor=pointer]:
+            - img [ref=e11]
+            - generic [ref=e13]: Assistant
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: "JIRA Instance:"
+          - combobox "JIRA Instance:" [ref=e17]:
+            - option "ContractLogix"
+            - option "Legal Sifter" [selected]
+        - generic [ref=e18]:
+          - generic [ref=e19]: "Project:"
+          - combobox "Project:" [ref=e20]:
+            - option "Select a project..."
+            - option "CLX - LS-CLX Platform" [selected]
+            - option "CMP - Customer Mgmt Portal"
+            - option "CS - Customer Support"
+            - option "CSF - CLX SIG Findings"
+            - option "DM - Data Migration"
+            - option "FNY - Fleet - New York(test)"
+            - option "IT - IT / Dev Ops"
+            - option "ITSEC - IT - Security"
+            - option "MDP - My discovery project"
+            - option "PRG1 - PR-G1-Appeon Platform"
+            - option "QA - QA"
+            - option "RP2 - PR-RP2"
+            - option "TL - Technology Logs"
+            - option "TTS - Service Desk"
+        - generic [ref=e21]:
+          - generic [ref=e22]: "Sprint:"
+          - combobox "Sprint:" [ref=e23]:
+            - option "Select a project first..." [selected]
+        - generic [ref=e24]:
+          - generic [ref=e27]: JIRA Connection Error
+          - generic [ref=e30]: "GitHub: All repos failed to connect"
+          - generic [ref=e33]: Connected to Aha
+      - generic [ref=e34]: "{\"error\":\"JIRA API error: 404 - \\u003c!DOCTYPE html\\u003e\\n\\u003chtml lang=\\\"en\\\"\\u003e\\n \\u003chead\\u003e\\n \\u003cmeta charset=\\\"utf-8\\\"\\u003e\\n \\u003cmeta name=\\\"description\\\" content=\\\"\\\"\\u003e\\n \\u003cmeta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1\\\"\\u003e\\n \\u003ctitle\\u003eAtlassian Cloud Notifications - Page Unavailable\\u003c/title\\u003e\\n \\u003clink rel=\\\"stylesheet\\\" href=\\\"/_edge/resources/aui-prototyping.css\\\"\\u003e\\n \\u003c/head\\u003e\\n \\u003cbody\\u003e\\n \\u003cdiv id=\\\"page\\\"\\u003e\\n \\u003csection id=\\\"content\\\" role=\\\"main\\\" class=\\\"aui-page-notification aui-page-size-medium\\\"\\u003e\\n \\u003cdiv id=\\\"notifications\\\" class=\\\"aui-page-panel\\\"\\u003e\\n \\u003cdiv class=\\\"aui-page-header-inner\\\"\\u003e\\n \\u003csection class=\\\"aui-page-panel-content\\\"\\u003e\\n \\u003ch1\\u003ePage unavailable\\u003c/h1\\u003e\\n \\u003cdiv class=\\\"aui-page-notification-description\\\"\\u003e\\n Your Atlassian Cloud site is currently unavailable.\\n \\u003cbr/\\u003e\\u003cbr/\\u003e\\n Please check \\u003ca href=\\\"https://status.atlassian.com\\\"\\u003eAtlassian Status\\u003c/a\\u003e for known problems.\\n \\u003cbr /\\u003e\\n If there are no known problems and your page hasn't appeared again in 5-10 minutes then please contact our support team.\\n \\u003c/div\\u003e\\n \\u003cbr\\u003e\\n \\u003cp\\u003e\\n \\u003ca href=\\\"https://status.atlassian.com\\\" class=\\\"aui-button aui-button-primary\\\"\\u003e\\n Atlassian Status\\n \\u003c/a\\u003e\\n \\u0026nbsp;\\n \\u003ca href=\\\"https://support.atlassian.com\\\" class=\\\"aui-button\\\"\\u003e\\n Contact Support\\n \\u003c/a\\u003e\\n \\u003c/p\\u003e\\n \\u003cbr\\u003e\\n \\u003cp style=\\\"color:#B3B3B3; font:normal 12px/18px Helvetica, Arial;\\\"\\u003eRequest ID: 83aaa5d91fad4a4999ce65273f959f53\\u003c/p\\u003e\\n \\u003c/section\\u003e\\n \\u003c/div\\u003e\\n \\u003c/div\\u003e\\n \\u003c/section\\u003e\\n \\u003cfooter id=\\\"footer\\\"\\u003e\\n \\u003csection class=\\\"footer-body\\\"\\u003e\\n \\u003cul\\u003e\\n \\u003cli\\u003e\\u003ca href=\\\"https://status.atlassian.com\\\"\\u003eAtlassian Status\\u003c/a\\u003e\\u003c/li\\u003e\\n \\u003cli\\u003e\\u003ca href=\\\"https://confluence.atlassian.com/display/cloud/What's+New\\\"\\u003eRelease Summary\\u003c/a\\u003e\\u003c/li\\u003e\\n \\u003cli\\u003e\\u003ca href=\\\"https://confluence.atlassian.com/display/Cloud/Atlassian+Cloud+Documentation\\\"\\u003eDocumentation\\u003c/a\\u003e\\u003c/li\\u003e\\n \\u003cli\\u003e\\u003ca href=\\\"https://answers.atlassian.com\\\"\\u003eAnswers\\u003c/a\\u003e\\u003c/li\\u003e\\n \\u003c/ul\\u003e\\n \\u003cdiv id=\\\"footer-logo\\\"\\u003e\\u003ca href=\\\"https://www.atlassian.com/\\\" target=\\\"_blank\\\"\\u003eAtlassian\\u003c/a\\u003e\\u003c/div\\u003e\\n \\u003c/section\\u003e\\n \\u003c/footer\\u003e\\n \\u003c/div\\u003e\\n \\u003c/body\\u003e\\n\\u003c/html\\u003e\",\"success\":false}"
+      - contentinfo [ref=e35]:
+        - link "Test Application" [ref=e37] [cursor=pointer]:
+          - /url: /tests
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - img [ref=e42]
+          - generic [ref=e44]:
+            - heading "Dashboard Assistant" [level=2] [ref=e45]
+            - paragraph [ref=e46]: Powered by Claude AI
+        - button [ref=e48] [cursor=pointer]:
+          - img [ref=e49]
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - textbox "Select a project or sprint to start..." [disabled] [ref=e54]
+          - button [disabled] [ref=e55]:
+            - img [ref=e56]
+        - paragraph [ref=e58]: Press Enter to send, Shift+Enter for new line
+  - generic [ref=e63] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e64]:
+      - img [ref=e65]
+    - generic [ref=e68]:
+      - button "Open issues overlay" [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: "2"
+          - generic [ref=e72]: "3"
+        - generic [ref=e73]:
+          - text: Issue
+          - generic [ref=e74]: s
+      - button "Collapse issues badge" [ref=e75]:
+        - img [ref=e76]
+  - alert [ref=e78]
+```

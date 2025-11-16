@@ -1,0 +1,86 @@
+{
+  "features": [
+    {
+      "reference_num": "DASH-101",
+      "name": "Implement real-time data refresh",
+      "workflow_status": {
+        "name": "In development"
+      },
+      "url": "https://example.aha.io/features/DASH-101"
+    },
+    {
+      "reference_num": "DASH-102",
+      "name": "Fix memory leak in chart rendering",
+      "workflow_status": {
+        "name": "Ready for development"
+      },
+      "url": "https://example.aha.io/features/DASH-102"
+    },
+    {
+      "reference_num": "DASH-106",
+      "name": "Add user authentication",
+      "workflow_status": {
+        "name": "In development"
+      },
+      "url": "https://example.aha.io/features/DASH-106"
+    },
+    {
+      "reference_num": "DASH-108",
+      "name": "Add dark mode support",
+      "workflow_status": {
+        "name": "Shipped"
+      },
+      "url": "https://example.aha.io/features/DASH-108"
+    }
+  ],
+  "verification_results": {
+    "DASH-101": {
+      "verified": true,
+      "ahaReference": "DASH-101",
+      "ahaUrl": "https://example.aha.io/features/DASH-101",
+      "ahaStatus": "In development"
+    },
+    "DASH-102": {
+      "verified": true,
+      "ahaReference": "DASH-102",
+      "ahaUrl": "https://example.aha.io/features/DASH-102",
+      "ahaStatus": "Ready for development"
+    },
+    "DASH-103": {
+      "verified": false,
+      "ahaReference": null,
+      "ahaUrl": null,
+      "ahaStatus": null
+    },
+    "DASH-104": {
+      "verified": false,
+      "ahaReference": null,
+      "ahaUrl": null,
+      "ahaStatus": null
+    },
+    "DASH-105": {
+      "verified": false,
+      "ahaReference": null,
+      "ahaUrl": null,
+      "ahaStatus": null
+    },
+    "DASH-106": {
+      "verified": true,
+      "ahaReference": "DASH-106",
+      "ahaUrl": "https://example.aha.io/features/DASH-106",
+      "ahaStatus": "In development"
+    },
+    "DASH-107": {
+      "verified": false,
+      "ahaReference": null,
+      "ahaUrl": null,
+      "ahaStatus": null
+    },
+    "DASH-108": {
+      "verified": true,
+      "ahaReference": "DASH-108",
+      "ahaUrl": "https://example.aha.io/features/DASH-108",
+      "ahaStatus": "Shipped"
+    }
+  }
+}

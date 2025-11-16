@@ -6,6 +6,8 @@ import (
 	"jira-dashboard/jira"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -969,7 +971,7 @@ func TestHandleIssueChangelog_Error(t *testing.T) {
 func TestHandleDashboard_ProjectError(t *testing.T) {
 	// Create mock JIRA server that returns an error for project issues
 	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/rest/api/3/search" {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 	}))
@@ -994,7 +996,7 @@ func TestHandleDashboard_ProjectError(t *testing.T) {
 func TestHandleDashboard_SprintError(t *testing.T) {
 	// Create mock JIRA server that returns an error for sprint issues
 	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/rest/api/3/search" {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
 			w.WriteHeader(http.StatusNotFound)
 		}
 	}))
@@ -1014,4 +1016,321 @@ func TestHandleDashboard_SprintError(t *testing.T) {
 
 	assert.Equal(t, http.StatusInternalServerError, w.Code)
 	assert.Contains(t, w.Body.String(), "Error fetching JIRA data")
+}
+
+// TestHandleJiraSearch_MethodNotAllowed tests that only GET is allowed
+func TestHandleJiraSearch_MethodNotAllowed(t *testing.T) {
+	cfg := &config.Config{}
+	handler := NewHandler(cfg, make(map[string]*jira.Client))
+
+	methods := []string{http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch}
+	for _, method := range methods {
+		req := httptest.NewRequest(method, "/api/search?jql=project=TEST", nil)
+		w := httptest.NewRecorder()
+
+		handler.handleJiraSearch(w, req)
+
+		assert.Equal(t, http.StatusMethodNotAllowed, w.Code, "Expected 405 for method %s", method)
+		assert.Contains(t, w.Body.String(), "Method not allowed")
+	}
+}
+
+// TestHandleJiraSearch_NoClients tests error when no JIRA clients configured
+func TestHandleJiraSearch_NoClients(t *testing.T) {
+	cfg := &config.Config{}
+	handler := NewHandler(cfg, make(map[string]*jira.Client))
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql=project=TEST", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.Contains(t, w.Body.String(), "no JIRA instances configured")
+}
+
+// TestHandleJiraSearch_InvalidInstance tests error with non-existent instance
+func TestHandleJiraSearch_InvalidInstance(t *testing.T) {
+	cfg := &config.Config{}
+	mockClient := &jira.Client{}
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?instance=nonexistent&jql=project=TEST", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.Contains(t, w.Body.String(), "instance 'nonexistent' not found")
+}
+
+// TestHandleJiraSearch_MissingJQL tests error when jql parameter is missing
+func TestHandleJiraSearch_MissingJQL(t *testing.T) {
+	cfg := &config.Config{}
+	mockClient := &jira.Client{}
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.Contains(t, w.Body.String(), "jql parameter is required")
+}
+
+// TestHandleJiraSearch_EmptyJQL tests error when jql parameter is empty
+func TestHandleJiraSearch_EmptyJQL(t *testing.T) {
+	cfg := &config.Config{}
+	mockClient := &jira.Client{}
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql=", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.Contains(t, w.Body.String(), "jql parameter is required")
+}
+
+// TestHandleJiraSearch_Success tests successful JQL search
+func TestHandleJiraSearch_Success(t *testing.T) {
+	mockSearchResponse := map[string]interface{}{
+		"issues": []map[string]interface{}{
+			{
+				"key": "TEST-1",
+				"fields": map[string]interface{}{
+					"summary":     "Test Issue 1",
+					"status":      map[string]interface{}{"name": "In Progress"},
+					"issuetype":   map[string]interface{}{"name": "Story"},
+					"created":     "2024-01-01T10:00:00Z",
+					"updated":     "2024-01-15T14:30:00Z",
+					"assignee":    map[string]interface{}{"displayName": "John Doe"},
+					"priority":    map[string]interface{}{"name": "High"},
+					"description": "Test description",
+				},
+			},
+			{
+				"key": "TEST-2",
+				"fields": map[string]interface{}{
+					"summary":     "Test Issue 2",
+					"status":      map[string]interface{}{"name": "Done"},
+					"issuetype":   map[string]interface{}{"name": "Bug"},
+					"created":     "2024-01-02T11:00:00Z",
+					"updated":     "2024-01-16T15:30:00Z",
+					"assignee":    map[string]interface{}{"displayName": "Jane Smith"},
+					"priority":    map[string]interface{}{"name": "Medium"},
+					"description": "Bug description",
+				},
+			},
+		},
+		"total": 2,
+	}
+
+	// Create mock JIRA server
+	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(mockSearchResponse)
+		}
+	}))
+	defer jiraServer.Close()
+
+	cfg := &config.Config{}
+	mockClient := jira.NewClient(jiraServer.URL, "test@example.com", "token123")
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql=project=TEST", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, "application/json", w.Header().Get("Content-Type"))
+
+	var response map[string]interface{}
+	err := json.NewDecoder(w.Body).Decode(&response)
+	assert.NoError(t, err)
+
+	// Verify response structure
+	assert.Equal(t, "project=TEST", response["jql"])
+	assert.Equal(t, float64(2), response["count"])
+	assert.NotNil(t, response["issues"])
+
+	// Verify issues array
+	issues, ok := response["issues"].([]interface{})
+	assert.True(t, ok)
+	assert.Len(t, issues, 2)
+
+	// Verify first issue
+	issue1 := issues[0].(map[string]interface{})
+	assert.Equal(t, "TEST-1", issue1["key"])
+	assert.Equal(t, "Test Issue 1", issue1["summary"])
+}
+
+// TestHandleJiraSearch_WithInstance tests search with specific instance
+func TestHandleJiraSearch_WithInstance(t *testing.T) {
+	mockSearchResponse := map[string]interface{}{
+		"issues": []map[string]interface{}{
+			{
+				"key": "PROJ-1",
+				"fields": map[string]interface{}{
+					"summary": "Issue from specific instance",
+				},
+			},
+		},
+		"total": 1,
+	}
+
+	// Create mock JIRA server
+	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(mockSearchResponse)
+		}
+	}))
+	defer jiraServer.Close()
+
+	cfg := &config.Config{}
+	mockClient1 := jira.NewClient(jiraServer.URL, "test@example.com", "token123")
+	mockClient2 := jira.NewClient(jiraServer.URL, "test2@example.com", "token456")
+	clients := map[string]*jira.Client{
+		"instance1": mockClient1,
+		"instance2": mockClient2,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?instance=instance2&jql=assignee=currentUser()", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response map[string]interface{}
+	json.NewDecoder(w.Body).Decode(&response)
+	assert.Equal(t, "assignee=currentUser()", response["jql"])
+	assert.Equal(t, float64(1), response["count"])
+}
+
+// TestHandleJiraSearch_ComplexJQL tests search with complex JQL query
+func TestHandleJiraSearch_ComplexJQL(t *testing.T) {
+	mockSearchResponse := map[string]interface{}{
+		"issues": []map[string]interface{}{},
+		"total":  0,
+	}
+
+	// Create mock JIRA server
+	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
+			// Verify JQL is passed correctly in request
+			jql := r.URL.Query().Get("jql")
+			assert.Contains(t, jql, "project")
+			assert.Contains(t, jql, "status")
+			assert.Contains(t, jql, "assignee")
+
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(mockSearchResponse)
+		}
+	}))
+	defer jiraServer.Close()
+
+	cfg := &config.Config{}
+	mockClient := jira.NewClient(jiraServer.URL, "test@example.com", "token123")
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	complexJQL := "project=TEST AND status='In Progress' AND assignee=currentUser() ORDER BY created DESC"
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql="+url.QueryEscape(complexJQL), nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response map[string]interface{}
+	json.NewDecoder(w.Body).Decode(&response)
+	assert.Contains(t, response["jql"], "project")
+	assert.Equal(t, float64(0), response["count"])
+}
+
+// TestHandleJiraSearch_Error tests error handling when JIRA API fails
+func TestHandleJiraSearch_Error(t *testing.T) {
+	// Create mock JIRA server that returns an error
+	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"errorMessages": []string{"Authentication failed"},
+		})
+	}))
+	defer jiraServer.Close()
+
+	cfg := &config.Config{}
+	mockClient := jira.NewClient(jiraServer.URL, "test@example.com", "invalid-token")
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql=project=TEST", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+	assert.Contains(t, w.Body.String(), "Error searching JIRA")
+}
+
+// TestHandleJiraSearch_EmptyResults tests search with no matching issues
+func TestHandleJiraSearch_EmptyResults(t *testing.T) {
+	mockSearchResponse := map[string]interface{}{
+		"issues": []map[string]interface{}{},
+		"total":  0,
+	}
+
+	// Create mock JIRA server
+	jiraServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/rest/api/3/search/jql") {
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(mockSearchResponse)
+		}
+	}))
+	defer jiraServer.Close()
+
+	cfg := &config.Config{}
+	mockClient := jira.NewClient(jiraServer.URL, "test@example.com", "token123")
+	clients := map[string]*jira.Client{
+		"primary": mockClient,
+	}
+	handler := NewHandler(cfg, clients)
+
+	req := httptest.NewRequest(http.MethodGet, "/api/search?jql=project=NONEXISTENT", nil)
+	w := httptest.NewRecorder()
+
+	handler.handleJiraSearch(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response map[string]interface{}
+	json.NewDecoder(w.Body).Decode(&response)
+	assert.Equal(t, "project=NONEXISTENT", response["jql"])
+	assert.Equal(t, float64(0), response["count"])
+
+	issues := response["issues"].([]interface{})
+	assert.Len(t, issues, 0)
 }

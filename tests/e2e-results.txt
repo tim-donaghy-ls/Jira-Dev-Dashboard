@@ -1,0 +1,1743 @@
+
+=== E2E Test Suite Setup ===
+
+Checking if application is running...
+✓ Frontend is accessible at http://localhost:3000
+✓ Backend API is accessible at http://localhost:8080
+✓ Authentication is properly disabled
+✓ Application is ready for E2E tests
+
+=== Starting Test Execution ===
+
+
+Running 190 tests using 1 worker
+
+  ✓    1 [chromium] › e2e/aha-integration.spec.ts:9:7 › Aha Integration - Connection Status › should display Aha connection status (10.2s)
+  ✓    2 [chromium] › e2e/aha-integration.spec.ts:17:7 › Aha Integration - Connection Status › should show connection status indicator (10.4s)
+  ✓    3 [chromium] › e2e/aha-integration.spec.ts:27:7 › Aha Integration - Connection Status › should show error when Aha is not configured (10.3s)
+  ✓    4 [chromium] › e2e/aha-integration.spec.ts:37:7 › Aha Integration - Connection Status › should display successful connection message (10.1s)
+  ✓    5 [chromium] › e2e/aha-integration.spec.ts:54:7 › Aha Integration - Feature Verification › should verify JIRA tickets against Aha features (9.4s)
+  ✓    6 [chromium] › e2e/aha-integration.spec.ts:66:7 › Aha Integration - Feature Verification › should display verification badges on JIRA tickets (13.4s)
+  ✓    7 [chromium] › e2e/aha-integration.spec.ts:78:7 › Aha Integration - Feature Verification › should show checkmark for verified tickets (9.5s)
+  ✓    8 [chromium] › e2e/aha-integration.spec.ts:89:7 › Aha Integration - Feature Verification › should show warning for unverified tickets (13.4s)
+  ✓    9 [chromium] › e2e/aha-integration.spec.ts:100:7 › Aha Integration - Feature Verification › should display Aha reference for verified tickets (9.4s)
+  ✓   10 [chromium] › e2e/aha-integration.spec.ts:111:7 › Aha Integration - Feature Verification › should link to Aha feature page (9.5s)
+  ✓   11 [chromium] › e2e/aha-integration.spec.ts:129:7 › Aha Integration - Verification Badges › should display badge for tickets verified in Aha (9.5s)
+  ✓   12 [chromium] › e2e/aha-integration.spec.ts:141:7 › Aha Integration - Verification Badges › should show different badge colors for verified vs unverified (9.4s)
+  ✓   13 [chromium] › e2e/aha-integration.spec.ts:154:7 › Aha Integration - Verification Badges › should display badge with Aha status (9.4s)
+  ✓   14 [chromium] › e2e/aha-integration.spec.ts:165:7 › Aha Integration - Verification Badges › should show tooltip on hover over badge (13.4s)
+  ✓   15 [chromium] › e2e/aha-integration.spec.ts:191:7 › Aha Integration - Warning Messages › should display warning for tickets not in Aha (9.4s)
+  ✓   16 [chromium] › e2e/aha-integration.spec.ts:202:7 › Aha Integration - Warning Messages › should show count of unverified tickets (9.4s)
+  ✘   17 [chromium] › e2e/aha-integration.spec.ts:214:7 › Aha Integration - Warning Messages › should list unverified ticket keys (9.4s)
+  ✓   18 [chromium] › e2e/aha-integration.spec.ts:224:7 › Aha Integration - Warning Messages › should link to unverified tickets (9.5s)
+  ✓   19 [chromium] › e2e/aha-integration.spec.ts:236:7 › Aha Integration - Warning Messages › should be dismissible warning (9.5s)
+  ✘   20 [chromium] › e2e/aha-integration.spec.ts:258:7 › Aha Integration - Batch Verification › should verify all tickets in batch (13.5s)
+  ✓   21 [chromium] › e2e/aha-integration.spec.ts:269:7 › Aha Integration - Batch Verification › should show loading state during verification (6.5s)
+  ✓   22 [chromium] › e2e/aha-integration.spec.ts:279:7 › Aha Integration - Batch Verification › should complete verification in reasonable time (12.5s)
+  ✘   23 [chromium] › e2e/aha-integration.spec.ts:292:7 › Aha Integration - Batch Verification › should not block dashboard rendering during verification (14.6s)
+  ✓   24 [chromium] › e2e/aha-integration.spec.ts:307:7 › Aha Integration - Error Handling › should handle Aha connection failure gracefully (3.4s)
+  ✓   25 [chromium] › e2e/aha-integration.spec.ts:317:7 › Aha Integration - Error Handling › should not block dashboard when Aha fails (8.4s)
+  ✘   26 [chromium] › e2e/aha-integration.spec.ts:325:7 › Aha Integration - Error Handling › should handle API timeout gracefully (12.5s)
+  ✓   27 [chromium] › e2e/aha-integration.spec.ts:335:7 › Aha Integration - Error Handling › should handle partial verification results (9.5s)
+  ✓   28 [chromium] › e2e/aha-integration.spec.ts:345:7 › Aha Integration - Error Handling › should show error for individual ticket verification failures (9.5s)
+  ✓   29 [chromium] › e2e/aha-integration.spec.ts:362:7 › Aha Integration - Status Display › should display Aha feature status (9.5s)
+  ✓   30 [chromium] › e2e/aha-integration.spec.ts:372:7 › Aha Integration - Status Display › should show Aha URL for verified tickets (9.4s)
+  ✓   31 [chromium] › e2e/aha-integration.spec.ts:382:7 › Aha Integration - Status Display › should open Aha feature in new tab (9.5s)
+  ✓   32 [chromium] › e2e/aha-integration.spec.ts:396:7 › Aha Integration - Status Display › should display Aha reference number (13.4s)
+  ✓   33 [chromium] › e2e/aha-integration.spec.ts:413:7 › Aha Integration - Filtering › should filter to show only verified tickets (9.8s)
+  ✓   34 [chromium] › e2e/aha-integration.spec.ts:427:7 › Aha Integration - Filtering › should filter to show only unverified tickets (9.4s)
+  ✓   35 [chromium] › e2e/aha-integration.spec.ts:439:7 › Aha Integration - Filtering › should show verification percentage (9.4s)
+  ✘   36 [chromium] › e2e/aha-integration.spec.ts:455:7 › Aha Integration - Performance › should verify tickets asynchronously (14.6s)
+  ✘   37 [chromium] › e2e/aha-integration.spec.ts:466:7 › Aha Integration - Performance › should batch verify tickets in single API call (15.1s)
+  ✘   38 [chromium] › e2e/aha-integration.spec.ts:479:7 › Aha Integration - Performance › should cache verification results (15.1s)
+  ✘   39 [chromium] › e2e/aha-integration.spec.ts:497:7 › Aha Integration - Performance › should not make redundant API calls (15.4s)
+  ✓   40 [chromium] › e2e/aha-integration.spec.ts:518:7 › Aha Integration - UI/UX › should show progress indicator during verification (6.5s)
+  ✓   41 [chromium] › e2e/aha-integration.spec.ts:529:7 › Aha Integration - UI/UX › should display verification status summary (12.6s)
+  ✓   42 [chromium] › e2e/aha-integration.spec.ts:539:7 › Aha Integration - UI/UX › should highlight unverified tickets (13.5s)
+  ✓   43 [chromium] › e2e/aha-integration.spec.ts:549:7 › Aha Integration - UI/UX › should provide clear visual feedback for verification status (9.6s)
+  ✓   44 [chromium] › e2e/ai-chat.spec.ts:9:7 › AI Chat - Drawer Functionality › should open chat drawer with keyboard shortcut (4.9s)
+  ✓   45 [chromium] › e2e/ai-chat.spec.ts:21:7 › AI Chat - Drawer Functionality › should open chat drawer by clicking button (5.0s)
+  ✓   46 [chromium] › e2e/ai-chat.spec.ts:36:7 › AI Chat - Drawer Functionality › should display chat drawer header with title (4.9s)
+  ✓   47 [chromium] › e2e/ai-chat.spec.ts:43:7 › AI Chat - Drawer Functionality › should display powered by Claude AI (821ms)
+  ✓   48 [chromium] › e2e/ai-chat.spec.ts:50:7 › AI Chat - Drawer Functionality › should have close button in chat drawer (8.0s)
+  ✓   49 [chromium] › e2e/ai-chat.spec.ts:61:7 › AI Chat - Drawer Functionality › should close chat drawer when clicking close button (5.4s)
+  ✓   50 [chromium] › e2e/ai-chat.spec.ts:86:7 › AI Chat - Drawer Functionality › should close chat drawer by clicking overlay (4.9s)
+  ✓   51 [chromium] › e2e/ai-chat.spec.ts:105:7 › AI Chat - Welcome Message › should display welcome message on first open (4.9s)
+  ✘   52 [chromium] › e2e/ai-chat.spec.ts:113:7 › AI Chat - Welcome Message › should list capabilities in welcome message (4.9s)
+  ✓   53 [chromium] › e2e/ai-chat.spec.ts:123:7 › AI Chat - Welcome Message › should show example queries in welcome message (5.0s)
+  ✓   54 [chromium] › e2e/ai-chat.spec.ts:142:7 › AI Chat - Send Message › should have textarea input for messages (4.9s)
+  ✓   55 [chromium] › e2e/ai-chat.spec.ts:147:7 › AI Chat - Send Message › should have send button (4.9s)
+  ✘   56 [chromium] › e2e/ai-chat.spec.ts:155:7 › AI Chat - Send Message › should display placeholder text in input (4.9s)
+  ✘   57 [chromium] › e2e/ai-chat.spec.ts:163:7 › AI Chat - Send Message › should type message in textarea (15.2s)
+  ✓   58 [chromium] › e2e/ai-chat.spec.ts:173:7 › AI Chat - Send Message › should send message when clicking send button (9.0s)
+  ✘   59 [chromium] › e2e/ai-chat.spec.ts:190:7 › AI Chat - Send Message › should send message when pressing Enter (15.2s)
+  ✓   60 [chromium] › e2e/ai-chat.spec.ts:203:7 › AI Chat - Send Message › should add new line with Shift+Enter (8.0s)
+  ✘   61 [chromium] › e2e/ai-chat.spec.ts:214:7 › AI Chat - Send Message › should disable send button when input is empty (4.9s)
+  ✘   62 [chromium] › e2e/ai-chat.spec.ts:223:7 › AI Chat - Send Message › should enable send button when input has text (15.3s)
+  ✘   63 [chromium] › e2e/ai-chat.spec.ts:235:7 › AI Chat - Send Message › should clear input after sending message (15.2s)
+  ✘   64 [chromium] › e2e/ai-chat.spec.ts:258:7 › AI Chat - Receive Response › should show loading indicator while processing (15.2s)
+  ✘   65 [chromium] › e2e/ai-chat.spec.ts:276:7 › AI Chat - Receive Response › should display AI response after sending message (15.2s)
+  ✘   66 [chromium] › e2e/ai-chat.spec.ts:292:7 › AI Chat - Receive Response › should display timestamp on messages (5.5s)
+  ✘   67 [chromium] › e2e/ai-chat.spec.ts:302:7 › AI Chat - Receive Response › should differentiate user and assistant messages (15.2s)
+  ✘   68 [chromium] › e2e/ai-chat.spec.ts:320:7 › AI Chat - Receive Response › should scroll to latest message automatically (15.2s)
+  ✘   69 [chromium] › e2e/ai-chat.spec.ts:351:7 › AI Chat - Sprint Analysis › should generate sprint analysis (15.2s)
+  ✘   70 [chromium] › e2e/ai-chat.spec.ts:367:7 › AI Chat - Sprint Analysis › should include metrics in sprint analysis (15.3s)
+  ✘   71 [chromium] › e2e/ai-chat.spec.ts:390:7 › AI Chat - Release Notes Generation › should generate release notes (15.2s)
+  ✘   72 [chromium] › e2e/ai-chat.spec.ts:406:7 › AI Chat - Release Notes Generation › should format release notes with sections (15.2s)
+  ✘   73 [chromium] › e2e/ai-chat.spec.ts:429:7 › AI Chat - Document Generation › should generate Word document (15.2s)
+  ✘   74 [chromium] › e2e/ai-chat.spec.ts:446:7 › AI Chat - Document Generation › should generate Excel spreadsheet (15.3s)
+  ✘   75 [chromium] › e2e/ai-chat.spec.ts:461:7 › AI Chat - Document Generation › should generate PowerPoint presentation (15.2s)
+  ✘   76 [chromium] › e2e/ai-chat.spec.ts:476:7 › AI Chat - Document Generation › should display document preview before download (15.2s)
+  ✘   77 [chromium] › e2e/ai-chat.spec.ts:492:7 › AI Chat - Document Generation › should have download button for generated documents (15.2s)
+  ✘   78 [chromium] › e2e/ai-chat.spec.ts:516:7 › AI Chat - Error Handling › should show error when no dashboard data is loaded (11.0s)
+  ✘   79 [chromium] › e2e/ai-chat.spec.ts:532:7 › AI Chat - Error Handling › should handle API errors gracefully (15.4s)
+  ✓   80 [chromium] › e2e/ai-chat.spec.ts:551:7 › AI Chat - Error Handling › should show error message when request fails (5.5s)
+  ✘   81 [chromium] › e2e/ai-chat.spec.ts:563:7 › AI Chat - Error Handling › should disable input during processing (15.4s)
+  ✘   82 [chromium] › e2e/ai-chat.spec.ts:590:7 › AI Chat - Clear Functionality › should have clear chat button (15.2s)
+  ✘   83 [chromium] › e2e/ai-chat.spec.ts:606:7 › AI Chat - Clear Functionality › should clear all messages when clicking clear (15.1s)
+  ✓   84 [chromium] › e2e/dashboard.spec.ts:9:7 › Dashboard - Core Functionality › should load dashboard successfully with correct title (2.9s)
+  ✓   85 [chromium] › e2e/dashboard.spec.ts:17:7 › Dashboard - Core Functionality › should display connection status indicators (2.9s)
+  ✓   86 [chromium] › e2e/dashboard.spec.ts:26:7 › Dashboard - Core Functionality › should display JIRA instance selector (2.8s)
+  ✓   87 [chromium] › e2e/dashboard.spec.ts:35:7 › Dashboard - Core Functionality › should display project selector after selecting instance (4.9s)
+  ✓   88 [chromium] › e2e/dashboard.spec.ts:51:7 › Dashboard - Core Functionality › should display sprint selector after selecting project (6.8s)
+  ✘   89 [chromium] › e2e/dashboard.spec.ts:80:7 › Dashboard - Summary Cards › should display summary cards after loading dashboard (4.4s)
+  ✓   90 [chromium] › e2e/dashboard.spec.ts:89:7 › Dashboard - Summary Cards › should display numeric values in summary cards (4.4s)
+  ✓   91 [chromium] › e2e/dashboard.spec.ts:98:7 › Dashboard - Summary Cards › should show sprint information when sprint is selected (4.4s)
+  ✓   92 [chromium] › e2e/dashboard.spec.ts:112:7 › Dashboard - Summary Cards › should display clickable summary cards that link to JIRA (4.4s)
+  ✓   93 [chromium] › e2e/dashboard.spec.ts:128:7 › Dashboard - Charts Overview › should display charts section (4.4s)
+  ✓   94 [chromium] › e2e/dashboard.spec.ts:137:7 › Dashboard - Charts Overview › should display status breakdown chart (4.4s)
+  ✓   95 [chromium] › e2e/dashboard.spec.ts:146:7 › Dashboard - Charts Overview › should display priority chart (4.4s)
+  ✓   96 [chromium] › e2e/dashboard.spec.ts:155:7 › Dashboard - Charts Overview › should be able to click on charts to view full screen modal (7.9s)
+  ✓   97 [chromium] › e2e/dashboard.spec.ts:180:7 › Dashboard - Filter Functionality › should switch between JIRA instances (4.4s)
+  ✓   98 [chromium] › e2e/dashboard.spec.ts:196:7 › Dashboard - Filter Functionality › should filter by project (6.4s)
+  ✓   99 [chromium] › e2e/dashboard.spec.ts:217:7 › Dashboard - Filter Functionality › should filter by sprint (4.4s)
+  ✓  100 [chromium] › e2e/dashboard.spec.ts:241:7 › Dashboard - Sprint Tickets › should display sprint tickets section (4.4s)
+  ✓  101 [chromium] › e2e/dashboard.spec.ts:249:7 › Dashboard - Sprint Tickets › should be able to collapse and expand sprint tickets (4.4s)
+  ✓  102 [chromium] › e2e/dashboard.spec.ts:263:7 › Dashboard - Sprint Tickets › should filter tickets by developer (4.4s)
+  ✓  103 [chromium] › e2e/dashboard.spec.ts:283:7 › Dashboard - Sprint Tickets › should search tickets by keyword (4.4s)
+  ✓  104 [chromium] › e2e/dashboard.spec.ts:301:7 › Dashboard - Sprint Tickets › should display ticket cards with key and summary (4.4s)
+  ✓  105 [chromium] › e2e/dashboard.spec.ts:310:7 › Dashboard - Sprint Tickets › should have export menu for sprint tickets (4.4s)
+  ✓  106 [chromium] › e2e/dashboard.spec.ts:329:7 › Dashboard - Responsive Design › should display correctly on desktop viewport (334ms)
+  ✓  107 [chromium] › e2e/dashboard.spec.ts:337:7 › Dashboard - Responsive Design › should display correctly on tablet viewport (337ms)
+  ✓  108 [chromium] › e2e/dashboard.spec.ts:345:7 › Dashboard - Responsive Design › should display correctly on mobile viewport (324ms)
+  ✓  109 [chromium] › e2e/dashboard.spec.ts:353:7 › Dashboard - Responsive Design › should have scrollable content on small screens (4.4s)
+  ✓  110 [chromium] › e2e/dashboard.spec.ts:368:7 › Dashboard - Error Handling › should display error message when API fails (318ms)
+  ✓  111 [chromium] › e2e/dashboard.spec.ts:381:7 › Dashboard - Error Handling › should show loading state while fetching data (328ms)
+  ✘  112 [chromium] › e2e/dashboard.spec.ts:399:7 › Dashboard - Error Handling › should handle no data gracefully (10.5s)
+  ✓  113 [chromium] › e2e/dashboard.spec.ts:412:7 › Dashboard - Navigation › should have link to test dashboard (360ms)
+  ✘  114 [chromium] › e2e/dashboard.spec.ts:419:7 › Dashboard - Navigation › should navigate to test dashboard and back (10.9s)
+  ✓  115 [chromium] › e2e/dashboard.spec.ts:434:7 › Dashboard - Navigation › should open chat drawer with keyboard shortcut (856ms)
+  ✓  116 [chromium] › e2e/dashboard.spec.ts:452:7 › Dashboard - Dark Mode › should have theme toggle button (327ms)
+  ✓  117 [chromium] › e2e/dashboard.spec.ts:465:7 › Dashboard - Dark Mode › should toggle between light and dark mode (694ms)
+  ✓  118 [chromium] › e2e/developer-analytics.spec.ts:9:7 › Developer Analytics - Workload Chart › should display developer workload section (10.4s)
+  ✓  119 [chromium] › e2e/developer-analytics.spec.ts:14:7 › Developer Analytics - Workload Chart › should show workload table with developer names (6.5s)
+  ✘  120 [chromium] › e2e/developer-analytics.spec.ts:28:7 › Developer Analytics - Workload Chart › should display status columns in workload table (6.5s)
+  ✓  121 [chromium] › e2e/developer-analytics.spec.ts:38:7 › Developer Analytics - Workload Chart › should display story points column (6.5s)
+  ✓  122 [chromium] › e2e/developer-analytics.spec.ts:46:7 › Developer Analytics - Workload Chart › should display commits column (6.5s)
+  ✓  123 [chromium] › e2e/developer-analytics.spec.ts:54:7 › Developer Analytics - Workload Chart › should display PRs column (6.5s)
+  ✓  124 [chromium] › e2e/developer-analytics.spec.ts:62:7 › Developer Analytics - Workload Chart › should show total row at bottom of workload table (6.5s)
+  ✓  125 [chromium] › e2e/developer-analytics.spec.ts:70:7 › Developer Analytics - Workload Chart › should be able to collapse and expand workload section (2.4s)
+  ✓  126 [chromium] › e2e/developer-analytics.spec.ts:85:7 › Developer Analytics - Workload Chart › should expand developer row to show failed tickets (6.5s)
+  ✓  127 [chromium] › e2e/developer-analytics.spec.ts:105:7 › Developer Analytics - Workload Chart › should show failed ticket details when row is expanded (6.5s)
+  ✓  128 [chromium] › e2e/developer-analytics.spec.ts:131:7 › Developer Analytics - Team Performance Table › should display team performance section (6.5s)
+  ✓  129 [chromium] › e2e/developer-analytics.spec.ts:139:7 › Developer Analytics - Team Performance Table › should show team performance table with metrics (6.5s)
+  ✓  130 [chromium] › e2e/developer-analytics.spec.ts:152:7 › Developer Analytics - Team Performance Table › should display developer names in performance table (6.5s)
+  ✓  131 [chromium] › e2e/developer-analytics.spec.ts:162:7 › Developer Analytics - Team Performance Table › should display total issues column (6.5s)
+  ✓  132 [chromium] › e2e/developer-analytics.spec.ts:170:7 › Developer Analytics - Team Performance Table › should display average development time (10.4s)
+  ✓  133 [chromium] › e2e/developer-analytics.spec.ts:180:7 › Developer Analytics - Team Performance Table › should display GitHub activity in performance table (9.5s)
+  ✓  134 [chromium] › e2e/developer-analytics.spec.ts:198:7 › Developer Analytics - Story Points Distribution › should display story points by developer (10.4s)
+  ✓  135 [chromium] › e2e/developer-analytics.spec.ts:210:7 › Developer Analytics - Story Points Distribution › should show total story points across team (6.5s)
+  ✓  136 [chromium] › e2e/developer-analytics.spec.ts:223:7 › Developer Analytics - Story Points Distribution › should display story points in charts (6.5s)
+  ✓  137 [chromium] › e2e/developer-analytics.spec.ts:240:7 › Developer Analytics - Filter by Developer › should have developer filter dropdown (6.5s)
+  ✓  138 [chromium] › e2e/developer-analytics.spec.ts:250:7 › Developer Analytics - Filter by Developer › should filter tickets by specific developer (6.5s)
+  ✓  139 [chromium] › e2e/developer-analytics.spec.ts:274:7 › Developer Analytics - Filter by Developer › should reset filter to show all developers (6.5s)
+  ✘  140 [chromium] › e2e/developer-analytics.spec.ts:302:7 › Developer Analytics - Dev Time Metrics › should display development time in days (6.5s)
+  ✓  141 [chromium] › e2e/developer-analytics.spec.ts:312:7 › Developer Analytics - Dev Time Metrics › should show average development time per developer (6.5s)
+  ✓  142 [chromium] › e2e/developer-analytics.spec.ts:328:7 › Developer Analytics - Dev Time Metrics › should display In Progress to QA time (10.4s)
+  ✓  143 [chromium] › e2e/developer-analytics.spec.ts:346:7 › Developer Analytics - Export Functionality › should have export option for developer data (6.5s)
+  ✓  144 [chromium] › e2e/developer-analytics.spec.ts:364:7 › Developer Analytics - Export Functionality › should export developer metrics to Excel (6.5s)
+  ✓  145 [chromium] › e2e/developer-analytics.spec.ts:396:7 › Developer Analytics - GitHub Integration Display › should display GitHub commits column (9.6s)
+  ✓  146 [chromium] › e2e/developer-analytics.spec.ts:407:7 › Developer Analytics - GitHub Integration Display › should display GitHub PRs column (9.6s)
+  ✓  147 [chromium] › e2e/developer-analytics.spec.ts:417:7 › Developer Analytics - GitHub Integration Display › should show loading state for GitHub data (6.5s)
+  ✓  148 [chromium] › e2e/developer-analytics.spec.ts:426:7 › Developer Analytics - GitHub Integration Display › should display merged PRs count (9.6s)
+  ✓  149 [chromium] › e2e/developer-analytics.spec.ts:437:7 › Developer Analytics - GitHub Integration Display › should show zero values when no GitHub activity (9.5s)
+  ✓  150 [chromium] › e2e/developer-analytics.spec.ts:455:7 › Developer Analytics - Sprint Slippage › should display sprint slippage section (6.5s)
+  ✓  151 [chromium] › e2e/developer-analytics.spec.ts:463:7 › Developer Analytics - Sprint Slippage › should show tickets moved between sprints (6.5s)
+  ✓  152 [chromium] › e2e/developer-analytics.spec.ts:474:7 › Developer Analytics - Sprint Slippage › should display warning for unassigned tickets (6.5s)
+  ✓  153 [chromium] › e2e/developer-analytics.spec.ts:485:7 › Developer Analytics - Sprint Slippage › should display warning for missing story points (6.5s)
+  ✓  154 [chromium] › e2e/github-integration.spec.ts:9:7 › GitHub Integration - Connection Status › should display GitHub connection status (5.9s)
+  ✓  155 [chromium] › e2e/github-integration.spec.ts:17:7 › GitHub Integration - Connection Status › should show connection status indicator (6.0s)
+  ✓  156 [chromium] › e2e/github-integration.spec.ts:27:7 › GitHub Integration - Connection Status › should display number of connected repositories (5.9s)
+  ✓  157 [chromium] › e2e/github-integration.spec.ts:38:7 › GitHub Integration - Connection Status › should show error when GitHub is not configured (6.0s)
+  ✓  158 [chromium] › e2e/github-integration.spec.ts:48:7 › GitHub Integration - Connection Status › should show timeout message if GitHub check takes too long (8.0s)
+  ✓  159 [chromium] › e2e/github-integration.spec.ts:65:7 › GitHub Integration - Repository Stats › should display GitHub activity in developer workload (9.6s)
+  ✓  160 [chromium] › e2e/github-integration.spec.ts:77:7 › GitHub Integration - Repository Stats › should show commit counts per developer (9.5s)
+  ✓  161 [chromium] › e2e/github-integration.spec.ts:89:7 › GitHub Integration - Repository Stats › should display PR counts per developer (9.5s)
+  ✓  162 [chromium] › e2e/github-integration.spec.ts:101:7 › GitHub Integration - Repository Stats › should show merged PR counts (9.6s)
+  ✓  163 [chromium] › e2e/github-integration.spec.ts:112:7 › GitHub Integration - Repository Stats › should display loading state for GitHub data (5.5s)
+  ✓  164 [chromium] › e2e/github-integration.spec.ts:124:7 › GitHub Integration - Repository Stats › should show zero values when developer has no GitHub activity (13.5s)
+  ✓  165 [chromium] › e2e/github-integration.spec.ts:134:7 › GitHub Integration - Repository Stats › should display total GitHub activity across team (5.4s)
+  ✓  166 [chromium] › e2e/github-integration.spec.ts:154:7 › GitHub Integration - PR Activity › should show total PRs created (13.4s)
+  ✓  167 [chromium] › e2e/github-integration.spec.ts:170:7 › GitHub Integration - PR Activity › should differentiate between open and merged PRs (13.4s)
+  ✓  168 [chromium] › e2e/github-integration.spec.ts:190:7 › GitHub Integration - PR Activity › should display PR activity per sprint period (9.6s)
+  ✓  169 [chromium] › e2e/github-integration.spec.ts:208:7 › GitHub Integration - Commit History › should display commit counts by developer (9.5s)
+  ✘  170 [chromium] › e2e/github-integration.spec.ts:218:7 › GitHub Integration - Commit History › should show commit activity for sprint period (9.5s)
+  ✓  171 [chromium] › e2e/github-integration.spec.ts:228:7 › GitHub Integration - Commit History › should aggregate commits across all repositories (9.6s)
+  ✓  172 [chromium] › e2e/github-integration.spec.ts:241:7 › GitHub Integration - Commit History › should display individual developer commit counts (9.6s)
+  ✓  173 [chromium] › e2e/github-integration.spec.ts:264:7 › GitHub Integration - Cross-reference with JIRA › should match GitHub activity with JIRA assignees (9.6s)
+  ✓  174 [chromium] › e2e/github-integration.spec.ts:276:7 › GitHub Integration - Cross-reference with JIRA › should display GitHub data alongside JIRA metrics (9.6s)
+  ✓  175 [chromium] › e2e/github-integration.spec.ts:293:7 › GitHub Integration - Cross-reference with JIRA › should correlate story points with commit activity (13.4s)
+  ✓  176 [chromium] › e2e/github-integration.spec.ts:312:7 › GitHub Integration - Error Handling › should handle GitHub API timeout gracefully (5.4s)
+  ✓  177 [chromium] › e2e/github-integration.spec.ts:323:7 › GitHub Integration - Error Handling › should show warning when GitHub is not configured (3.3s)
+  ✓  178 [chromium] › e2e/github-integration.spec.ts:333:7 › GitHub Integration - Error Handling › should display partial data when some repos fail to connect (3.3s)
+  ✓  179 [chromium] › e2e/github-integration.spec.ts:345:7 › GitHub Integration - Error Handling › should not block dashboard load if GitHub fails (8.5s)
+  ✓  180 [chromium] › e2e/github-integration.spec.ts:355:7 › GitHub Integration - Error Handling › should show loading indicator while fetching GitHub data (5.5s)
+  ✓  181 [chromium] › e2e/github-integration.spec.ts:367:7 › GitHub Integration - Error Handling › should handle missing GitHub activity gracefully (13.4s)
+  ✓  182 [chromium] › e2e/github-integration.spec.ts:386:7 › GitHub Integration - Developer Matching › should match JIRA assignees with GitHub users (9.5s)
+  ✓  183 [chromium] › e2e/github-integration.spec.ts:401:7 › GitHub Integration - Developer Matching › should handle unmatched developers (9.6s)
+  ✓  184 [chromium] › e2e/github-integration.spec.ts:412:7 › GitHub Integration - Developer Matching › should match by username, email, or name parts (9.6s)
+  ✘  185 [chromium] › e2e/github-integration.spec.ts:434:7 › GitHub Integration - Activity Filtering › should filter GitHub activity by sprint dates (9.6s)
+  ✘  186 [chromium] › e2e/github-integration.spec.ts:449:7 › GitHub Integration - Activity Filtering › should update GitHub data when sprint changes (15.4s)
+  ✓  187 [chromium] › e2e/github-integration.spec.ts:471:7 › GitHub Integration - Activity Filtering › should show GitHub activity across all repositories (13.5s)
+  ✘  188 [chromium] › e2e/github-integration.spec.ts:491:7 › GitHub Integration - Performance › should load GitHub data asynchronously without blocking UI (14.7s)
+  ✓  189 [chromium] › e2e/github-integration.spec.ts:502:7 › GitHub Integration - Performance › should show loading indicator only for GitHub columns (5.5s)
+  ✓  190 [chromium] › e2e/github-integration.spec.ts:516:7 › GitHub Integration - Performance › should not reload GitHub data unnecessarily (11.5s)
+
+
+  1) [chromium] › e2e/aha-integration.spec.ts:214:7 › Aha Integration - Warning Messages › should list unverified ticket keys 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      219 |
+      220 |     const count = await ticketKeys.count();
+    > 221 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      222 |   });
+      223 |
+      224 |   test('should link to unverified tickets', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:221:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-7cb94-list-unverified-ticket-keys-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-7cb94-list-unverified-ticket-keys-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-7cb94-list-unverified-ticket-keys-chromium/error-context.md
+
+  2) [chromium] › e2e/aha-integration.spec.ts:258:7 › Aha Integration - Batch Verification › should verify all tickets in batch 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      264 |
+      265 |     // Should have tickets to verify
+    > 266 |     expect(ticketCount).toBeGreaterThan(0);
+          |                         ^
+      267 |   });
+      268 |
+      269 |   test('should show loading state during verification', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:266:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-47c08-verify-all-tickets-in-batch-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-47c08-verify-all-tickets-in-batch-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-47c08-verify-all-tickets-in-batch-chromium/error-context.md
+
+  3) [chromium] › e2e/aha-integration.spec.ts:292:7 › Aha Integration - Batch Verification › should not block dashboard rendering during verification 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('text=/total issues/i').first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('text=/total issues/i').first()[22m
+
+
+      293 |     // Dashboard should be visible immediately
+      294 |     const summaryCards = page.locator('text=/total issues/i');
+    > 295 |     await expect(summaryCards.first()).toBeVisible({ timeout: 10000 });
+          |                                        ^
+      296 |
+      297 |     // Aha verification happens in background
+      298 |     await page.waitForTimeout(5000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:295:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-728ca-ndering-during-verification-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-728ca-ndering-during-verification-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-728ca-ndering-during-verification-chromium/error-context.md
+
+  4) [chromium] › e2e/aha-integration.spec.ts:325:7 › Aha Integration - Error Handling › should handle API timeout gracefully 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      330 |     const tickets = page.locator('text=/[A-Z]+-\d+/');
+      331 |     const count = await tickets.count();
+    > 332 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      333 |   });
+      334 |
+      335 |   test('should handle partial verification results', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:332:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-6787f-ndle-API-timeout-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-6787f-ndle-API-timeout-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-6787f-ndle-API-timeout-gracefully-chromium/error-context.md
+
+  5) [chromium] › e2e/aha-integration.spec.ts:455:7 › Aha Integration - Performance › should verify tickets asynchronously 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('text=/total issues/i').first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('text=/total issues/i').first()[22m
+
+
+      458 |     // Dashboard should be usable immediately
+      459 |     const summaryCards = page.locator('text=/total issues/i');
+    > 460 |     await expect(summaryCards.first()).toBeVisible({ timeout: 10000 });
+          |                                        ^
+      461 |
+      462 |     // Aha verification happens in background
+      463 |     await page.waitForTimeout(3000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:460:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-3ddf0-rify-tickets-asynchronously-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-3ddf0-rify-tickets-asynchronously-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-3ddf0-rify-tickets-asynchronously-chromium/error-context.md
+
+  6) [chromium] › e2e/aha-integration.spec.ts:466:7 › Aha Integration - Performance › should batch verify tickets in single API call 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: page.waitForTimeout: Test timeout of 15000ms exceeded.
+
+      468 |
+      469 |     // Wait for verification to complete
+    > 470 |     await page.waitForTimeout(8000);
+          |                ^
+      471 |
+      472 |     // All tickets should be verified at once
+      473 |     const tickets = page.locator('text=/[A-Z]+-\d+/');
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:470:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-9dcb6--tickets-in-single-API-call-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-9dcb6--tickets-in-single-API-call-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-9dcb6--tickets-in-single-API-call-chromium/error-context.md
+
+  7) [chromium] › e2e/aha-integration.spec.ts:479:7 › Aha Integration - Performance › should cache verification results 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: page.waitForTimeout: Test timeout of 15000ms exceeded.
+
+      574 |     if (projectOptions > 1) {
+      575 |       await projectSelector.selectOption({ index: 1 });
+    > 576 |       await page.waitForTimeout(2000);
+          |                  ^
+      577 |
+      578 |       const sprintSelector = page.locator('select').nth(2);
+      579 |       const sprintOptions = await sprintSelector.locator('option').count();
+        at loadDashboardWithData (/Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:576:18)
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:488:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-fc260--cache-verification-results-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-fc260--cache-verification-results-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-fc260--cache-verification-results-chromium/error-context.md
+
+  8) [chromium] › e2e/aha-integration.spec.ts:497:7 › Aha Integration - Performance › should not make redundant API calls 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: page.waitForTimeout: Test timeout of 15000ms exceeded.
+
+      500 |
+      501 |     // Wait more
+    > 502 |     await page.waitForTimeout(3000);
+          |                ^
+      503 |
+      504 |     // Should not re-verify without user action
+      505 |     const tickets = page.locator('text=/[A-Z]+-\d+/');
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/aha-integration.spec.ts:502:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-cc442-ot-make-redundant-API-calls-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/aha-integration-Aha-Integr-cc442-ot-make-redundant-API-calls-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/aha-integration-Aha-Integr-cc442-ot-make-redundant-API-calls-chromium/error-context.md
+
+  9) [chromium] › e2e/ai-chat.spec.ts:113:7 › AI Chat - Welcome Message › should list capabilities in welcome message 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      118 |     const count = await capabilities.count();
+      119 |
+    > 120 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      121 |   });
+      122 |
+      123 |   test('should show example queries in welcome message', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:120:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Welcome--679d7-bilities-in-welcome-message-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Welcome--679d7-bilities-in-welcome-message-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Welcome--679d7-bilities-in-welcome-message-chromium/error-context.md
+
+  10) [chromium] › e2e/ai-chat.spec.ts:155:7 › AI Chat - Send Message › should display placeholder text in input 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"ask"[39m
+    Received string:    [31m"select a project or sprint to start..."[39m
+
+      158 |
+      159 |     expect(placeholder).toBeTruthy();
+    > 160 |     expect(placeholder?.toLowerCase()).toContain('ask');
+          |                                        ^
+      161 |   });
+      162 |
+      163 |   test('should type message in textarea', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:160:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-dd139-y-placeholder-text-in-input-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-dd139-y-placeholder-text-in-input-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-dd139-y-placeholder-text-in-input-chromium/error-context.md
+
+  11) [chromium] › e2e/ai-chat.spec.ts:163:7 › AI Chat - Send Message › should type message in textarea 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Show me all high priority bugs")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      165 |     const message = 'Show me all high priority bugs';
+      166 |
+    > 167 |     await textarea.fill(message);
+          |                    ^
+      168 |
+      169 |     const value = await textarea.inputValue();
+      170 |     expect(value).toBe(message);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:167:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-00f97-ld-type-message-in-textarea-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-00f97-ld-type-message-in-textarea-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-00f97-ld-type-message-in-textarea-chromium/error-context.md
+
+  12) [chromium] › e2e/ai-chat.spec.ts:190:7 › AI Chat - Send Message › should send message when pressing Enter 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Show me sprint summary")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      191 |     const textarea = page.locator('textarea');
+      192 |
+    > 193 |     await textarea.fill('Show me sprint summary');
+          |                    ^
+      194 |     await textarea.press('Enter');
+      195 |
+      196 |     // Wait for message to appear
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:193:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-8391c-message-when-pressing-Enter-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-8391c-message-when-pressing-Enter-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-8391c-message-when-pressing-Enter-chromium/error-context.md
+
+  13) [chromium] › e2e/ai-chat.spec.ts:214:7 › AI Chat - Send Message › should disable send button when input is empty 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+
+    Received: [31mfalse[39m
+
+      218 |
+      219 |     const isDisabled = await sendButton.isDisabled();
+    > 220 |     expect(isDisabled).toBeTruthy();
+          |                        ^
+      221 |   });
+      222 |
+      223 |   test('should enable send button when input has text', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:220:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-588f6--button-when-input-is-empty-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-588f6--button-when-input-is-empty-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-588f6--button-when-input-is-empty-chromium/error-context.md
+
+  14) [chromium] › e2e/ai-chat.spec.ts:223:7 › AI Chat - Send Message › should enable send button when input has text 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Test message")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      227 |     }).last();
+      228 |
+    > 229 |     await textarea.fill('Test message');
+          |                    ^
+      230 |
+      231 |     const isDisabled = await sendButton.isDisabled();
+      232 |     expect(isDisabled).toBeFalsy();
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:229:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-19848--button-when-input-has-text-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-19848--button-when-input-has-text-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-19848--button-when-input-has-text-chromium/error-context.md
+
+  15) [chromium] › e2e/ai-chat.spec.ts:235:7 › AI Chat - Send Message › should clear input after sending message 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Test message")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      239 |     }).last();
+      240 |
+    > 241 |     await textarea.fill('Test message');
+          |                    ^
+      242 |     await sendButton.click();
+      243 |
+      244 |     await page.waitForTimeout(500);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:241:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-d7bc3-input-after-sending-message-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Send-Mes-d7bc3-input-after-sending-message-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Send-Mes-d7bc3-input-after-sending-message-chromium/error-context.md
+
+  16) [chromium] › e2e/ai-chat.spec.ts:258:7 › AI Chat - Receive Response › should show loading indicator while processing 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Analyze sprint performance")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      262 |     }).last();
+      263 |
+    > 264 |     await textarea.fill('Analyze sprint performance');
+          |                    ^
+      265 |     await sendButton.click();
+      266 |
+      267 |     // Look for loading indicator (animated dots or spinner)
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:264:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--964f3--indicator-while-processing-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--964f3--indicator-while-processing-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Receive--964f3--indicator-while-processing-chromium/error-context.md
+
+  17) [chromium] › e2e/ai-chat.spec.ts:276:7 › AI Chat - Receive Response › should display AI response after sending message 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("What is the total story points?")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      277 |     const textarea = page.locator('textarea');
+      278 |
+    > 279 |     await textarea.fill('What is the total story points?');
+          |                    ^
+      280 |     await textarea.press('Enter');
+      281 |
+      282 |     // Wait for AI response (may take several seconds)
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:279:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--30119-ponse-after-sending-message-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--30119-ponse-after-sending-message-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Receive--30119-ponse-after-sending-message-chromium/error-context.md
+
+  18) [chromium] › e2e/ai-chat.spec.ts:292:7 › AI Chat - Receive Response › should display timestamp on messages 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      297 |     const count = await timestamp.count();
+      298 |
+    > 299 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      300 |   });
+      301 |
+      302 |   test('should differentiate user and assistant messages', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:299:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--d3514-splay-timestamp-on-messages-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--d3514-splay-timestamp-on-messages-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Receive--d3514-splay-timestamp-on-messages-chromium/error-context.md
+
+  19) [chromium] › e2e/ai-chat.spec.ts:302:7 › AI Chat - Receive Response › should differentiate user and assistant messages 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Test question")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      303 |     const textarea = page.locator('textarea');
+      304 |
+    > 305 |     await textarea.fill('Test question');
+          |                    ^
+      306 |     await textarea.press('Enter');
+      307 |
+      308 |     await page.waitForTimeout(1000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:305:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--92110-user-and-assistant-messages-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--92110-user-and-assistant-messages-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Receive--92110-user-and-assistant-messages-chromium/error-context.md
+
+  20) [chromium] › e2e/ai-chat.spec.ts:320:7 › AI Chat - Receive Response › should scroll to latest message automatically 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Message 1")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      323 |     // Send multiple messages
+      324 |     for (let i = 0; i < 3; i++) {
+    > 325 |       await textarea.fill(`Message ${i + 1}`);
+          |                      ^
+      326 |       await textarea.press('Enter');
+      327 |       await page.waitForTimeout(500);
+      328 |     }
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:325:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--b86dc-atest-message-automatically-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Receive--b86dc-atest-message-automatically-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Receive--b86dc-atest-message-automatically-chromium/error-context.md
+
+  21) [chromium] › e2e/ai-chat.spec.ts:351:7 › AI Chat - Sprint Analysis › should generate sprint analysis 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Generate a sprint analysis")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      352 |     const textarea = page.locator('textarea');
+      353 |
+    > 354 |     await textarea.fill('Generate a sprint analysis');
+          |                    ^
+      355 |     await textarea.press('Enter');
+      356 |
+      357 |     // Wait for AI response
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:354:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Sprint-A-15697-ld-generate-sprint-analysis-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Sprint-A-15697-ld-generate-sprint-analysis-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Sprint-A-15697-ld-generate-sprint-analysis-chromium/error-context.md
+
+  22) [chromium] › e2e/ai-chat.spec.ts:367:7 › AI Chat - Sprint Analysis › should include metrics in sprint analysis 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Analyze the current sprint")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      368 |     const textarea = page.locator('textarea');
+      369 |
+    > 370 |     await textarea.fill('Analyze the current sprint');
+          |                    ^
+      371 |     await textarea.press('Enter');
+      372 |
+      373 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:370:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Sprint-A-a40b0--metrics-in-sprint-analysis-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Sprint-A-a40b0--metrics-in-sprint-analysis-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Sprint-A-a40b0--metrics-in-sprint-analysis-chromium/error-context.md
+
+  23) [chromium] › e2e/ai-chat.spec.ts:390:7 › AI Chat - Release Notes Generation › should generate release notes 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Generate release notes for this sprint")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      391 |     const textarea = page.locator('textarea');
+      392 |
+    > 393 |     await textarea.fill('Generate release notes for this sprint');
+          |                    ^
+      394 |     await textarea.press('Enter');
+      395 |
+      396 |     // Wait for AI response
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:393:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Release--fd6f4-ould-generate-release-notes-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Release--fd6f4-ould-generate-release-notes-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Release--fd6f4-ould-generate-release-notes-chromium/error-context.md
+
+  24) [chromium] › e2e/ai-chat.spec.ts:406:7 › AI Chat - Release Notes Generation › should format release notes with sections 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Create release notes")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      407 |     const textarea = page.locator('textarea');
+      408 |
+    > 409 |     await textarea.fill('Create release notes');
+          |                    ^
+      410 |     await textarea.press('Enter');
+      411 |
+      412 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:409:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Release--4e02b-release-notes-with-sections-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Release--4e02b-release-notes-with-sections-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Release--4e02b-release-notes-with-sections-chromium/error-context.md
+
+  25) [chromium] › e2e/ai-chat.spec.ts:429:7 › AI Chat - Document Generation › should generate Word document 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Generate a Word document with sprint summary")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      430 |     const textarea = page.locator('textarea');
+      431 |
+    > 432 |     await textarea.fill('Generate a Word document with sprint summary');
+          |                    ^
+      433 |     await textarea.press('Enter');
+      434 |
+      435 |     // Wait for AI response
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:432:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-a497d-ould-generate-Word-document-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-a497d-ould-generate-Word-document-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Document-a497d-ould-generate-Word-document-chromium/error-context.md
+
+  26) [chromium] › e2e/ai-chat.spec.ts:446:7 › AI Chat - Document Generation › should generate Excel spreadsheet 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Create an Excel sheet with developer metrics")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      447 |     const textarea = page.locator('textarea');
+      448 |
+    > 449 |     await textarea.fill('Create an Excel sheet with developer metrics');
+          |                    ^
+      450 |     await textarea.press('Enter');
+      451 |
+      452 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:449:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-c18bb--generate-Excel-spreadsheet-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-c18bb--generate-Excel-spreadsheet-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Document-c18bb--generate-Excel-spreadsheet-chromium/error-context.md
+
+  27) [chromium] › e2e/ai-chat.spec.ts:461:7 › AI Chat - Document Generation › should generate PowerPoint presentation 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Generate a PowerPoint presentation for sprint review")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      462 |     const textarea = page.locator('textarea');
+      463 |
+    > 464 |     await textarea.fill('Generate a PowerPoint presentation for sprint review');
+          |                    ^
+      465 |     await textarea.press('Enter');
+      466 |
+      467 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:464:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-7ef24-ate-PowerPoint-presentation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-7ef24-ate-PowerPoint-presentation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Document-7ef24-ate-PowerPoint-presentation-chromium/error-context.md
+
+  28) [chromium] › e2e/ai-chat.spec.ts:476:7 › AI Chat - Document Generation › should display document preview before download 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Generate a Word document")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      477 |     const textarea = page.locator('textarea');
+      478 |
+    > 479 |     await textarea.fill('Generate a Word document');
+          |                    ^
+      480 |     await textarea.press('Enter');
+      481 |
+      482 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:479:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-611fa-ent-preview-before-download-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-611fa-ent-preview-before-download-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Document-611fa-ent-preview-before-download-chromium/error-context.md
+
+  29) [chromium] › e2e/ai-chat.spec.ts:492:7 › AI Chat - Document Generation › should have download button for generated documents 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Create a Word doc with team performance")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      493 |     const textarea = page.locator('textarea');
+      494 |
+    > 495 |     await textarea.fill('Create a Word doc with team performance');
+          |                    ^
+      496 |     await textarea.press('Enter');
+      497 |
+      498 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:495:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-9bb8b-ton-for-generated-documents-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Document-9bb8b-ton-for-generated-documents-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Document-9bb8b-ton-for-generated-documents-chromium/error-context.md
+
+  30) [chromium] › e2e/ai-chat.spec.ts:516:7 › AI Chat - Error Handling › should show error when no dashboard data is loaded 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Show me the issues")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      517 |     const textarea = page.locator('textarea');
+      518 |
+    > 519 |     await textarea.fill('Show me the issues');
+          |                    ^
+      520 |     await textarea.press('Enter');
+      521 |
+      522 |     await page.waitForTimeout(1000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:519:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-331f7-no-dashboard-data-is-loaded-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-331f7-no-dashboard-data-is-loaded-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Error-Ha-331f7-no-dashboard-data-is-loaded-chromium/error-context.md
+
+  31) [chromium] › e2e/ai-chat.spec.ts:532:7 › AI Chat - Error Handling › should handle API errors gracefully 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Invalid query 12345 !@#$%")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    19 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      537 |
+      538 |     // Send a query that might fail
+    > 539 |     await textarea.fill('Invalid query 12345 !@#$%');
+          |                    ^
+      540 |     await textarea.press('Enter');
+      541 |
+      542 |     await page.waitForTimeout(10000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:539:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-0e001-andle-API-errors-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-0e001-andle-API-errors-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Error-Ha-0e001-andle-API-errors-gracefully-chromium/error-context.md
+
+  32) [chromium] › e2e/ai-chat.spec.ts:563:7 › AI Chat - Error Handling › should disable input during processing 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Test query")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    19 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      570 |     }).last();
+      571 |
+    > 572 |     await textarea.fill('Test query');
+          |                    ^
+      573 |     await sendButton.click();
+      574 |
+      575 |     // Check if disabled immediately after sending
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:572:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-bd824-ble-input-during-processing-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Error-Ha-bd824-ble-input-during-processing-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Error-Ha-bd824-ble-input-during-processing-chromium/error-context.md
+
+  33) [chromium] › e2e/ai-chat.spec.ts:590:7 › AI Chat - Clear Functionality › should have clear chat button 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Select a project or sprint to start..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Test message")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    20 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      591 |     // Send a message first
+      592 |     const textarea = page.locator('textarea');
+    > 593 |     await textarea.fill('Test message');
+          |                    ^
+      594 |     await textarea.press('Enter');
+      595 |
+      596 |     await page.waitForTimeout(1000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:593:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Clear-Fu-641f5-ould-have-clear-chat-button-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Clear-Fu-641f5-ould-have-clear-chat-button-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Clear-Fu-641f5-ould-have-clear-chat-button-chromium/error-context.md
+
+  34) [chromium] › e2e/ai-chat.spec.ts:606:7 › AI Chat - Clear Functionality › should clear all messages when clicking clear 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: locator.fill: Test timeout of 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('textarea')[22m
+    [2m    - locator resolved to <textarea rows="3" disabled placeholder="Ask questions or request Word docs, Excel sheets, PowerPoint decks..." class="flex-1 px-3.5 py-2.5 border border-custom rounded-lg bg-container text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed resize-none"></textarea>[22m
+    [2m    - fill("Message 2")[22m
+    [2m  - attempting fill action[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and editable[22m
+    [2m      - element is not enabled[22m
+    [2m    - retrying fill action[22m
+    [2m      - waiting 100ms[22m
+    [2m    13 × waiting for element to be visible, enabled and editable[22m
+    [2m       - element is not enabled[22m
+    [2m     - retrying fill action[22m
+    [2m       - waiting 500ms[22m
+
+
+      612 |     await page.waitForTimeout(500);
+      613 |
+    > 614 |     await textarea.fill('Message 2');
+          |                    ^
+      615 |     await textarea.press('Enter');
+      616 |     await page.waitForTimeout(500);
+      617 |
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/ai-chat.spec.ts:614:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Clear-Fu-1f1e8-essages-when-clicking-clear-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/ai-chat-AI-Chat---Clear-Fu-1f1e8-essages-when-clicking-clear-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ai-chat-AI-Chat---Clear-Fu-1f1e8-essages-when-clicking-clear-chromium/error-context.md
+
+  35) [chromium] › e2e/dashboard.spec.ts:80:7 › Dashboard - Summary Cards › should display summary cards after loading dashboard 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      84 |     // At least one summary metric should be visible
+      85 |     const count = await summaryText.count();
+    > 86 |     expect(count).toBeGreaterThan(0);
+         |                   ^
+      87 |   });
+      88 |
+      89 |   test('should display numeric values in summary cards', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/dashboard.spec.ts:86:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Summ-aed6b-rds-after-loading-dashboard-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Summ-aed6b-rds-after-loading-dashboard-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dashboard-Dashboard---Summ-aed6b-rds-after-loading-dashboard-chromium/error-context.md
+
+  36) [chromium] › e2e/dashboard.spec.ts:399:7 › Dashboard - Error Handling › should handle no data gracefully 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('text=/select.*project|no.*data|no.*issues/i').first()
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('text=/select.*project|no.*data|no.*issues/i').first()[22m
+    [2m    3 × locator resolved to <option value="" selected>Select a project first...</option>[22m
+    [2m      - unexpected value "hidden"[22m
+    [2m    11 × locator resolved to <option value="">Select a project...</option>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      404 |
+      405 |     if (await emptyState.count() > 0) {
+    > 406 |       await expect(emptyState.first()).toBeVisible();
+          |                                        ^
+      407 |     }
+      408 |   });
+      409 | });
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/dashboard.spec.ts:406:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Erro-87e6b-d-handle-no-data-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Erro-87e6b-d-handle-no-data-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dashboard-Dashboard---Erro-87e6b-d-handle-no-data-gracefully-chromium/error-context.md
+
+  37) [chromium] › e2e/dashboard.spec.ts:419:7 › Dashboard - Navigation › should navigate to test dashboard and back 
+
+    Error: [2mexpect([22m[31mpage[39m[2m).[22mtoHaveURL[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Expected pattern: [32m/^\/$/[39m
+    Received string:  [31m"http://localhost:3000/"[39m
+    Timeout: 10000ms
+
+    Call log:
+    [2m  - Expect "toHaveURL" with timeout 10000ms[22m
+    [2m    2 × unexpected value "http://localhost:3000/tests"[22m
+    [2m    12 × unexpected value "http://localhost:3000/"[22m
+
+
+      429 |     await backLink.click();
+      430 |
+    > 431 |     await expect(page).toHaveURL(/^\/$/);
+          |                        ^
+      432 |   });
+      433 |
+      434 |   test('should open chat drawer with keyboard shortcut', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/dashboard.spec.ts:431:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Navi-dac6d--to-test-dashboard-and-back-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/dashboard-Dashboard---Navi-dac6d--to-test-dashboard-and-back-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dashboard-Dashboard---Navi-dac6d--to-test-dashboard-and-back-chromium/error-context.md
+
+  38) [chromium] › e2e/developer-analytics.spec.ts:28:7 › Developer Analytics - Workload Chart › should display status columns in workload table 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      33 |
+      34 |     const count = await statusHeaders.count();
+    > 35 |     expect(count).toBeGreaterThan(0);
+         |                   ^
+      36 |   });
+      37 |
+      38 |   test('should display story points column', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/developer-analytics.spec.ts:35:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/developer-analytics-Develo-8be80-s-columns-in-workload-table-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/developer-analytics-Develo-8be80-s-columns-in-workload-table-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/developer-analytics-Develo-8be80-s-columns-in-workload-table-chromium/error-context.md
+
+  39) [chromium] › e2e/developer-analytics.spec.ts:302:7 › Developer Analytics - Dev Time Metrics › should display development time in days 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      307 |
+      308 |     const count = await timeMetrics.count();
+    > 309 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      310 |   });
+      311 |
+      312 |   test('should show average development time per developer', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/developer-analytics.spec.ts:309:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/developer-analytics-Develo-ac8e0-ay-development-time-in-days-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/developer-analytics-Develo-ac8e0-ay-development-time-in-days-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/developer-analytics-Develo-ac8e0-ay-development-time-in-days-chromium/error-context.md
+
+  40) [chromium] › e2e/github-integration.spec.ts:218:7 › GitHub Integration - Commit History › should show commit activity for sprint period 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      223 |
+      224 |     const count = await commitData.count();
+    > 225 |     expect(count).toBeGreaterThan(0);
+          |                   ^
+      226 |   });
+      227 |
+      228 |   test('should aggregate commits across all repositories', async ({ page }) => {
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/github-integration.spec.ts:225:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--c2bc7--activity-for-sprint-period-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--c2bc7--activity-for-sprint-period-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/github-integration-GitHub--c2bc7--activity-for-sprint-period-chromium/error-context.md
+
+  41) [chromium] › e2e/github-integration.spec.ts:434:7 › GitHub Integration - Activity Filtering › should filter GitHub activity by sprint dates 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31m0[39m
+
+      443 |       const count = await githubData.count();
+      444 |
+    > 445 |       expect(count).toBeGreaterThan(0);
+          |                     ^
+      446 |     }
+      447 |   });
+      448 |
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/github-integration.spec.ts:445:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--2dafd-ub-activity-by-sprint-dates-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--2dafd-ub-activity-by-sprint-dates-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/github-integration-GitHub--2dafd-ub-activity-by-sprint-dates-chromium/error-context.md
+
+  42) [chromium] › e2e/github-integration.spec.ts:449:7 › GitHub Integration - Activity Filtering › should update GitHub data when sprint changes 
+
+    [31mTest timeout of 15000ms exceeded.[39m
+
+    Error: locator.textContent: Test timeout of 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('tfoot td').filter({ hasText: /^\d+$/ }).first()[22m
+
+
+      451 |
+      452 |     // Get initial GitHub data
+    > 453 |     const initialCommits = await page.locator('tfoot td').filter({ hasText: /^\d+$/ }).first().textContent();
+          |                                                                                                ^
+      454 |
+      455 |     // Change sprint if possible
+      456 |     const sprintSelector = page.locator('select').nth(2);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/github-integration.spec.ts:453:96
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--f5ca2-ub-data-when-sprint-changes-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--f5ca2-ub-data-when-sprint-changes-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/github-integration-GitHub--f5ca2-ub-data-when-sprint-changes-chromium/error-context.md
+
+  43) [chromium] › e2e/github-integration.spec.ts:491:7 › GitHub Integration - Performance › should load GitHub data asynchronously without blocking UI 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('text=/total issues/i').first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('text=/total issues/i').first()[22m
+
+
+      494 |     // Dashboard should be interactive while GitHub loads
+      495 |     const summaryCards = page.locator('text=/total issues/i');
+    > 496 |     await expect(summaryCards.first()).toBeVisible({ timeout: 10000 });
+          |                                        ^
+      497 |
+      498 |     // GitHub data loads in background
+      499 |     await page.waitForTimeout(5000);
+        at /Users/timothydonaghy/Documents/@Repos/Experiments/JIRA-Dev-Dashboard/tests/e2e/github-integration.spec.ts:496:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--d6ee1-onously-without-blocking-UI-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/github-integration-GitHub--d6ee1-onously-without-blocking-UI-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/github-integration-GitHub--d6ee1-onously-without-blocking-UI-chromium/error-context.md
+
+  43 failed
+    [chromium] › e2e/aha-integration.spec.ts:214:7 › Aha Integration - Warning Messages › should list unverified ticket keys 
+    [chromium] › e2e/aha-integration.spec.ts:258:7 › Aha Integration - Batch Verification › should verify all tickets in batch 
+    [chromium] › e2e/aha-integration.spec.ts:292:7 › Aha Integration - Batch Verification › should not block dashboard rendering during verification 
+    [chromium] › e2e/aha-integration.spec.ts:325:7 › Aha Integration - Error Handling › should handle API timeout gracefully 
+    [chromium] › e2e/aha-integration.spec.ts:455:7 › Aha Integration - Performance › should verify tickets asynchronously 
+    [chromium] › e2e/aha-integration.spec.ts:466:7 › Aha Integration - Performance › should batch verify tickets in single API call 
+    [chromium] › e2e/aha-integration.spec.ts:479:7 › Aha Integration - Performance › should cache verification results 
+    [chromium] › e2e/aha-integration.spec.ts:497:7 › Aha Integration - Performance › should not make redundant API calls 
+    [chromium] › e2e/ai-chat.spec.ts:113:7 › AI Chat - Welcome Message › should list capabilities in welcome message 
+    [chromium] › e2e/ai-chat.spec.ts:155:7 › AI Chat - Send Message › should display placeholder text in input 
+    [chromium] › e2e/ai-chat.spec.ts:163:7 › AI Chat - Send Message › should type message in textarea 
+    [chromium] › e2e/ai-chat.spec.ts:190:7 › AI Chat - Send Message › should send message when pressing Enter 
+    [chromium] › e2e/ai-chat.spec.ts:214:7 › AI Chat - Send Message › should disable send button when input is empty 
+    [chromium] › e2e/ai-chat.spec.ts:223:7 › AI Chat - Send Message › should enable send button when input has text 
+    [chromium] › e2e/ai-chat.spec.ts:235:7 › AI Chat - Send Message › should clear input after sending message 
+    [chromium] › e2e/ai-chat.spec.ts:258:7 › AI Chat - Receive Response › should show loading indicator while processing 
+    [chromium] › e2e/ai-chat.spec.ts:276:7 › AI Chat - Receive Response › should display AI response after sending message 
+    [chromium] › e2e/ai-chat.spec.ts:292:7 › AI Chat - Receive Response › should display timestamp on messages 
+    [chromium] › e2e/ai-chat.spec.ts:302:7 › AI Chat - Receive Response › should differentiate user and assistant messages 
+    [chromium] › e2e/ai-chat.spec.ts:320:7 › AI Chat - Receive Response › should scroll to latest message automatically 
+    [chromium] › e2e/ai-chat.spec.ts:351:7 › AI Chat - Sprint Analysis › should generate sprint analysis 
+    [chromium] › e2e/ai-chat.spec.ts:367:7 › AI Chat - Sprint Analysis › should include metrics in sprint analysis 
+    [chromium] › e2e/ai-chat.spec.ts:390:7 › AI Chat - Release Notes Generation › should generate release notes 
+    [chromium] › e2e/ai-chat.spec.ts:406:7 › AI Chat - Release Notes Generation › should format release notes with sections 
+    [chromium] › e2e/ai-chat.spec.ts:429:7 › AI Chat - Document Generation › should generate Word document 
+    [chromium] › e2e/ai-chat.spec.ts:446:7 › AI Chat - Document Generation › should generate Excel spreadsheet 
+    [chromium] › e2e/ai-chat.spec.ts:461:7 › AI Chat - Document Generation › should generate PowerPoint presentation 
+    [chromium] › e2e/ai-chat.spec.ts:476:7 › AI Chat - Document Generation › should display document preview before download 
+    [chromium] › e2e/ai-chat.spec.ts:492:7 › AI Chat - Document Generation › should have download button for generated documents 
+    [chromium] › e2e/ai-chat.spec.ts:516:7 › AI Chat - Error Handling › should show error when no dashboard data is loaded 
+    [chromium] › e2e/ai-chat.spec.ts:532:7 › AI Chat - Error Handling › should handle API errors gracefully 
+    [chromium] › e2e/ai-chat.spec.ts:563:7 › AI Chat - Error Handling › should disable input during processing 
+    [chromium] › e2e/ai-chat.spec.ts:590:7 › AI Chat - Clear Functionality › should have clear chat button 
+    [chromium] › e2e/ai-chat.spec.ts:606:7 › AI Chat - Clear Functionality › should clear all messages when clicking clear 
+    [chromium] › e2e/dashboard.spec.ts:80:7 › Dashboard - Summary Cards › should display summary cards after loading dashboard 
+    [chromium] › e2e/dashboard.spec.ts:399:7 › Dashboard - Error Handling › should handle no data gracefully 
+    [chromium] › e2e/dashboard.spec.ts:419:7 › Dashboard - Navigation › should navigate to test dashboard and back 
+    [chromium] › e2e/developer-analytics.spec.ts:28:7 › Developer Analytics - Workload Chart › should display status columns in workload table 
+    [chromium] › e2e/developer-analytics.spec.ts:302:7 › Developer Analytics - Dev Time Metrics › should display development time in days 
+    [chromium] › e2e/github-integration.spec.ts:218:7 › GitHub Integration - Commit History › should show commit activity for sprint period 
+    [chromium] › e2e/github-integration.spec.ts:434:7 › GitHub Integration - Activity Filtering › should filter GitHub activity by sprint dates 
+    [chromium] › e2e/github-integration.spec.ts:449:7 › GitHub Integration - Activity Filtering › should update GitHub data when sprint changes 
+    [chromium] › e2e/github-integration.spec.ts:491:7 › GitHub Integration - Performance › should load GitHub data asynchronously without blocking UI 
+  147 passed (27.3m)

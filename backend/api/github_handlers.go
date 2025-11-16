@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 )
@@ -466,99 +465,27 @@ func (h *Handler) handleGitHubDeveloperActivity(w http.ResponseWriter, r *http.R
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
-	// Aggregate activity from all repositories using GetDeveloperStats
-	developerActivity := make(map[string]map[string]interface{})
-	var mu sync.Mutex
-	var wg sync.WaitGroup
-
-	// Rate limiter: allow up to 10 concurrent requests for better performance
-	// GitHub allows 5000 requests/hour for authenticated users, so this is safe
-	rateLimiter := make(chan struct{}, 10)
-
-	var repoIndex int
-
-	for repoName, client := range h.githubClients {
-		// Skip if repo filter is set and doesn't match
-		if repoFilter != "" && repoName != repoFilter {
-			continue
-		}
-
-		// Filter to only CLX repos to reduce API calls
-		if !strings.Contains(strings.ToUpper(repoName), "CLX") {
-			continue
-		}
-
-		repoIndex++
-
-		// Use GetDeveloperStats which includes test coverage calculation
-		wg.Add(1)
-		go func(repo string, ghClient *github.Client) {
-			defer wg.Done()
-
-			// Acquire rate limiter token
-			rateLimiter <- struct{}{}
-			defer func() { <-rateLimiter }()
-
-			// Use GetDeveloperStats which calculates test coverage from PRs
-			stats, err := ghClient.GetDeveloperStats(ctx, &startDate)
-			if err != nil {
-				log.Printf("Warning: Failed to fetch developer stats from %s: %v", repo, err)
-				return
-			}
-
-			// Merge stats into aggregated activity
-			mu.Lock()
-			for username, devStats := range stats {
-				// Filter by end date
-				if devStats.LastCommitDate != nil && devStats.LastCommitDate.After(endDate) {
-					continue
-				}
-
-				if _, exists := developerActivity[username]; !exists {
-					lastActivity := startDate
-					if devStats.LastCommitDate != nil {
-						lastActivity = *devStats.LastCommitDate
-					}
-
-					developerActivity[username] = map[string]interface{}{
-						"username":     username,
-						"commits":      0,
-						"prs":          0,
-						"prsMerged":    0,
-						"additions":    0,
-						"deletions":    0,
-						"testCoverage": 0.0,
-						"lastActivity": lastActivity,
-					}
-				}
-
-				activity := developerActivity[username]
-				activity["commits"] = activity["commits"].(int) + devStats.TotalCommits
-				activity["prs"] = activity["prs"].(int) + devStats.TotalPRs
-				activity["prsMerged"] = activity["prsMerged"].(int) + devStats.MergedPRs
-				activity["additions"] = activity["additions"].(int) + devStats.Additions
-				activity["deletions"] = activity["deletions"].(int) + devStats.Deletions
-
-				// Aggregate test coverage (weighted average by PRs merged)
-				existingCoverage := activity["testCoverage"].(float64)
-				existingPRs := activity["prsMerged"].(int) - devStats.MergedPRs
-				if devStats.MergedPRs > 0 && devStats.TestCoverage > 0 {
-					totalPRs := activity["prsMerged"].(int)
-					if totalPRs > 0 {
-						activity["testCoverage"] = (existingCoverage*float64(existingPRs) + devStats.TestCoverage*float64(devStats.MergedPRs)) / float64(totalPRs)
-					}
-				}
-
-				if devStats.LastCommitDate != nil && devStats.LastCommitDate.After(activity["lastActivity"].(time.Time)) {
-					activity["lastActivity"] = *devStats.LastCommitDate
-				}
-			}
-			mu.Unlock()
-		}(repoName, client)
+	// Convert github clients to GitHubStatsProvider interface
+	statsProviders := make(map[string]GitHubStatsProvider)
+	for name, client := range h.githubClients {
+		statsProviders[name] = client
 	}
 
-	log.Printf("Fetching GitHub activity from %d CLX repos...", repoIndex)
-	wg.Wait()
+	// Create aggregator with dependency injection
+	aggregator := NewDeveloperActivityAggregator(statsProviders, 10)
+
+	// Aggregate activity using the new architecture
+	developerActivity, err := aggregator.AggregateDeveloperActivity(ctx, AggregateOptions{
+		StartDate:  startDate,
+		EndDate:    endDate,
+		RepoFilter: repoFilter,
+		OnlyCLX:    true, // Filter to only CLX repos
+	})
+
+	if err != nil {
+		http.Error(w, "Failed to aggregate developer activity: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{

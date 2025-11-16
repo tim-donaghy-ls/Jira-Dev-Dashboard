@@ -1,0 +1,78 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - banner [ref=e4]:
+        - button "Switch to dark mode" [ref=e6] [cursor=pointer]: 🌙
+        - generic [ref=e7]:
+          - img "Legal Sifter" [ref=e8]
+          - heading "Development Metrics Dashboard" [level=1] [ref=e9]
+          - button "Dashboard Assistant (⌘K)" [ref=e10] [cursor=pointer]:
+            - img [ref=e11]
+            - generic [ref=e13]: Assistant
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: "JIRA Instance:"
+          - combobox "JIRA Instance:" [ref=e17]:
+            - option "ContractLogix" [selected]
+            - option "Legal Sifter"
+        - generic [ref=e18]:
+          - generic [ref=e19]: "Project:"
+          - combobox "Project:" [ref=e20]:
+            - option "Select a project..." [selected]
+            - option "CLX - LS-CLX Platform"
+            - option "CMP - Customer Mgmt Portal"
+            - option "CS - Customer Support"
+            - option "CSF - CLX SIG Findings"
+            - option "DM - Data Migration"
+            - option "FNY - Fleet - New York(test)"
+            - option "IT - IT / Dev Ops"
+            - option "ITSEC - IT - Security"
+            - option "MDP - My discovery project"
+            - option "PRG1 - PR-G1-Appeon Platform"
+            - option "QA - QA"
+            - option "RP2 - PR-RP2"
+            - option "TL - Technology Logs"
+            - option "TTS - Service Desk"
+        - generic [ref=e21]:
+          - generic [ref=e22]: "Sprint:"
+          - combobox "Sprint:" [disabled] [ref=e23]:
+            - option "Select a project first..." [selected]
+        - generic [ref=e24]:
+          - generic [ref=e27]: Connected to JIRA
+          - generic [ref=e30]: "GitHub: All repos failed to connect"
+          - generic [ref=e33]: Connected to Aha
+      - paragraph [ref=e35]: Select a project and sprint to load the dashboard
+      - contentinfo [ref=e36]:
+        - link "Test Application" [ref=e38] [cursor=pointer]:
+          - /url: /tests
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - img [ref=e43]
+          - generic [ref=e45]:
+            - heading "Dashboard Assistant" [level=2] [ref=e46]
+            - paragraph [ref=e47]: Powered by Claude AI
+        - button [ref=e49] [cursor=pointer]:
+          - img [ref=e50]
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - textbox "Select a project or sprint to start..." [disabled] [ref=e55]
+          - button [disabled] [ref=e56]:
+            - img [ref=e57]
+        - paragraph [ref=e59]: Press Enter to send, Shift+Enter for new line
+  - generic [ref=e64] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e65]:
+      - img [ref=e66]
+    - generic [ref=e69]:
+      - button "Open issues overlay" [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: "0"
+          - generic [ref=e73]: "1"
+        - generic [ref=e74]: Issue
+      - button "Collapse issues badge" [ref=e75]:
+        - img [ref=e76]
+  - alert [ref=e78]
+```

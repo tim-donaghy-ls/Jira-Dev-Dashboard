@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "name": "/run-doc-pipeline",
+      "description": "Run the multi-language documentation pipeline for the current repo.",
+      "mapped_action": "doc_orchestrator.run_pipeline"
+    }
+  ]
+}
